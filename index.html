@@ -36,10 +36,8 @@
 
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.5;overflow:hidden}
 
-/* ── Layout ── */
 .shell{display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
-/* ── Header ── */
 .hdr{
   background:var(--surface);
   border-bottom:1px solid var(--border2);
@@ -63,7 +61,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .day-badge{font-size:11px;color:var(--amber);font-weight:600}
 .ts{font-size:10px;color:var(--muted)}
 
-/* ── Tab bar ── */
 .tabs{
   background:var(--surface);
   border-bottom:1px solid var(--border);
@@ -80,7 +77,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--amber);border-bottom-color:var(--amber)}
 
-/* ── Content ── */
 .content{flex:1;overflow-y:auto;padding:16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .content::-webkit-scrollbar{width:4px}
 .content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
@@ -88,7 +84,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .page{display:none}
 .page.active{display:block}
 
-/* ── Cards ── */
 .card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:6px;padding:14px;margin-bottom:12px;
@@ -100,14 +95,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 }
 .card-upd{font-size:10px;font-weight:400;color:var(--muted);font-family:var(--mono);text-transform:none;letter-spacing:0}
 
-/* ── Grid ── */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
 
-/* ── Metric box ── */
 .mbox{
   background:var(--surface2);border:1px solid var(--border);
   border-radius:5px;padding:12px;
@@ -120,7 +113,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .mbox-val.yellow{color:var(--yellow)}
 .mbox-sub{font-size:10px;color:var(--dim);margin-top:5px;line-height:1.4}
 
-/* ── Status row ── */
 .srow{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);gap:10px}
 .srow:last-child{border-bottom:none}
 .srow-label{font-size:11px;color:var(--dim);flex:0 0 140px;font-family:var(--sans)}
@@ -129,14 +121,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .srow-val.red{color:var(--red2)}
 .srow-val.green{color:var(--green)}
 
-/* ── Headline ── */
 .headline{
   font-family:var(--sans);font-weight:800;font-size:18px;
   color:var(--bright);line-height:1.3;margin-bottom:10px;
 }
 .summary-text{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:12px}
 
-/* ── Dev list ── */
 .dev-list{list-style:none;padding:0}
 .dev-list li{
   font-size:11px;line-height:1.5;padding:5px 0 5px 14px;
@@ -146,7 +136,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .dev-list li:last-child{border-bottom:none}
 .dev-list li::before{content:'›';position:absolute;left:0;color:var(--amber)}
 
-/* ── Watchlist ── */
 .wl-item{
   background:var(--surface2);border:1px solid var(--border);
   border-radius:5px;padding:10px 12px;margin-bottom:8px;
@@ -169,7 +158,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .wl-deadline{font-size:10px;color:var(--amber);margin-bottom:4px}
 .wl-notes{font-size:11px;color:var(--dim);line-height:1.5}
 
-/* ── Scenario card ── */
 .sc-card{
   background:var(--surface2);border:1px solid var(--border);
   border-radius:5px;padding:11px;margin-bottom:8px;
@@ -183,7 +171,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .sc-cell-val{font-size:11px;color:var(--text)}
 .sc-notes{font-size:11px;color:var(--dim);line-height:1.5}
 
-/* ── Travel ── */
 .travel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
 .travel-card{
   background:var(--surface2);border:1px solid var(--border);
@@ -197,7 +184,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .travel-EC{color:var(--blue)}
 .travel-notes{font-size:10px;color:var(--dim);line-height:1.5}
 
-/* ── Prediction ── */
 .pred-item{
   background:var(--surface2);border:1px solid var(--border);
   border-radius:5px;padding:9px 11px;margin-bottom:7px;
@@ -216,7 +202,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .pred-deadline{font-size:10px;color:var(--amber);margin-bottom:3px}
 .pred-notes{font-size:10px;color:var(--dim);line-height:1.5}
 
-/* ── Track record ── */
 .track{display:flex;gap:16px;padding:11px;background:var(--surface2);border-radius:5px;margin-bottom:12px;flex-wrap:wrap}
 .track-num{font-family:var(--sans);font-weight:800;font-size:24px}
 .track-num.green{color:var(--green)}
@@ -224,17 +209,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .track-num.amber{color:var(--amber)}
 .track-label{font-size:10px;color:var(--dim);margin-top:2px;font-family:var(--sans)}
 
-/* ── Nuclear ── */
 .nuc-bar-wrap{margin:10px 0}
 .nuc-bar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:4px}
 .nuc-bar-bg{background:var(--surface2);border-radius:3px;height:6px;overflow:hidden}
 .nuc-bar-fill{height:100%;border-radius:3px;background:var(--red2);transition:width .6s ease}
 
-/* ── Sparkline ── */
 .spark-canvas{width:100%;height:240px;display:block;cursor:crosshair}
 .chart-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:800px){.chart-grid2{grid-template-columns:1fr}}
-/* Tooltip */
+
 #chart-tooltip{
   position:fixed;pointer-events:none;display:none;z-index:9999;
   background:#0d1117;border:1px solid var(--border2);border-radius:5px;
@@ -244,7 +227,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 #chart-tooltip .tt-label{color:var(--muted);font-size:10px;margin-bottom:2px}
 #chart-tooltip .tt-val{color:var(--amber);font-weight:700;font-size:13px}
 
-/* ── Force table ── */
 .force-table{width:100%;border-collapse:collapse;font-size:11px}
 .force-table th{
   font-family:var(--sans);font-size:9px;font-weight:700;text-transform:uppercase;
@@ -258,7 +240,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .dot-amber{background:var(--amber)}
 .dot-red{background:var(--red2)}
 
-/* ── Damage list ── */
 .damage-list{list-style:none;padding:0;columns:2;gap:12px}
 @media(max-width:700px){.damage-list{columns:1}}
 .damage-list li{
@@ -267,7 +248,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 }
 .damage-list li::before{content:'▸';position:absolute;left:0;color:var(--red2)}
 
-/* ── Footer ── */
 .ftr{
   background:var(--surface);border-top:1px solid var(--border);
   padding:7px 18px;font-size:10px;color:var(--muted);
@@ -277,13 +257,61 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .exco-btn{font-family:var(--mono);font-size:11px;font-weight:500;padding:6px 14px;border:1px solid var(--border2);border-radius:4px;background:var(--surface2);color:var(--text);cursor:pointer;transition:all .15s}
 .exco-btn:hover{border-color:var(--amber);color:var(--amber)}
 
+.exco-top{margin-bottom:14px}
+.exco-top .card{margin-bottom:12px}
+.exco-critical{border-left:3px solid var(--red);background:rgba(239,68,68,0.04)}
+.exco-high{border-left:3px solid var(--amber);background:rgba(232,160,32,0.04)}
+.exco-pill{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:0.06em;margin-right:8px;font-family:var(--sans)}
+.exco-pill-critical{background:rgba(239,68,68,0.18);color:var(--red2);border:1px solid rgba(239,68,68,0.4)}
+.exco-pill-high{background:rgba(232,160,32,0.18);color:var(--amber);border:1px solid rgba(232,160,32,0.4)}
+.exco-headline{font-size:13px;font-weight:600;color:var(--text);margin:6px 0 10px;line-height:1.5}
+.exco-summary{font-size:12px;color:var(--text);line-height:1.65;margin-bottom:10px}
+.exco-sublabel{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin:8px 0 6px}
+.exco-list{margin:0;padding-left:18px;font-size:11px;line-height:1.6;color:var(--text)}
+.exco-list li{margin-bottom:3px}
+.exco-precedent-block{margin-top:10px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:4px}
+.exco-precedent-text{font-size:11px;color:var(--text);line-height:1.5;font-style:italic}
+.exco-insurance-banner{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:4px;padding:10px;margin:10px 0}
+.exco-insurance-priority{font-weight:700;color:var(--red2);font-size:12px;margin-bottom:6px;letter-spacing:0.04em}
+.exco-insurance-bottom{font-size:11px;color:var(--text);line-height:1.6;margin-bottom:8px}
+.exco-revised-assessment{font-size:11px;color:var(--text);line-height:1.5;background:rgba(0,0,0,0.2);border-left:2px solid var(--amber);padding:8px 10px;margin-top:10px}
+.exco-marriott{padding:8px;border:1px solid rgba(255,255,255,0.05);border-radius:4px;margin-bottom:6px;font-size:11px}
+.exco-marriott-name{font-weight:600;color:var(--text)}
+.exco-marriott-area{color:var(--muted);font-size:10px}
+.exco-marriott-rec{color:var(--amber);font-size:10px;margin-top:3px;font-weight:600}
+.exco-abort-tier{margin-bottom:8px}
+.exco-abort-tier-label{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px}
+.exco-abort-tier-1 .exco-abort-tier-label{color:var(--red2)}
+.exco-abort-tier-2 .exco-abort-tier-label{color:var(--amber)}
+.exco-abort-tier-3 .exco-abort-tier-label{color:var(--muted)}
+.exco-q-card{background:rgba(0,0,0,0.2);padding:8px 10px;border-radius:4px;margin-bottom:6px}
+.exco-q-text{font-weight:600;font-size:11px;color:var(--text);margin-bottom:4px;line-height:1.4}
+.exco-q-rec{font-size:11px;color:var(--text);line-height:1.5}
+.exco-q-sev-high{border-left:2px solid var(--red);padding-left:10px}
+.exco-q-sev-medium{border-left:2px solid var(--amber);padding-left:10px}
+.exco-q-sev-mediumhigh,.exco-q-sev-medium-high{border-left:2px solid var(--amber);padding-left:10px}
+.exco-indicator{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,0.08)}
+.exco-indicator:last-child{border-bottom:none}
+.exco-indicator-name{font-weight:600;color:var(--text);flex:1}
+.exco-indicator-current{color:var(--amber);font-family:var(--mono);font-weight:700;text-align:right;white-space:nowrap}
+.exco-gc-row{padding:8px 10px;background:rgba(0,0,0,0.18);border-radius:4px;margin-bottom:6px}
+.exco-gc-headline{font-weight:600;font-size:11px;color:var(--text);margin-bottom:4px}
+.exco-gc-meta{font-size:10px;color:var(--muted);margin-bottom:3px;line-height:1.4}
+.exco-gc-actual{font-size:11px;color:var(--text);line-height:1.5;margin-top:3px}
+.exco-gc-prob{font-size:10px;color:var(--red2);font-weight:600;margin-top:5px;letter-spacing:0.04em}
+.exco-trust-readings{display:flex;gap:14px;margin:8px 0 12px;font-size:12px;align-items:center;flex-wrap:wrap}
+.exco-trust-card{padding:6px 10px;border-radius:4px;background:rgba(0,0,0,0.2)}
+.exco-trust-card-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em}
+.exco-trust-card-val{font-size:18px;font-weight:700;font-family:var(--mono)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div id="chart-tooltip"><div class="tt-label" id="tt-label"></div><div class="tt-val" id="tt-val"></div></div>
 <div class="shell">
 
-<!-- Header -->
 <div class="hdr">
   <div class="hdr-left">
     <div class="hdr-logo">GULF &amp; EGYPT RISK MONITOR</div>
@@ -297,7 +325,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- Tabs -->
 <div class="tabs">
   <button class="tab active" onclick="showTab('brief')">Intel Brief</button>
   <button class="tab" onclick="showTab('markets')">Markets</button>
@@ -314,11 +341,99 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   <button class="tab" onclick="showTab('sources')">Data & Sources</button>
 </div>
 
-<!-- Content -->
 <div class="content">
 
-<!-- BRIEF -->
 <div class="page active" id="page-brief">
+
+  <div class="exco-top">
+    <div class="card exco-critical" id="exco-energy-alert" style="display:none">
+      <div class="card-title"><span class="exco-pill exco-pill-critical">CRITICAL</span> ENERGY CRISIS ALERT <span class="card-upd" id="exco-energy-upd"></span></div>
+      <div class="exco-headline" id="exco-energy-headline"></div>
+      <div class="exco-summary" id="exco-energy-summary"></div>
+      <div class="grid2" style="margin-top:6px">
+        <div>
+          <div class="exco-sublabel">Current measures</div>
+          <ul class="exco-list" id="exco-energy-measures"></ul>
+        </div>
+        <div>
+          <div class="exco-sublabel">Blackout risk</div>
+          <ul class="exco-list" id="exco-energy-blackout"></ul>
+        </div>
+      </div>
+      <div class="exco-precedent-block">
+        <div class="exco-sublabel">2024 precedent</div>
+        <div class="exco-precedent-text" id="exco-energy-precedent"></div>
+      </div>
+    </div>
+
+    <div class="card exco-critical" id="exco-cairo-briefing" style="display:none">
+      <div class="card-title"><span class="exco-pill exco-pill-critical">TRAVELER</span> CAIRO TRAVEL BRIEFING <span class="card-upd" id="exco-cairo-upd"></span></div>
+      <div class="exco-headline" id="exco-cairo-headline"></div>
+      <div class="exco-insurance-banner">
+        <div class="exco-insurance-priority" id="exco-cairo-ins-priority"></div>
+        <div class="exco-insurance-bottom" id="exco-cairo-ins-bottom"></div>
+        <div class="exco-sublabel">Required cover types</div>
+        <ul class="exco-list" id="exco-cairo-ins-types"></ul>
+        <div class="exco-sublabel">Provider categories to request</div>
+        <ul class="exco-list" id="exco-cairo-ins-providers"></ul>
+      </div>
+      <div class="grid2">
+        <div>
+          <div class="exco-sublabel">Marriott options</div>
+          <div id="exco-cairo-marriotts"></div>
+        </div>
+        <div>
+          <div class="exco-sublabel">Abort triggers</div>
+          <div id="exco-cairo-abort"></div>
+        </div>
+      </div>
+      <div class="exco-revised-assessment" id="exco-cairo-assessment"></div>
+    </div>
+
+    <div class="card exco-high" id="exco-trust-index" style="display:none">
+      <div class="card-title"><span class="exco-pill exco-pill-high">TRUST</span> TRUST DIRECTION TRACKER <span class="card-upd" id="exco-trust-upd"></span></div>
+      <div class="exco-headline" id="exco-trust-caveat"></div>
+      <div id="exco-trust-snapshot"></div>
+      <div id="exco-trust-signals"></div>
+    </div>
+
+    <div class="card exco-high" id="exco-govt-commits" style="display:none">
+      <div class="card-title"><span class="exco-pill exco-pill-high">COMMITMENTS</span> GOVERNMENT COMMITMENTS — Promised vs Historical vs Actual <span class="card-upd" id="exco-gc-upd"></span></div>
+      <div class="exco-headline" id="exco-gc-desc"></div>
+      <div id="exco-gc-list"></div>
+    </div>
+
+    <div class="card exco-critical" id="exco-briefing-card" style="display:none">
+      <div class="card-title"><span class="exco-pill exco-pill-critical">EXCO</span> EXCO BRIEFING <span class="card-upd" id="exco-brf-upd"></span></div>
+      <div class="exco-headline" id="exco-brf-headline"></div>
+      <div class="exco-summary" id="exco-brf-summary"></div>
+      <div class="grid2">
+        <div>
+          <div class="exco-sublabel">Five key questions for EXCO</div>
+          <div id="exco-brf-questions"></div>
+        </div>
+        <div>
+          <div class="exco-sublabel">Top indicators</div>
+          <div id="exco-brf-indicators"></div>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:8px">
+        <div>
+          <div class="exco-sublabel">Signals not yet reflected in mainstream</div>
+          <ul class="exco-list" id="exco-brf-signals"></ul>
+        </div>
+        <div>
+          <div class="exco-sublabel">Bull-case triggers to watch</div>
+          <ul class="exco-list" id="exco-brf-bull"></ul>
+        </div>
+      </div>
+      <div style="margin-top:8px">
+        <div class="exco-sublabel">Recommended actions</div>
+        <ol class="exco-list" id="exco-brf-actions"></ol>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">Intelligence Brief <span class="card-upd" id="brief-upd"></span></div>
     <div class="headline" id="brief-headline">Loading…</div>
@@ -335,7 +450,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- MARKETS -->
 <div class="page" id="page-markets">
   <div class="card">
     <div class="card-title">Market Metrics <span class="card-upd" id="mkt-upd"></span></div>
@@ -375,7 +489,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- WATCHLIST -->
 <div class="page" id="page-watchlist">
   <div class="card">
     <div class="card-title">Active Watchlist <span class="card-upd" id="wl-upd"></span></div>
@@ -383,7 +496,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- SCENARIOS -->
 <div class="page" id="page-scenarios">
   <div class="card">
     <div class="card-title">Scenario Analysis — Tonight &amp; Beyond <span class="card-upd" id="sc-upd"></span></div>
@@ -407,7 +519,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- NUCLEAR -->
 <div class="page" id="page-nuclear">
   <div class="card">
     <div class="card-title">Iran Nuclear Programme — Status &amp; Assessment <span class="card-upd" id="nuc-upd"></span></div>
@@ -436,7 +547,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- GROUND OPS -->
 <div class="page" id="page-ground">
   <div class="card">
     <div class="card-title">Ground Forces — Deployed &amp; Positioned <span class="card-upd" id="gnd-upd"></span></div>
@@ -463,7 +573,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- GCC DAMAGE -->
 <div class="page" id="page-damage">
   <div class="card">
     <div class="card-title">War Costs — US &amp; GCC <span class="card-upd" id="dmg-upd"></span></div>
@@ -487,7 +596,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- EGYPT -->
 <div class="page" id="page-egypt">
   <div class="card">
     <div class="card-title">Egypt Status <span class="card-upd" id="eg-upd"></span></div>
@@ -528,7 +636,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- HORMUZ -->
 <div class="page" id="page-hormuz">
   <div class="card">
     <div class="card-title">Strait of Hormuz <span class="card-upd" id="hz-upd"></span></div>
@@ -544,7 +651,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- TRAVEL -->
 <div class="page" id="page-travel">
   <div class="card">
     <div class="card-title">Travel Advisories <span class="card-upd" id="tr-upd"></span></div>
@@ -553,7 +659,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- PREDICTIONS -->
 <div class="page" id="page-predictions">
   <div class="card">
     <div class="card-title">Predictions Track Record</div>
@@ -565,8 +670,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-
-<!-- EXCO -->
 <div class="page" id="page-exco">
   <div class="card">
     <div class="card-title">Executive Summary Report <span class="card-upd" id="exco-upd"></span></div>
@@ -579,7 +682,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
   </div>
 </div>
 
-<!-- SOURCES -->
 <div class="page" id="page-sources">
   <div class="card">
     <div class="card-title">Data Points — Current Values <span class="card-upd" id="src-upd"></span></div>
@@ -601,22 +703,1076 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 
 </div><!-- /content -->
 
-<!-- Footer -->
 <div class="ftr">
   <span id="ftr-left">Gulf &amp; Egypt Risk Monitor</span>
   <span id="ftr-right">Data: gulf-risk-data.js</span>
 </div>
 </div><!-- /shell -->
 
-<!-- ── Data file injected below ── -->
-<!-- ── Inline data artifact ──
-PLACEHOLDER
-── End data artifact ── -->
+<script>
+// === BEGIN STABLE ===
 
+window.GULF_RISK_DATA = window.GULF_RISK_DATA || {};
 
+Object.assign(window.GULF_RISK_DATA, {
+
+  _context: {
+    purpose: "Daily intelligence dashboard — Gulf & Egypt risk during Operation Epic Fury (US-Israel war on Iran, began 28 Feb 2026). Updated daily. EXCO-grade — distinguishes mainstream-headline framing from on-the-ground signals.",
+    daily_update_instructions: "Required daily searches: Brent, USD/EGP, Hormuz transits, ceasefire status, Egypt energy, Suez revenue, US gas, Sisi stability. Edit only gulf-risk-data-daily-YYYY-MM-DD.js. Do not edit this stable file unless reference data changed.",
+    key_figures_to_verify_daily: [
+      "Brent crude futures price",
+      "USD/EGP rate (official AND black-market)",
+      "Hormuz daily ship transits",
+      "Iran war ceasefire/hostilities status",
+      "Egypt energy import bill + rationing posture",
+      "Egypt urban CPI",
+      "Egypt energy rationing status (9pm closures, WFH mandate, fuel allocations)",
+      "Suez Canal weekly revenue",
+      "US gas national average",
+      "Sisi/Egypt political stability signals",
+      "GCC / Israeli / EU trust signals (monthly cadence)"
+    ],
+    fields_that_change_daily: ["metrics.brent_usd", "metrics.egp_usd", "hormuz.ships_24h", "brief.headline", "brief.key_developments", "_meta.day", "_meta.updated"],
+    fields_that_change_weekly: ["chart_series.brent", "chart_series.egp", "watchlist.items", "scenarios.tonight", "egypt.foreign_reserves_bn", "travel.advisories"],
+    fields_that_are_stable: ["nuclear", "ground_ops.target_1", "ground_ops.target_2", "ground_ops.target_3", "egypt.gcc_bailout_history", "predictions.resolved_incorrect", "trust_index", "government_commitments", "energy_crisis_alert", "cairo_travel_briefing", "exco_briefing"]
+  },
+
+  force_table: [
+    {unit:"31st MEU (USS Tripoli)",   status:"IN THEATER",   dot:"green",  mission:"Amphibious assault — Kharg/Qeshm initial entry phase"},
+    {unit:"82nd Airborne DIV HQ",     status:"FWD DEPLOYED", dot:"red",    mission:"Maj. Gen. Tegtmeier — joint forcible-entry C2. This is operational, not deterrence."},
+    {unit:"82nd ABN 1st BCT (IRF)",   status:"DEPLOYED",     dot:"amber",  mission:"~2,000 paratroopers — airfield seizure, airbridge for extraction ops"},
+    {unit:"11th MEU (USS Boxer)",     status:"INBOUND",      dot:"amber",  mission:"2,500 Marines — arriving end April, additional amphibious capacity"},
+    {unit:"USS George H.W. Bush CSG", status:"IN THEATER",   dot:"green",  mission:"~6,000 personnel, carrier air wing — entered CENTCOM AOR Apr 23 (third US carrier)"},
+    {unit:"USS Abraham Lincoln CSG",  status:"IN THEATER",   dot:"green",  mission:"F-35Cs, F-18s — strike ready, continuous combat ops"},
+    {unit:"8 Aegis Destroyers",       status:"IN THEATER",   dot:"green",  mission:"Arabian Sea — Tomahawk/SM-6 magazines, minesweeping"}
+  ],
+
+  nuclear: {
+    confirmed_stockpile_kg: 440.9,
+    stockpile_enrichment_pct: 60,
+    confirmed_location_kg: 200,
+    confirmed_location: "Isfahan — underground tunnel complex, too deep for MOP bunker busters. US confirmed it did not attempt destruction. Satellite imagery (Mar 18–Apr 8 2026) shows new barriers and checkpoints at all three entrances; southern entrance received 18 barrels via truck delivery (assessed as enriched uranium stockpile consolidation or relocation). IAEA Grossi (29 Apr 2026 AP interview): ~200kg HEU likely remains here since June 2025; IAEA seals never broken there but inspectors have not verified. Airbus satellite imagery confirms 18 blue containers entered the tunnel on 9 June 2025.",
+    remaining_kg_location: "Unknown — possibly destroyed at Natanz/Fordow, possibly at undeclared covert sites",
+    weapons_equivalent: "9-10 weapons if enriched to 90%",
+    isfahan_weapons_equivalent: "~5 weapons (Grossi to AP 29 Apr: stockpile potentially enables as many as 10 bombs if weaponised)",
+    breakout_time_to_weapons_grade: "Under 1 week (DIA confirmed)",
+    breakout_time_to_device: "3-8 months (US intelligence)",
+    centrifuge_blind_spot: "IAEA has had no access to centrifuge manufacturing since February 2021 — 4+ years. Cannot verify what has been built covertly.",
+    covert_programme: "Credible — almost certain. Three undeclared weaponisation sites confirmed (Lavisan-Shian, Turquzabad, Varamin). Ultra-secret enrichment programme at unknown location reported. Oct 2025: Khamenei authorised miniaturised warhead development for ballistic missiles before his death.",
+    russian_assistance: "Confirmed — Iranian SPND scientists (nuclear weapons design body) made covert visit to Russian military-linked research institutes November 2024. Consecutively numbered diplomatic passports. Financial Times verified via corporate filings, sanctions records, travel data. Reinforced April 2026 Putin-Araghchi meeting — Putin pledged Russia will do 'everything that serves your interests'.",
+    china_assistance: "Historical — A.Q. Khan network via Pakistan/China in 1980s-90s. China assisted Saghand uranium mine. Russia/China declared JCPOA terminated Oct 2025, UN sanctions void.",
+    enrichment_status: "DNI Gabbard testified 18 Mar: Iran has not resumed enriching uranium at declared sites. Natanz entrance buildings inaccessible. Fordow severely damaged. Isfahan hit. BUT: covert sites unknown.",
+    russia_offer: "Russia offered to hold Iran's enriched uranium — confirmed as part of negotiations. Iran's Foreign Minister Araghchi offered to down-blend or transfer material to a third country on 15 March CBS interview. US rejected partial measures, demands full dismantlement.",
+    us_demand: "Trump 8 Apr: 'There will be no enrichment of uranium and the United States will, working with Iran, dig up and remove all of the deeply buried Nuclear Dust.' Zero enrichment. Full dismantlement. Wed 29 Apr Axios: 'I don’t want them to have a nuclear weapon... blockade is somewhat more effective than the bombing'.",
+    iran_position: "5-year enrichment pause (rejected by US which demanded 20-year pause). Sovereignty over Strait. War reparations. Security guarantees. Recognition as regional power. April 2026 Pakistan-mediated proposal: postpone nuclear talks to later stage — rejected by Trump 29 Apr.",
+    key_gap: "US demands 20-year enrichment pause plus full dismantlement. Iran offered 5 years. This gap has not narrowed. Nuclear material question is the hardest issue — it is why ground operations targeting uranium are under active planning.",
+    iaea_access: "ALL IAEA access in Iran terminated 28 Feb 2026 (war start). Cameras disabled, seals removed across declared facilities. Inspectors only at non-attacked sites: Bushehr, Tehran Research Reactor, labs. No access to any of Iran's four declared enrichment facilities since June 2025 strikes. New declared underground enrichment site at Isfahan (declared by Iran to IAEA in June 2025) has NEVER been inspected — as of Mar 2026 IAEA does not know whether centrifuges have been installed (Grossi: 'None' on evidence of an enrichment facility at the site). NEW (29 Apr 2026, AP interview): Grossi told the AP that ~200kg of Iran's 60% HEU 'likely remains' at Isfahan since June 2025; the IAEA seals were never broken, but inspectors have not verified. Airbus satellite imagery shows 18 blue containers (assessed as containing the HEU stockpile) entering an Isfahan tunnel on 9 June 2025, just before the start of the June 2025 12-day war. Grossi (15 Apr): resumption of inspections is prerequisite for any negotiated settlement.",
+    proliferation_verdict: "Iran does not have a deployable nuclear weapon. It has: the material (~200kg of 60% HEU likely still at Isfahan since June 2025 per Grossi to AP 29 Apr — enough for as many as 10 bombs if weaponised; total declared stockpile 440.9kg), the knowledge (covert weaponisation research confirmed at 3 sites, SPND active), the Russian assistance (Nov 2024 confirmed; April 2026 Putin-Araghchi reinforced), the centrifuge capacity (unknown — blind since 2021), and the political authorisation (Khamenei signed off miniaturised warhead development Oct 2025, before his death). The assembly question remains genuinely uncertain. Iran's Mon 27 Apr 2026 formal proposal would POSTPONE nuclear talks to 'a later stage' — Trump formally rejected that decoupling 29 Apr in Axios phone interview ('blockade is somewhat more effective than the bombing'). Rubio softened slightly but anchored on a deal that 'definitively prevents them from sprinting to a nuclear weapon at any point'. Bulletin of Atomic Scientists: this war has fundamentally undermined the NPT.",
+    updated: "2026-04-29T20:30:00.000Z"
+  },
+
+  capital_flight: {
+    note: "No authoritative real-time aggregate figure exists. Pre-war IIF baseline: $271B net resident outflows in 2025. War-period estimates are analytical extrapolations not sourced aggregates.",
+    pre_war_iif_bn: 271,
+    estimated_war_period_additional_bn: "Unknown — corporate relocations documented case by case, private wealth flows not aggregated in real time",
+    corporate_relocations_documented: [
+      "Apple, Microsoft, Google, Meta, Oracle, IBM — IRGC designated as military targets April 2026, many shut down regional operations",
+      "Amazon — suspended Gulf deliveries, closed Abu Dhabi fulfilment centre after AWS data centres struck",
+      "Stargate UAE ($30B AI campus) — IRGC threatened 'complete and utter annihilation', project paused",
+      "Major tech companies relocated staff out of region"
+    ],
+    private_wealth: "London, Singapore, Zurich private bankers reporting elevated Gulf client activity. Not aggregated.",
+    sovereign_wealth: "Gulf SWFs pausing regional re-entry — ceasefire expiry uncertainty. Investment committees under scrutiny.",
+    difc_status: "Operational",
+    qfc_status: "Operational",
+    updated: "2026-04-27T10:03:16.000Z"
+  },
+
+  trust_index: {
+    priority: "HIGH",
+    display_order: "ELEVATED",
+    label_caveat: "DIRECTION TRACKER, not a calibrated index. Numbers reflect analyst judgment scored against five named signals per axis. Treat the trajectory as the signal; do not over-interpret the absolute level.",
+    description: "Monthly direction tracker for foreign-counterparty trust in Egypt, since Q1 2026. Five signals per axis (commitments honoured, capital flows, deposits, military cooperation, diplomatic alignment) each scored 0-20; sum = 0-100 figure. Direction matters more than absolute level.",
+    methodology: "Five signals per axis, each scored 0-20 by analyst judgment, summed for a 0-100 figure. Signals defined under signals_by_party. Subjective — score against narrative facts, not market data. Flag for replacement with quantitative composite (e.g. CDS, deposit balances, FDI flows) when those are available consistently across the three axes.",
+    review_cadence: "Monthly — first business day of each month, with mid-month update if a load-bearing signal flips (e.g. Kuwaiti deposit pull, IMF program suspension, fresh Gulf commitment).",
+    monthly_series: {
+      labels: ["Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026"],
+      gcc_trust:      [62, 58, 48, 38],
+      israeli_trust:  [55, 50, 42, 35],
+      eu_trust:       [60, 55, 48, 42],
+      colours: { gcc: "#10b981", israeli: "#3b82f6", eu: "#f59e0b" },
+      y_min: 0,  y_max: 100,
+      crisis_threshold: 30,
+      notes: [
+        "Jan 2026: pre-war stable baseline. GCC anchored by Ras El-Hekma 2024 deal. Israel: gas-import partnership operational. EU: IMF-program halo + Article IV positive.",
+        "Feb 2026: war begins 28 Feb. All three drop on Suez disruption + Egyptian neutrality posture.",
+        "Mar 2026: GCC -10 — Egypt declined military support for GCC in Iran war; Gulf bilateral tone shifts. Israeli trust drops as Egypt distances. EU largely unaffected initially.",
+        "Apr 2026: GCC -10 — open Kuwaiti-media calls to withdraw $2B Kuwaiti CBE deposit (Arab Center DC + Atlantic Council 'they have been exposed'). Israeli trust drops on Bekaa Valley spillover risk. EU drops on visible energy/blackout posture and IMF June review pending in non-routine context."
+      ]
+    },
+    signals_by_party: {
+      gcc: [
+        "Calls in Kuwaiti media to withdraw $2B Kuwaiti CBE deposit (Apr 2026)",
+        "Gulf SWFs explicitly pivoting to 'war-proof' investments per AGBI / Atlantic Council, away from Egypt-style infrastructure plays",
+        "No public confirmation that scheduled 2026 Ras El-Hekma tranches landed",
+        "Skeptics in Gulf openly questioning Egypt-GCC alignment given Cairo's no-mil-support posture (Arab Center DC)",
+        "Egypt-Gulf relationship described as 'under pressure' (Arab Center DC Apr 2026)"
+      ],
+      israel: [
+        "Egypt avoided alignment with US-Israeli war narrative",
+        "Gas-import dependency complicates posture — Israel exports continue but on heightened-risk corridor",
+        "Bekaa Valley strikes (28 Apr) and threats to 'burn' all of Lebanon (29 Apr) raise Sinai/border-spillover risk",
+        "No public Egyptian statement of support for Israeli campaign"
+      ],
+      eu: [
+        "IMF April 2026 WEO trimmed Egypt 2026/27 growth -1.1pp cumulatively",
+        "IMF June 2026 review pending — non-routine context, third successive review under stress",
+        "EU member-state aid posture unchanged but no FRESH commitments in war period",
+        "Standard Chartered Jan 5 'robust FX inflows' forecast (PRE-WAR) replaced by March 11 'easing delayed as inflation rebounds' — same bank, sharply revised view"
+      ]
+    },
+    next_review_date: "End May 2026 (Q1 + April closeout)",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  government_commitments: {
+    priority: "HIGH",
+    display_order: "ELEVATED",
+    description: "Government commitments — promised vs historical track record vs actual delivery. Helps distinguish PR-grade promises from likely outcomes. Each line includes a BREAK PROBABILITY assessment.",
+    commitments: [
+      {
+        id: "energy_no_blackouts_2026",
+        headline: "Government promise: NO rolling blackouts summer 2026",
+        promised: "Cabinet (Apr 2026) explicitly stated no rolling blackouts planned for summer 2026, despite war-stress on LNG/Israeli-gas supply.",
+        historical: "2024: same promise made April-May 2024. Rolling 2-3 hour blackouts arrived June 2024 and persisted through August. Government messaging pivoted from 'no blackouts' to 'temporary load-shedding'.",
+        actual: "Government burning fuel oil to delay blackouts (MEES Apr 24). 9pm shop closures + mandated 1-day-WFH already in force. Fuel-oil substitution buys ~6-10 weeks before stockpile pressure.",
+        break_probability: "HIGH (60-75%) for some level of regional blackouts by mid-July 2026. Cabinet message will likely pivot from denial to 'temporary' load-shedding."
+      },
+      {
+        id: "imf_eff_compliance",
+        headline: "IMF EFF reform compliance",
+        promised: "Egypt committed under EFF to: subsidy reform, FX flexibility, privatization, debt reduction, fiscal consolidation.",
+        historical: "5th and 6th reviews COMBINED in Feb 2026 because Egypt was running behind schedule. Each prior review delayed except the 1st.",
+        actual: "Apr 23 budget draft shows energy subsidies down (compliant) BUT export subsidies UP (rolling-back of subsidy logic for elite capture). Privatization frozen 'while war ongoing' (Mada Masr Apr 1). FX 'flexibility' is cosmetic given 19% policy rate + intervention.",
+        break_probability: "MEDIUM. Program continues nominally but real reform compliance deteriorating. June review likely produces softer waivers. Risk of program suspension low near-term but rising into H2 2026."
+      },
+      {
+        id: "egp_managed_floating",
+        headline: "EGP managed-floating regime",
+        promised: "Mar 2024 'liberalised' EGP under IMF terms. Government commits to free-floating with limited intervention.",
+        historical: "Egypt has reverted to managed/pegged regime each time stress emerged: 2003, 2011, 2016, 2022. Pattern: liberalize → manage → devalue → liberalize.",
+        actual: "Black market premium 5-6% on dealer quotes (sarfegp), structural 68% per specialist outlets. CBE intervention apparent. Atlantic Council April 2026: 'both markets moving independently' — explicit acknowledgement of cosmetic vs real divergence. CBE NFA -$4.2B in Q1 2026 underneath flat headline reserves.",
+        break_probability: "HIGH (70-85%) of forced devaluation event before Q1 2027 if war unresolved. EGP at 60+ official rate is the realistic next step."
+      },
+      {
+        id: "baladi_loaf_subsidy",
+        headline: "Baladi (subsidised) loaf bread price",
+        promised: "Government committed to maintain LE0.20 baladi loaf (after raising from LE0.05 in 2024 — first hike in 30 years).",
+        historical: "Bread riots 1977 (Sadat), 2008, 2017. Baladi price is the historical red line for street unrest.",
+        actual: "Held at LE0.20 currently. IMF program does not require further hike near-term. Government will absorb cost rather than risk this red line.",
+        break_probability: "LOW near-term (10-15%). This is the LAST line the regime will cross. If it does break, expect immediate civil unrest — LEADING POLITICAL INDICATOR."
+      },
+      {
+        id: "fuel_subsidy_2026",
+        headline: "Fuel subsidy reduction schedule",
+        promised: "IMF-mandated quarterly fuel-price adjustments to bring petrol/diesel to cost-recovery by 2027.",
+        historical: "2014, 2016, 2019, 2024 each saw fuel hikes. Government has historically delayed politically inconvenient hikes — but generally delivers.",
+        actual: "Fuel prices up 15-22% via Apr 2026 emergency adjustment (Mada Masr). Petrol allocations to official vehicles cut ~33%. Higher hike likely in May or June.",
+        break_probability: "LOW. Scheduled hikes will continue. Political timing may shift. Pump-feed inflation builds."
+      }
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  energy_crisis_alert: {
+    priority: "CRITICAL",
+    alert_color: "red",
+    display_order: "TOP",
+    headline: "ALERT — ENERGY CRISIS: Government burning fuel oil to defer blackouts; mandated 1-day-WFH; 9pm shop closures; June peak-demand window is the danger zone",
+    summary: "Egypt is in active energy rationing as of April 2026. Government publicly denies imminent rolling blackouts but is burning fuel oil to delay them — same playbook as 2024 when blackouts arrived in June anyway. June-August 2026 is the danger window: peak demand + war-disrupted LNG + heightened-risk Israeli gas corridor. This is a STRUCTURAL story that has not been properly framed in mainstream coverage.",
+    current_measures: [
+      "9pm shop/restaurant/cafe closures across Cairo and most cities (since 28 Mar 2026)",
+      "MANDATED 1-day-per-week work-from-home for non-essential public-sector workers — first WFH mandate of 2026",
+      "Petrol prices raised 15-22% (Apr 2026 emergency adjustment, Mada Masr)",
+      "Official-vehicle fuel allocations cut ~33%",
+      "Major state energy projects delayed",
+      "Street lighting dimmed across Cairo + Alexandria",
+      "Government burning fuel oil to avoid rolling blackouts (MEES 24 Apr)"
+    ],
+    blackout_risk: {
+      current_status: "Government denies, but mitigation measures suggest near-miss",
+      summer_window: "June-August 2026 peak demand exceeds derated supply",
+      probability_some_blackouts_july: "60-75% per analyst consensus + 2024 precedent",
+      probability_some_blackouts_june: "30-45% — depends on how fast fuel-oil stockpile is consumed",
+      impact_for_business_traveller: "Hotel rooms may lose A/C 2-4 hours intermittently. Quality hotels with full backup-generator coverage will hold lighting/lifts/Wi-Fi but A/C may cycle. Plan for 4+ hours daily mains-power uncertainty by mid-June."
+    },
+    fuel_supply: {
+      lng_disrupted: "Hormuz blockade halts Qatari LNG to Egypt entirely",
+      israeli_gas: "Leviathan field gas continuing but on heightened-risk corridor",
+      fuel_oil_substitution: "Government scaling fuel-oil burn for power gen — high-emissions, expensive, finite stockpile",
+      sustainability_window: "Fuel-oil substitution buys ~6-10 weeks before stockpile pressure becomes acute"
+    },
+    consumer_visible_signs: [
+      "Shop closures by 9pm",
+      "Dimmed street lights at night",
+      "Fuel price hikes (15-22% confirmed)",
+      "Possible petrol queues if shortage emerges",
+      "Slower public-sector services on WFH days",
+      "Generator noise common in business districts"
+    ],
+    precedent_2024: "April-May 2024: Cabinet promised 'no rolling blackouts' for summer. June-August 2024: rolling 2-3 hour daily blackouts arrived in Cairo, Alexandria, Delta governorates. Messaging pivoted from denial to 'temporary load-shedding'. Same playbook expected 2026 with materially worse external constraints (Hormuz blockade adds to 2024's purely-fiscal stress).",
+    if_blackouts_arrive_what_changes: [
+      "Tourism corridor (5-star hotels) generally holds — generators rated for peak load",
+      "Mid-tier hotels variable — check generator capacity in advance",
+      "Business meetings in commercial buildings disrupted — bring laptop battery + backup hotspot",
+      "Restaurants/services in non-tourist areas disrupted",
+      "Fuel queues raise low-grade civil tension — risk of flashpoint at petrol stations"
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  cairo_travel_briefing: {
+    priority: "CRITICAL",
+    display_order: "TOP",
+    headline: "CAIRO BUSINESS TRAVEL — JUNE 2026 — INSURANCE IS MANDATORY, NOT OPTIONAL",
+    destination: "Cairo (mainland Egypt — US Level 2 / FCDO 'sensible precautions')",
+    trip_dates: "June 2026 (specific dates pending)",
+    hotel_brand: "Marriott (preferred)",
+
+    insurance_alert: {
+      priority: "ABSOLUTE TOP PRIORITY — DO NOT TRAVEL WITHOUT THIS",
+      bottom_line: "Standard travel insurance does NOT cover war-zone evacuation, political-incident extraction, capital-loss, or kidnap. Egypt's war-adjacent context + active capital controls + escalation risk all sit OUTSIDE standard travel-insurance scope. Specialty cover is mandatory.",
+      standard_travel_insurance_sufficient: false,
+      required_cover_types: [
+        "WAR RISK / POLITICAL EVACUATION COVER — explicit named-perils for war, civil unrest, military intervention. Standard policies EXCLUDE these.",
+        "KIDNAP & RANSOM (K&R) COVER — strongly recommended for any business traveller in a high-tension region. Provides crisis-response team + ransom funds + family liaison.",
+        "MEDICAL EVACUATION (MEDEVAC) — air ambulance to UK or third country. Confirm Egypt is INSIDE the evacuation perimeter.",
+        "TRIP DISRUPTION / CURTAILMENT — for early departure if conditions deteriorate post-arrival.",
+        "EQUIPMENT + CASH COVER — laptop, phone, cash exposure given currency risk."
+      ],
+      provider_categories_to_request: [
+        "Corporate-grade K&R + crisis response provider (your employer's preferred broker should know one)",
+        "Medevac + medical-assistance specialist (with Egypt explicitly inside the evacuation perimeter)",
+        "Specialty insurer with war-risk endorsement (not a bolt-on to standard travel cover — a specialty product)",
+        "Specialty broker for political-risk + K&R packaging"
+      ],
+      provider_naming_note: "Specific provider names omitted intentionally — your employer's procurement / preferred-broker relationship should drive selection. Ask them by category, above.",
+      employer_responsibility: "If this is a work trip, employer has duty-of-care obligation to insure you appropriately. ASK FOR PROOF OF COVER IN WRITING — policy number, perils explicitly covered, evacuation perimeter, 24/7 crisis line. If the answer is 'we have travel insurance', that is INSUFFICIENT for current Egypt context.",
+      pre_departure_checklist: [
+        "Confirm war/political evacuation cover IN POLICY WORDING (not just summary or sales sheet)",
+        "Confirm Egypt is INSIDE the country list at time of travel — some policies dynamically exclude countries when FCDO escalates",
+        "Carry the 24/7 crisis line on phone speed-dial + on paper backup",
+        "Register with FCDO ('Get in touch with the British Embassy' service) before travel",
+        "Share full itinerary + Marriott reservation with one offshore contact + employer security",
+        "Photocopy passport + insurance + spare cash in bag separate from primary"
+      ]
+    },
+
+    cairo_marriott_options: [
+      {
+        property: "Cairo Marriott Hotel & Omar Khayyam Casino",
+        area: "Zamalek (island in central Cairo)",
+        pros: "Historic, central, UK Embassy walking distance (Garden City), Marriott corporate-grade generator coverage, established crisis protocols, well-known to expat + diplomatic community",
+        cons: "Older infrastructure than newer Marriotts, dense central-Cairo location means longer airport route under disruption",
+        airport_distance: "~16-20 km, 30-50 min in traffic",
+        recommendation: "PRIMARY CHOICE for embassy proximity + crisis-protocol depth",
+        verification_status: "Generator capacity, exact embassy distance, and corporate-protocol depth not re-verified this week. Confirm directly with property + UK Mission Cairo before booking."
+      },
+      {
+        property: "JW Marriott Hotel Cairo",
+        area: "Mirage City, New Cairo (east of city)",
+        pros: "Newer infrastructure, better generator + water-tank capacity, golf-course campus = lower density = lower civil-unrest exposure, closer to airport",
+        cons: "Far from central Cairo / embassy district / many business meetings, requires 30-45 min commute each way, isolated if civil incident",
+        airport_distance: "~12-15 km",
+        recommendation: "BEST IF MEETINGS ARE NEW CAIRO / EAST OF CITY"
+      },
+      {
+        property: "Marriott Mena House",
+        area: "Giza (near Pyramids)",
+        pros: "Iconic, garden campus, lower density, tourist-corridor hardened",
+        cons: "Far from business district, longer airport route, tourism-profile location = different risk vs business",
+        airport_distance: "~30 km, 60+ min in traffic",
+        recommendation: "AVOID for business — leisure profile only"
+      },
+      {
+        property: "Le Méridien Cairo Airport",
+        area: "Cairo airport campus",
+        pros: "Airport-adjacent — fastest exit option in disruption. Lower urban risk.",
+        cons: "Far from central Cairo. Unsuitable for downtown business meetings.",
+        airport_distance: "Walking distance",
+        recommendation: "BACK-UP / LAST-NIGHT-BEFORE-FLIGHT option only"
+      }
+    ],
+
+    cash_and_fx_guidance: [
+      "BRING USD or EUR cash. DO NOT rely on ATMs for foreign currency — banks may dispense EGP only.",
+      "Mixed denominations: USD 100s for hotel, USD 20s/50s for taxis/restaurants",
+      "Estimated daily cash budget: USD 100-200 reasonable, more if shopping/entertainment",
+      "AVOID street currency exchanges — recently uplifted scrutiny + risk",
+      "Use Marriott exchange or licensed banks for any conversion (worse rate but safer)",
+      "Credit cards generally accepted in Marriott + major restaurants — but expect occasional terminal failures",
+      "DO NOT bring more cash than you can lose / declare on customs (Egypt customs limit USD 10,000)"
+    ],
+
+    abort_triggers_pre_departure: {
+      tier_1_immediate_abort: [
+        "FCDO advisory escalates to 'all but essential travel' for Cairo (definitive, externally validated)",
+        "US ground-op H-hour appears imminent — intelligence buildup signals + carrier movement (definitive)",
+        "Cairo airport disruption confirmed (closures, security incidents)"
+      ],
+      tier_2_high_concern_review_immediately: [
+        "Lebanon ceasefire (~14 May) collapses with full Israeli ground op (high probability of regional escalation)",
+        "Kuwait or any Gulf state publicly withdraws CBE deposit (FX-cascade risk)",
+        "Egypt official EGP rate breaks 55 panic threshold",
+        "First mine-laying kinetic incident under shoot-to-destroy ROE (escalation indicator)"
+      ],
+      tier_3_yellow_flag_monitor: [
+        "Beijing summit (May 14-15) collapses with no diplomatic offramp",
+        "Baladi loaf subsidy formally cut (street-unrest leading indicator)",
+        "Rolling blackouts officially announced (infrastructure stress)",
+        "USD/EGP structural premium widens further (FX-cascade leading indicator)"
+      ],
+      tier_explanation: "Tier 1 = abort decision is automatic. Tier 2 = call employer security + insurer same day; default is abort unless strong reason to proceed. Tier 3 = monitor + reassess at the regular decision gate; not by itself enough to abort."
+    },
+    abort_decision_window: "Make go/no-go decision 7-10 days pre-departure. Beijing summit + Lebanon truce expiry resolve mid-May; that's the natural decision gate.",
+
+    on_the_ground_rules: [
+      "Stay inside Marriott unless meeting business contacts — minimise random outdoor exposure",
+      "Use Uber/Careem from hotel only — DO NOT hail street taxis",
+      "Avoid Tahrir Square, government district, embassies on Fri/Sat (traditional protest days even when banned)",
+      "DO NOT photograph government buildings, military, police, infrastructure, ports, airports",
+      "DO NOT engage politics — Egypt + war + Sisi — in public, with drivers, with anyone you don't know",
+      "Carry passport COPY not original (originals to safe in hotel) — but always have ID on you",
+      "Have a return-to-hotel plan from any meeting — taxi number, route memorised",
+      "Check FCDO travel advice DAILY while in country",
+      "Keep phone charged + powerbank — blackout-readiness",
+      "Have offline maps downloaded (Google Maps Egypt offline)"
+    ],
+
+    contingency_evac: [
+      "Have flight back booked as flexible/refundable",
+      "Know location of UK Embassy Cairo: 7 Ahmed Ragheb St, Garden City — UK Mission +20 (2) 2791 6000",
+      "Have your insurer's 24/7 crisis line on phone speed-dial",
+      "Have an offshore contact who knows your itinerary daily — check-in 24h cadence",
+      "Cash USD reserve ($500-1000) + passport + flight document accessible without unlocking phone",
+      "If situation breaks: get to airport early, do not delay; alternative routes via Sharm El Sheikh or Hurghada if Cairo airport disrupted"
+    ],
+
+    revised_safety_assessment: "Updated 29 Apr 2026 PM after deeper research into the cover-up evidence: my earlier 'not unsafe by Level-2 standards, requires more planning than normal' framing UNDERSTATED the structural risk. The widening black-market premium (68% structural / 5-6% live), CBE NFA -$4.2B Q1, hot money $45-50B at risk, GCC trust collapse, and energy-crisis denial-mode all push the *tail risk* of a sudden FX/banking/blackout cascade up materially. The headline (Level 2, sensible precautions) is not wrong — but the conditional probability of a fast-deteriorating week during the trip is higher than normal Egypt travel implies. GO/NO-GO calls for proper insurance, a hard abort plan, and the May 14-15 Beijing summit + ~14 May Lebanon truce resolution as the natural decision gate.",
+    current_threat_level: "ELEVATED — Cairo Level 2 / sensible precautions baseline, BUT with materially-higher tail risk than normal Egypt travel due to war-adjacent context, capital-control risk, energy crisis denial-mode, and GCC-trust collapse. Go-able with proper preparation; NOT go-able without specialty insurance and an abort plan.",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  exco_briefing: {
+    priority: "CRITICAL",
+    display_order: "TOP",
+    audience: "Executive committee — supports general activities and decision-making. Distinguishes mainstream-headline framing from on-the-ground signals.",
+    headline: "EXCO BRIEF — Egypt + Gulf risk profile materially worse than mainstream framing; energy crisis structural; June Cairo travel requires specialty insurance + abort plan",
+
+    one_paragraph_summary: "Egypt is in a slow-motion cover-up. Headline metrics (reserves $52.83B end-Mar, IMF program active, EGP at 52.82 official) are press-release-grade and lag the underlying stress. Real signals: black-market premium 68% structural / 5-6% live and widening; CBE net foreign assets -$4.2B Q1; hot money $45-50B at risk; open calls in Kuwaiti media to withdraw the $2B Kuwaiti CBE deposit; energy rationing live with 9pm closures + mandated 1-day-WFH; government denying summer blackouts while burning fuel oil to defer them (the same playbook that failed in 2024). GCC trust index at 38/100 — lowest reading since Q1 series began; EU and Israeli trust both falling. Trip-level implication: Cairo June 2026 is GO with proper specialty insurance + abort triggers, NO-GO without. Beijing summit May 14-15 + Lebanon truce expiry mid-May are the natural decision gate.",
+
+    five_key_questions_for_exco: [
+      {
+        question: "Do we extend Cairo / Egypt activities into June 2026?",
+        recommendation: "CONDITIONAL GO. Maintain optionality. Re-decide 7-10 days before any travel, after the May 14-15 Beijing summit and ~14 May Lebanon truce expiry resolve. Specialty war-risk + K&R insurance MANDATORY.",
+        severity: "high"
+      },
+      {
+        question: "Do we maintain or revise EGP / Egypt-asset exposure?",
+        recommendation: "REDUCE if currently held. Forced-devaluation probability 70-85% within 12 months on current trajectory. Hedge available where possible. New exposure: do not commit before H1 2027.",
+        severity: "high"
+      },
+      {
+        question: "What is our position on Egyptian counterparty default risk?",
+        recommendation: "Treat Egyptian sovereign + corporate counterparties as elevated risk. Bond spread 745bps. Capital controls mean USD repatriation may be delayed even when counterparty solvent.",
+        severity: "medium-high"
+      },
+      {
+        question: "Do we extend supplier diversification away from war-exposed jurisdictions?",
+        recommendation: "YES. Shift critical business-continuity provisioning to non-Gulf alternatives: Cyprus, Malta, Greece, India. Assume current Gulf supply chains running at 60-70% normal capacity.",
+        severity: "high"
+      },
+      {
+        question: "How do we communicate this risk picture internally?",
+        recommendation: "Distinguish 'the picture in headlines' from 'the picture in market signals + on-the-ground reality'. Mainstream coverage is materially behind. The trust_index, government_commitments, and energy_crisis_alert fields on this dashboard are designed for that purpose — point colleagues there.",
+        severity: "medium"
+      }
+    ],
+
+    top_indicators_with_current_readings: [
+      { indicator: "Brent crude",                       current: "$118.03",                 direction: "↑↑↑",         break_level: "$130 sustained",          why: "Pump-feed inflation + Egypt fuel-subsidy stress + global cost-of-living pressure" },
+      { indicator: "USD/EGP official",                  current: "52.82",                   direction: "managed flat",break_level: "55 (panic threshold)",    why: "CBE intervention apparent; cosmetic vs market truth" },
+      { indicator: "USD/EGP black market (live)",       current: "55.45-55.98 (sarfegp)",   direction: "↑ widening",  break_level: "60+",                     why: "True stress signal; live dealer quotes" },
+      { indicator: "USD/EGP structural premium",        current: "68% (Apr 2026)",          direction: "↑ from 52% Jan",break_level: "70%+",                  why: "Specialist outlets' wider measure; the part dealer quotes don't show" },
+      { indicator: "Egypt CBE reserves (headline)",     current: "$52.83B (end-Mar)",       direction: "flat headline",break_level: "$48B",                   why: "Press-release grade; NFA underneath -$4.2B Q1" },
+      { indicator: "Hormuz daily transits",             current: "13 (Apr 28)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
+      { indicator: "GCC-Egypt trust index",             current: "38/100 (Apr)",            direction: "↓ -10 from Mar",break_level: "30 (crisis threshold)", why: "Determines whether bailout architecture survives" },
+      { indicator: "Egypt baladi loaf price",           current: "LE0.20 held",             direction: "stable",      break_level: "Any rise",                why: "Historical red line for street unrest" },
+      { indicator: "Egypt energy rationing posture",    current: "9pm closures + 1-day WFH + fuel-oil burn", direction: "↑ measures expanding", break_level: "Official rolling blackouts", why: "Structural story missing from mainstream framing" },
+      { indicator: "H-hour US ground op probability",   current: "25-30% in 14 days",       direction: "↑ from 20-25% Mon", break_level: "40%+",                why: "Defines whether war stays open-ended or escalates" }
+    ],
+
+    signals_not_yet_reflected_in_mainstream: [
+      "Reserves headline ($52.83B) is true but does not reflect CBE NFA -$4.2B Q1 underneath",
+      "Standard Chartered's 'robust FX inflows' (5 Jan 2026) was published pre-war; same bank revised to 'easing delayed as inflation rebounds' on 11 Mar — view materially shifted",
+      "IMF 5th+6th combined review (25 Feb) was three days before war start; programme has not had a fresh post-war assessment yet",
+      "Government 'no blackouts summer 2026' uses identical messaging to 2024 — when blackouts arrived in June anyway",
+      "Black market structural premium reportedly widened from 52% to 68% in 2026 (single-source — see indicator caveats); live dealer-quote premium ~5-6% (sarfegp Apr 24)",
+      "Egyptian companies divesting locally is happening below the visible reporting threshold (anecdotal; not yet aggregated)",
+      "GCC-Egypt relationship described as 'under pressure' (Arab Center DC) — most coverage still implies stable",
+      "Mandated 1-day-WFH (Apr 2026) is the first such mandate this year — reported but not framed as significant"
+    ],
+    bull_case_triggers_to_watch: [
+      "Iran accepts a partial nuclear concession that allows the blockade to lift",
+      "Beijing summit (May 14-15) produces a written framework that holds for >7 days",
+      "Lebanon truce extended past mid-June with no further IDF strikes north of Litani",
+      "Fresh GCC bailout deposit announced (any size) — would re-anchor trust_index",
+      "IMF June review approves a clean tranche disbursement with no fresh waivers required",
+      "Hormuz transits return above 30/day sustained for 7 days",
+      "Brent returns below $100 sustained for 14 days",
+      "Egypt enters a new IMF programme tranche or unlocks bridge financing"
+    ],
+    indicator_caveats: {
+      "USD/EGP structural premium 68%": "Single-source (specialist outlet, not corroborated). Verify before citing externally. The live dealer-quote 5-6% premium is the better-grounded number for now.",
+      "Hot money $45-50B at risk": "Cited from search; the figure represents foreign positions in Egyptian government debt + T-bills, not all are actively at flight risk. Treat as 'order of magnitude' not exact.",
+      "Trust index numerical scores": "Direction tracker, not calibrated. Read trajectory, not absolute levels.",
+      "GCC-Egypt 'no public confirmation 2026 Ras El-Hekma tranches landed'": "Absence-of-evidence — the absence of a public announcement is consistent with delay OR with a quiet disbursement; treat as 'unconfirmed' not 'confirmed not paid'.",
+      "Cairo Marriott property specifics": "Generator capacity, embassy distance, protocol depth — not re-verified this week; confirm directly before booking."
+    },
+
+    recommended_actions: [
+      "Update internal travel policy: Egypt requires specialty war-risk + K&R insurance + abort trigger framework",
+      "Pre-position USD/EUR cash for any team members travelling",
+      "Confirm K&R cover with broker for any traveller to Egypt or Gulf",
+      "Establish 24h check-in protocol with offshore security or coordinator",
+      "Identify Cairo-based fixer / local liaison if regular travel expected",
+      "Set May 14-15 Beijing summit + ~14 May Lebanon truce as Egypt-trip decision gate",
+      "Quarterly review of trust_index trajectory — if any axis breaks 30, escalate to full review"
+    ],
+
+    source_grade: {
+      headline: "Source-quality matters at EXCO level. This dashboard grades:",
+      high_grade: "IMF / CBE official statements (read for direction not absolute), Atlantic Council, Arab Center DC, Mada Masr (independent Egyptian), HRW, FT, Reuters, Bloomberg, Al Jazeera, MEES",
+      medium_grade: "TradingEconomics (live spot data), AAA, FCDO / US State Dept travel advisories, Hormuz Strait Monitor (operational data)",
+      live_data_dealer_quotes: "sarfegp / blackmarketlive / egcurrency — small private outlets used for live black-market dealer quotes; treat as live signal not editorial. Cross-check between two outlets before citing externally.",
+      low_grade_or_pre_war: "Standard Chartered Jan 5 2026 forecast (PRE-WAR — same bank revised view by Mar 11), themiddleeastinsider.com (small UK private outlet, self-styled authority — flagged as low-credibility)",
+      note: "Pre-war sources (before 28 Feb 2026) should not be cited as current evidence without explicit recontextualisation. Single-source data points are flagged in indicator_caveats above."
+    },
+
+    review_cadence: {
+      next_critical_review: "2026-05-06 — weekly cadence to keep EXCO content honest",
+      cadence_rule: "Critical-review pass every 7 days minimum. Triggered earlier if any tier-1 or tier-2 abort trigger fires, or if a load-bearing single-source claim is challenged.",
+      what_a_critical_review_does: [
+        "Re-verify the headline data points against current sources",
+        "Re-grade single-source claims (especially the 68% black-market premium and $45-50B hot money)",
+        "Re-check the trust_index scores against the five named signals per axis",
+        "Update bull_case_triggers_to_watch with any newly-credible upside scenarios",
+        "Sweep abort_triggers_pre_departure for fired triggers and re-tier if needed"
+      ],
+      who_does_it: "Interactive Claude session (this kind of work requires reasoning, not the mechanical refresh of the daily scheduled task)"
+    },
+
+    rendering_status: {
+      shell_renderer_verified: false,
+      note: "The priority and display_order flags on this dashboard are convention-based. The current shell renderer has not been visually verified to surface the new EXCO sections prominently. Open https://paulcoomber.github.io/middle-east-tracker/ and confirm trust_index, government_commitments, energy_crisis_alert, cairo_travel_briefing, and exco_briefing each appear with appropriate prominence. If they do not, the shell needs an update — separate work item."
+    },
+
+    critical_review_protocol: {
+      headline: "PAUL FILTER — every scheduled run must pass the dashboard through this seven-question check before publishing. Findings recorded in daily _meta.critical_review_findings.",
+      rationale: "Without this step, mechanical refreshes ship stale claims with fresh numbers stamped on top. Paul has explicitly asked for this — assume he WILL ask these questions next time he reads the dashboard, and answer them before he has to.",
+      seven_questions: [
+        {
+          id: "Q1_source",
+          question: "Show me the source — is it pre-war, single-outlet, press-release vs ground-truth?",
+          how_to_apply: "Sweep `_meta.sources` and any embedded citations. Flag any source dated before 2026-02-28 used as current evidence. Flag any single-source data claim (look at indicator_caveats — those are already tagged). If today's searches corroborated a previously-single-source claim, REMOVE the caveat and update the indicator_caveats entry.",
+          remediation: "Add `source_date_caveat` field to any flagged claim, or remove if verified."
+        },
+        {
+          id: "Q2_direction_vs_absolute",
+          question: "Is the official number cosmetic (intervention-defended) or real? What's the parallel-market read?",
+          how_to_apply: "Compare metrics.egp_usd (official) with the black-market live quote (sarfegp / blackmarketlive cross-checked). If gap >5% and widening, surface as a tier-2 indicator in the daily brief. If gap >10%, flag as tier-1.",
+          remediation: "Update brief.headline or brief.summary to lead with the parallel-market signal when divergence is material."
+        },
+        {
+          id: "Q3_counter_narrative",
+          question: "What would the bull case look like today? Do today's numbers make bear stronger or weaker?",
+          how_to_apply: "Read exco_briefing.bull_case_triggers_to_watch. For each, check today's data. If ANY bull trigger fired, surface in brief.key_developments with 'BULL TRIGGER:' prefix. If multiple bull triggers fired, downgrade overall threat_level by one notch.",
+          remediation: "Append bull-trigger findings to brief.key_developments; consider threat_level adjustment."
+        },
+        {
+          id: "Q4_stale_claims",
+          question: "Anything claimed in the stable file that today's searches contradict, downgrade, or upgrade?",
+          how_to_apply: "Sweep stable file for assertions about: trust scores, government commitments, energy crisis status, abort-trigger states. If today's data contradicts (e.g. Kuwait DID withdraw deposit; or fresh GCC tranche announced), update the relevant stable section AND log to _meta.critical_review_findings.",
+          remediation: "Edit stable file when a stale claim is identified — single-string str.replace via Python, validate, build."
+        },
+        {
+          id: "Q5_what_changed",
+          question: "Since the last archive snapshot, what indicators moved? Are any approaching break levels?",
+          how_to_apply: "Read exco-archive/index.json — most recent snapshot before today. Diff today's top indicators against it. Highlight ANY indicator within 10% of its break_level — flag as 'NEAR BREAK' in brief.key_developments.",
+          remediation: "Add 'NEAR BREAK:' prefixed entry to brief.key_developments for any indicator near its threshold."
+        },
+        {
+          id: "Q6_decision_relevance",
+          question: "Does today's update change EXCO recommendations? Cairo trip status? Trust index direction?",
+          how_to_apply: "Re-read exco_briefing.five_key_questions_for_exco. For each, ask: 'Has today's data shifted my answer?' If yes, update the recommendation field with timestamped delta. Same for cairo_travel_briefing.current_threat_level.",
+          remediation: "Update exco_briefing or cairo_travel_briefing fields explicitly with today's date when recommendation shifts."
+        },
+        {
+          id: "Q7_cover_up_alertness",
+          question: "Is the official narrative diverging FURTHER from on-the-ground signals this cycle?",
+          how_to_apply: "Compare today's official data (CBE / IMF / government statements from today's searches) with independent reporting (Mada Masr / Atlantic Council / black market). If the gap widened, log it in _meta.critical_review_findings as 'COVERUP_WIDENING'. If the gap narrowed, log as 'COVERUP_NARROWING'.",
+          remediation: "Surface coverup direction explicitly in brief.summary — Paul reads divergence as the truth signal."
+        }
+      ],
+      execution_template_for_daily_meta: {
+        critical_review_findings: {
+          ts: "(filled at run time)",
+          q1_source_grade: "(none|flagged|cleared|verified) + brief note",
+          q2_official_vs_parallel: "(within band|gap widening|gap narrowing) + numbers",
+          q3_bull_triggers_fired: "(none|N triggers fired: list)",
+          q4_stale_claims: "(none|N claims need update: list)",
+          q5_near_break_indicators: "(none|N indicators near break: list)",
+          q6_recommendation_shift: "(no change|specific shift described)",
+          q7_coverup_direction: "(narrowing|stable|widening) + evidence"
+        }
+      },
+      escalation: "If Q5 finds tier-1 or Q6 changes a Cairo-trip recommendation or Q7 shows coverup widening with new evidence, prefix brief.headline with 'ESCALATION:' so Paul sees it at the top.",
+      cadence_relationship: "This protocol runs every scheduled cycle (twice daily). It is COMPLEMENTARY to the weekly interactive critical-review pass under exco_briefing.review_cadence — the weekly pass goes deeper (methodology, source-grade quality, framing); the per-cycle protocol catches drift fast."
+    },
+
+    updated: "2026-04-29T21:28:06.000Z"
+  }
+
+});
+// === END STABLE ===
+// === BEGIN DAILY: gulf-risk-data-daily-2026-04-30.js ===
+
+window.GULF_RISK_DATA = window.GULF_RISK_DATA || {};
+
+Object.assign(window.GULF_RISK_DATA, {
+
+  _meta: {
+    updated: "2026-04-29T21:28:06.000Z",
+    day: 60,
+    analyst_note: "EXCO ALERT — see exco_briefing, energy_crisis_alert, cairo_travel_briefing, trust_index, government_commitments (NEW STABLE SECTIONS, this update). HIGH ALERT — Wed 29 Apr (evening US session), TRUMP FORMALLY REJECTS IRAN'S PROPOSAL: in an Axios phone interview Wed, Trump explicitly killed the Pakistan-mediated offer to reopen Hormuz and end the war in exchange for lifting the naval blockade — 'I don’t want to [lift the blockade], because I don’t want them to have a nuclear weapon... The blockade is somewhat more effective than the bombing. They are choking like a stuffed pig' (Axios/CNBC/CBS News/NBC News/NPR 29 Apr). RUBIO MARGINALLY SOFTENED back from Tue TV-hardening — 'It’s better than what we thought they were going to submit' (Axios) — but conditioned acceptance on a deal that 'definitively prevents them from sprinting towards a nuclear weapon at any point'. Public-rejection pathway is now CONFIRMED, not forming. BRENT $118.03 (~+6% CNBC) — extended past $118 in late session after Trump's blockade-extension remarks; eighth straight session of gains, highest since June 2022. USD/EGP 52.82 (exchangerates 29 Apr) — flat on yesterday's 52.84 despite Brent surge as CBE intervention apparent. US AAA RETAIL GASOLINE $4.23/gal (refresh of stale $4.04 datum). FED HELD RATES at 3.50-3.75% (Powell's last meeting as chair) with 8-4 dissent (most since Oct 1992). IAEA Grossi told AP that Iran's 200kg of 60% HEU 'likely remains at Isfahan' since June 2025. HORMUZ: 13 transits on Apr 28 (4 in / 9 out, all Northern Corridor) — Hormuz Strait Monitor; recent average ~7/day vs 125-140 pre-war. Israeli strikes killed 8 in southern Lebanon Wed including 3 RESCUE WORKERS (Euronews); Israel threatened to 'burn' all of Lebanon. Pakistan mediators awaiting REVISED Iranian counter-proposal in coming days; Iran's national security spokesperson publicly said Pakistan 'is not suitable as a mediator'. H-hour probability HOLDS ~25-30% in next 14 days.",
+    sources: [
+      "Axios 29 Apr 2026 — Trump rejects Iran offer to reopen Hormuz, end war",
+      "CNBC / CBS News / NBC News / NPR / Al Jazeera 29 Apr 2026 — coverage of Trump rejection",
+      "CNBC 29 Apr 2026 — Brent crude tops $118 ($118.03) after Trump blockade comments — eighth straight session of gains, highest since June 2022",
+      "TradingEconomics 29 Apr 2026 — Brent crude $116.53 (+4.74%) earlier session close",
+      "exchangerates.org 29 Apr 2026 — USD/EGP 52.82",
+      "Hormuz Strait Monitor / Bloomberg / USNI 28-29 Apr — 13 transits on Apr 28 (4 in / 9 out, Northern Corridor)",
+      "Al-Monitor / IBTimes / CNN visualisation 29 Apr — Hormuz traffic at trickle",
+      "Euronews 29 Apr 2026 — Israeli strikes kill 8 in southern Lebanon including 3 rescue workers",
+      "AP / WashPost / WSLS 29 Apr 2026 — IAEA Grossi: HEU likely still at Isfahan",
+      "Yahoo Finance / CNBC / Bloomberg 29 Apr 2026 — Fed holds rates 8-4 dissent; Powell stepping down as chair",
+      "Pravda USA 29 Apr 2026 — Pakistani mediators expect second Iranian offer",
+      "Organiser / EADaily 27-29 Apr 2026 — Iran: Pakistan not suitable as mediator",
+      "House of Commons Library 29 Apr 2026 — 5-point Iranian counter-proposal context",
+      "ABC7 LA 29 Apr 2026 — Pentagon: $25B war cost",
+      "Bloomberg / CNN / WashPost / NPR 28 Apr 2026 — UAE quits OPEC effective 1 May",
+      "Pakistan Today / The National / Haaretz 28 Apr 2026 — Bekaa Valley strikes; 16-town displacement order",
+      "Axios 27 Apr 2026 — Iran's formal proposal: reopen Hormuz, postpone nuclear",
+      "Reuters / Moscow Times 27 Apr 2026 — Putin-Araghchi meeting concluded",
+      "TheMediaLine 27 Apr 2026 — 37 ships redirected by US blockade",
+      "CNBC 27 Apr — Goldman raises Brent late-2026 forecast to $90",
+      "AAA Fuel Prices 29 Apr 2026 — US average $4.23/gal regular unleaded",
+      "Atlantic Council Apr 2026 — A crisis in Egypt could be a warning sign for the global economy",
+      "Atlantic Council Apr 2026 — They have been exposed: Iran war upends Gulf states",
+      "Mada Masr 23 Apr 2026 — Energy subsidies down, export subsidies up in new budget draft",
+      "Mada Masr 1 Apr 2026 — Govt unlikely launch EGX offerings in current economic conditions",
+      "Arab Center DC Apr 2026 — Egypt and the Gulf: A Relationship under Pressure",
+      "African Business Apr 2026 — Egypt on frontline of Iran war's economic disruption",
+      "MEES 24 Apr 2026 — Egypt Plans Fuel Burn To Avoid Power Blackouts",
+      "Al Jazeera 7 Apr 2026 — From 9pm shutdowns to remote work: Egypt cuts fuel amid power crisis",
+      "GOV.UK FCDO — Egypt travel advice (current advisories)",
+      "travel.state.gov — Iran/Iraq/Lebanon Level 4"
+    ]
+  },
+
+  chart_series: {
+    labels: ["28 Jan","4 Feb","11 Feb","18 Feb","25 Feb","28 Feb","4 Mar","11 Mar","18 Mar","25 Mar","1 Apr","4 Apr","7 Apr","8 Apr","10 Apr","13 Apr","14 Apr","15 Apr","17 Apr","18 Apr","20 Apr","21 Apr","22 Apr","23 Apr","24 Apr","25 Apr","26 Apr","27 Apr","28 Apr","29 Apr"],
+    brent:         [70,   68,   67,    67.5,  69,    72,    85,   110,  118,   112,   108,   111,  109,  91,   96,    103,   95,    99,    88,    96,    97,    95.22, 93.80, 96.50, 101.40, 105.33, 105.33, 108.11, 111.16, 118.03],
+    egp:           [47.2, 47.5, 47.8,  48.2,  48.9,  49.5,  51.2, 52.8, 53.5,  53.9,  54.1,  54.5, 54.62,54.69,54.25, 53.37, 53.09, 52.50, 51.92, 51.80, 51.75, 51.73, 51.75, 52.05, 52.62, 52.62, 52.62, 52.55, 52.84, 52.82],
+    hormuz:        [54,   53,   52,    50,    48,    48,    42,   38,   40,    35,    30,    28,   22,   25,   20,    5,     8,     12,    14,    16,    16,    3,     5,     4,     5,     3,     4,     4,     4,     6],
+    suez:          [32,   32,   31,    30,    30,    29,    26,   24,   23,    22,    21,    20,   20,   20,   19,    18,    18,    20,    19,    21,    22,    22,    23,    23,    22,    20,    19,    19,    19,    19],
+    bab_el_mandeb: [16,   15,   15,    14,    13,    12,    10,   9,    8,     7,     7,     6,    6,    5,    5,     4,     4,     4,     3,     4,     5,     5,     5,     5,     4,     4,     4,     4,     4,     4],
+    war_start_index: 5,
+    brent_min: 60,  brent_max: 125,
+    egp_min:   45,  egp_max:   57,
+    hormuz_min: 0,  hormuz_max: 60,
+    suez_min:   0,  suez_max:   40,
+    bem_min:    0,  bem_max:    20,
+    source_note: "Verified through session 29 Apr 2026 ~21:28 UTC. 29 Apr Brent $118.03 (+~6% CNBC/TradingEconomics intraday extended) — eighth straight session of gains, highest since June 2022, after Trump's blockade-extension comments. EGP 52.82 (CBE intervention apparent given gap to Brent move). Hormuz ~13 transits in 24h on Apr 28 (Hormuz Strait Monitor / Bloomberg / USNI)."
+  },
+
+  brief: {
+    headline: "Day 60 (Wed 29 Apr ~21:28 UTC): Brent extends to $118.03 (~+6% CNBC, highest since June 2022) after Trump formally rejects Iran's Hormuz/blockade proposal in Axios call — 'they're choking like a stuffed pig'; AAA gas $4.23 (refreshed); Hormuz 13 transits Apr 28 (Northern Corridor); Israeli strikes kill 8 in Lebanon incl 3 rescue workers; Fed holds rates 8-4 (Powell's last as chair); USD/EGP 52.82; H-hour probability holds 25-30%",
+    summary: "Trump's formal rejection of Iran's Pakistan-mediated proposal landed Wednesday afternoon via an Axios phone interview: 'I don’t want to [lift the blockade], because I don’t want them to have a nuclear weapon... The blockade is somewhat more effective than the bombing. They are choking like a stuffed pig'. Rubio softened verbally from his Tue TV-hardening — 'It’s better than what we thought they were going to submit' — but anchored any acceptance on a deal that 'definitively prevents them from sprinting towards a nuclear weapon at any point' (Axios/CNBC/CBS News/NBC News/NPR). Brent crude extended further into the evening session to $118.03 (~+6% CNBC), an eighth consecutive up-session and the highest print since June 2022. The Federal Reserve held the policy rate at 3.50-3.75% on an 8-4 vote (most dissent since October 1992) at Powell's final meeting as chair — Powell will step down mid-May but retain his Board of Governors seat. Markets read hawkish Fed + oil surge as risk-off: S&P -0.3%, Nasdaq -0.3%, Dow -0.8% (-364 pts). USD/EGP printed 52.82 — flat on Tuesday's 52.84 despite Brent's surge, implying CBE intervention. IAEA Grossi told AP that ~200kg of Iran's 60% HEU 'likely remains' at Isfahan since June 2025; Airbus satellite imagery shows 18 blue containers entering the underground tunnel on 9 June 2025. Hormuz traffic stayed at a trickle: 13 transits on Apr 28 (4 inbound / 9 outbound, all Northern Corridor per Hormuz Strait Monitor), recent average ~7/day vs 125-140 pre-war. EXCO READOUT: this update adds five new top-priority structural sections — exco_briefing (decision framework), energy_crisis_alert (CRITICAL), cairo_travel_briefing (Cairo June trip + INSURANCE MANDATORY), trust_index (GCC/Israeli/EU monthly), and government_commitments (real vs historical vs actual). These elevate the dashboard from informational to decision-grade. The single most important framing change: distinguish official press-release data (52.82, $52.83B reserves, IMF active) from market-and-ground signals (black-market 68% structural premium, CBE NFA -$4.2B Q1, energy rationing live, 1-day-WFH mandated, GCC trust at series-low 38/100). Pakistan mediators are awaiting a REVISED Iranian counter-proposal in coming days; Iran's national security spokesperson publicly called Pakistan 'not suitable as a mediator' — the channel itself is in question. Israeli strikes killed 8 in southern Lebanon Wed including three rescue workers; Israel publicly threatened to 'burn' all of Lebanon. H-hour probability ~25-30% in next 14 days, UPGRADED on Trump's confirmed rejection.",
+    threat_level: "HIGH",
+    key_developments: [
+      "Good Evening, from Paul! It's 29th April, 2026, last updated at 21:28.",
+      "EXCO BRIEFING ADDED (29 Apr 21:28 UTC): see exco_briefing — five key questions, top indicators, what mainstream is missing, recommended actions. Source-grade matrix included.",
+      "NEW STABLE SECTION — energy_crisis_alert (PRIORITY: CRITICAL): government burning fuel oil to defer summer blackouts; mandated 1-day-WFH; 9pm closures; June peak-demand danger window. Same denial playbook as 2024 — when blackouts arrived in June anyway.",
+      "NEW STABLE SECTION — trust_index: GCC trust 38/100 (↓ -10 vs Mar), Israeli 35/100, EU 42/100. GCC at lowest since series began Q1 2026. Crisis threshold = 30.",
+      "NEW STABLE SECTION — government_commitments: 5 promises tracked vs historical track record vs actual. EGP managed-floating commitment break probability 70-85%. No-blackouts-summer 2026 break probability 60-75%.",
+      "NEW STABLE SECTION — cairo_travel_briefing: June 2026 Cairo Marriott trip — INSURANCE MANDATORY (war risk + K&R + medevac). Cairo Marriott Zamalek primary recommendation; abort triggers + 9 on-the-ground rules + UK Embassy contact prepositioned.",
+      "COVER-UP THESIS: official EGP 52.82 + headline reserves $52.83B are press-release grade. Real signals: black-market premium 68% structural, CBE NFA -$4.2B Q1, calls in Kuwait to withdraw $2B CBE deposit, hot money $45-50B at risk. Both markets moving independently per Atlantic Council Apr 2026.",
+      "NEW (Wed 29 Apr ~21:28 UTC): BRENT EXTENDS TO $118.03 (~+6% CNBC) — eighth straight session of gains, highest since June 2022, after Trump CNN remarks doubling down on blockade until nuclear deal.",
+      "NEW (Wed 29 Apr ~21:28 UTC): AAA US AVG GASOLINE $4.23/gal (refreshed from stale $4.04). Pump-feed pressure mounting from Brent $118+.",
+      "NEW (Wed 29 Apr ~21:28 UTC): HORMUZ STRAIT MONITOR — 13 transits on Apr 28 (4 inbound / 9 outbound, all Northern Corridor).",
+      "NEW (Wed 29 Apr ~PM): TRUMP FORMALLY REJECTS IRAN'S PROPOSAL — Axios phone interview Wed: 'I don’t want to [lift the blockade], because I don’t want them to have a nuclear weapon... The blockade is somewhat more effective than the bombing. They are choking like a stuffed pig' (Axios/CNBC/CBS News/NBC News/NPR 29 Apr).",
+      "NEW (Wed 29 Apr): RUBIO MARGINALLY SOFTENED back from Tue TV-hardening — 'It’s better than what we thought they were going to submit' — but conditioned acceptance on a deal that 'definitively prevents them from sprinting towards a nuclear weapon at any point'.",
+      "NEW (Wed 29 Apr): BRENT closed at $116.53 (+4.74%) and EXTENDED to $118.03 (~+6% CNBC) in late session — eighth straight session of gains, highest since June 2022.",
+      "NEW (Wed 29 Apr): USD/EGP 52.82 — flat on Tue 52.84 despite Brent +4.74% surge. CBE intervention apparent.",
+      "NEW (Wed 29 Apr): FED HELD 3.50-3.75% with 8-4 dissent — most since October 1992. Powell will step down as chair mid-May, retain Board seat.",
+      "NEW (Wed 29 Apr): EQUITIES — S&P 500 -0.3%, Nasdaq -0.3%, Dow -0.8% (-364 pts).",
+      "NEW (Wed 29 Apr): IAEA GROSSI to AP — Iran's ~200kg of 60% HEU 'likely still at Isfahan' since June 2025; satellite imagery shows 18 blue containers entering tunnel 9 June 2025.",
+      "NEW (Wed 29 Apr): LEBANON ESCALATION — Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS (Euronews). Israel threatened to 'burn' all of Lebanon.",
+      "NEW (Wed 29 Apr): HORMUZ ~6 SHIPS in past 24h; recent average 7 vessels vs 125-140 pre-war.",
+      "NEW (Wed 29 Apr): PAKISTAN MEDIATORS expect a revised Iranian counter-proposal in coming days. Iran 5-point counter-proposal includes: end of US-Israeli attacks, security guarantees, war reparations, recognition of Iranian sovereignty over Strait of Hormuz.",
+      "NEW (Wed 29 Apr): IRAN QUESTIONS PAKISTAN'S MEDIATION LEGITIMACY — national security spokesperson: Pakistan 'is not suitable as a mediator'.",
+      "NEW (Wed 29 Apr): Trump on CNN — 'Iran better get smart soon'. Pentagon told ABC7 — total US war cost to date $25 billion.",
+      "Holding (Tue 28 Apr): UAE QUITS OPEC effective 1 May 2026. Ending ~60 years of membership.",
+      "Holding (Tue 28 Apr): Trump claimed Iran 'in a state of collapse'. Israel ordered displacement of 16 south Lebanon towns.",
+      "Holding (Tue 28 Apr PM): IDF struck Lebanon's BEKAA VALLEY for the FIRST TIME since the 16 Apr ceasefire.",
+      "Holding (Mon 27 Apr PM): IRAN'S FORMAL WRITTEN PROPOSAL published — reopen Hormuz, end war, postpone nuclear talks; conditional on US lifting blockade.",
+      "Holding (Mon 27 Apr PM): PUTIN-ARAGHCHI MEETING CONCLUDED in St. Petersburg — Russia pledged support.",
+      "Holding (Mon 27 Apr PM): Goldman Sachs raised Brent late-2026 forecast to $90 from $80 — now $28+ below Wed's $118.03 spot.",
+      "Holding (Mon 27 Apr PM): USS GEORGE H.W. BUSH CSG ARRIVED in CENTCOM (Apr 23) — third US carrier; highest carrier presence in 20+ years.",
+      "Holding (Mon 27 Apr PM): US blockade redirect tally 37 ships (TheMediaLine).",
+      "Holding (Mon 27 Apr evening): SISI-PATRUSHEV MEETING in Cairo on Suez Canal Industrial Zone + El Dabaa.",
+      "Holding: Pentagon told Congress — clearing Iran's Hormuz mines could take SIX MONTHS.",
+      "Holding: ROE 'shoot to destroy' on mine-laying boats; no kinetic encounter under this ROE yet.",
+      "Holding: MV Touska still held since 19 Apr seizure by USS Spruance.",
+      "Holding: Lebanon ceasefire EXTENDED 3 weeks (Trump 23 Apr) — new expiry ~14 May; effectively unraveling.",
+      "Holding: 82nd Airborne HQ forward deployed; total US forces 50,000+ in region.",
+      "Holding: Three ground operations under active planning — Kharg, Qeshm, uranium counterproliferation.",
+      "GOP and Democrat split on ground invasion; no Congressional authorisation.",
+      "Death toll: 4,000+ across conflict."
+    ],
+    ceasefire_status: "OPEN-ENDED AND DETERIORATING. Wed 29 Apr PM: TRUMP FORMALLY REJECTED Iran's Mon proposal in Axios phone call — 'I don’t want to lift the blockade because I don’t want them to have a nuclear weapon... they’re choking like a stuffed pig'. Rubio softened verbally back from Tue's TV-hardening — 'better than what we thought' — but conditioned on 'definitively prevents them from sprinting to a nuclear weapon'. Public-rejection pathway is CONFIRMED. Lebanon arc accelerating: Israeli strikes killed 8 in southern Lebanon Wed including 3 RESCUE WORKERS (Euronews); Israel threatened to 'burn' all of Lebanon. Hegseth: blockade continues 'as long as it takes' — 37 ships redirected. Three US carriers on station. Brent $118.03 prices the rejection.",
+    nuclear_status: "Iran does not have a deployable weapon. ~200kg 60%-enriched at Isfahan likely still there since June 2025 (Grossi to AP 29 Apr) — enough for as many as 10 bombs if weaponised. Total declared stockpile 440.9kg. Trump Wed: 'I don't want them to have a nuclear weapon... blockade is somewhat more effective than the bombing'. Rubio anchored on 'definitively prevents them from sprinting'.",
+    ground_op_status: "Not Iraq. Targeted raids: Kharg Island seizure (90% Iran oil exports), Qeshm Island (Hormuz control), counterproliferation uranium seizure. H-hour probability Wed 29 Apr PM: ~25-30% in next 14 days, UPGRADED from 22-26% Tue. Drivers: Trump's FORMAL Axios rejection CONFIRMED, Brent $116+ removing residual cost-of-living constraint, Lebanon arc compounding (3 rescue workers killed Wed), Iran questioning Pakistan's mediation legitimacy. IAEA Grossi's AP confirmation that ~200kg HEU likely still at Isfahan since June 2025 sharpens counterproliferation-raid intelligence picture.",
+    next_flashpoint: "Iran's REVISED counter-proposal via Pakistan — expected in coming days. Whether Trump's Axios rejection moves to Truth Social or formal presser. Hezbollah retaliation for compounding Lebanon strikes — collapse of the Trump-extended Lebanon truce ahead of ~14 May expiry now near-term-likely. First mine-laying incident under shoot-to-destroy ROE. MV Touska retaliation still live. Beijing summit May 14-15 now decisive. Whether IRGC hardliners act unilaterally now that the proposal track is dead.",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  metrics: {
+    _verified: "2026-04-29T21:28:06.000Z",
+    _stale_fields: ["metrics.suez_revenue_weekly_m"],
+    brent_usd: 118.03,
+    brent_spot_usd: null,
+    brent_week_range: "$99.13 Mon AM open → $108.11 Mon close → $111.16 Tue PM → $116.53 Wed close → $118.03 Wed late session (CNBC)",
+    brent_spot_note: "The Wed 29 Apr late session print of $118.03 (~+6%) is the eighth consecutive up-session and the highest Brent print since June 2022. Drivers: Trump's formal Axios rejection of Iran's Pakistan-mediated proposal + Trump CNN comments confirming blockade continues until nuclear deal; UAE OPEC exit imminent (effective 1 May); Lebanon arc compounding (3 rescue workers killed Wed); IAEA Grossi confirming ~200kg HEU likely still at Isfahan. Goldman late-2026 forecast already lifted $80→$90 — that target is now $28+ below spot. Forecasters' ground-ops floor of $115-150 is now LIVE: spot is inside the lower band.",
+    wti_usd: 95.08,
+    us_gas_average: 4.23,
+    us_gas_note: "Refreshed Wed 29 Apr (AAA). Brent surge to $118 will continue pulling through to pump over 7-10 days; second-wave goods-channel inflation lag 6-10 weeks.",
+    egp_usd: 52.82,
+    egp_week_high: 52.84,
+    egp_panic_threshold: 55,
+    egypt_bond_spread_bps: 745,
+    suez_revenue_weekly_m: null,
+    suez_pre_war_weekly_m: 190,
+    suez_ytd_2026_m: 449,
+    suez_ytd_2025_same_period_m: 368,
+    hormuz_ships_monday: 16,
+    hormuz_ships_24h: 13,
+    hormuz_ships_recent_avg: 7,
+    hormuz_vessel_incidents_total: 37,
+    sp500: 7137,
+    nasdaq: 24698,
+    dow_jones: 48754,
+    dollar_index: 98,
+    fed_funds_target_low: 3.50,
+    fed_funds_target_high: 3.75,
+    fed_dissent: "8-4 (most since Oct 1992) — Miran/Hammack/Kashkari/Logan dissented; Powell to step aside as chair mid-May, retain Board seat",
+    goldman_brent_forecast_late_2026: 90,
+    hormuz_status: "Effectively closed. Wed 29 Apr PM: 37 ships redirected by US blockade. Trump's formal Axios rejection anchors continued blockade. 13 transits Apr 28 (4 in / 9 out, Northern Corridor); recent average ~7/day vs 125-140 pre-war. Polymarket 99.7% AGAINST normal Hormuz traffic by 30 Apr. Pentagon 6-month mine-clearing timeline holds. Three US CSGs on station.",
+    iea_assessment: "Largest supply disruption in history of global oil market",
+    imf_growth_warning: "Global growth will take hit even if ceasefire holds — Hormuz uncertainty persistent drag",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  ground_ops: {
+    status: "POSTURED — Wed 29 Apr PM: H-hour probability ~25-30% in next 14 days. USS George H.W. Bush CSG ARRIVED in CENTCOM (third US carrier alongside Lincoln + Ford). Drivers: TRUMP'S FORMAL AXIOS REJECTION OF IRAN'S PROPOSAL CONFIRMED, Brent $118.03 (eighth straight up-session, highest since June 2022) eliminating cost-of-living constraint, Lebanon arc compounding (3 rescue workers killed Wed + Bekaa Valley strikes Tue + 16-town displacement order Tue), Iran questioning Pakistan's mediation legitimacy. IAEA Grossi's AP confirmation of ~200kg HEU likely still at Isfahan since June 2025 sharpens counterproliferation-raid intelligence picture. Pentagon told ABC7 total US war cost to date $25 billion.",
+    us_forces_total: "50,000+ in region and rising",
+    forces_deployed: [
+      "31st MEU — 2,500 Marines + sailors, USS Tripoli — IN THEATER",
+      "82nd Airborne Divisional HQ — Maj. Gen. Brandon Tegtmeier forward deployed",
+      "82nd Airborne 1st BCT (IRF) — ~2,000-3,000 paratroopers deployed",
+      "USS Abraham Lincoln Carrier Strike Group — F-18s, F-35Cs in theater",
+      "8 Aegis guided missile destroyers in Arabian Sea",
+      "USS George H.W. Bush Carrier Strike Group — ~6,000 personnel ARRIVED CENTCOM Apr 23",
+      "11th MEU — 2,500 Marines, USS Boxer — arriving end April",
+      "10,200 additional troops confirmed deploying"
+    ],
+    target_1: {
+      name: "Kharg Island",
+      description: "90% of Iran's crude oil exports. 7 sq miles. 20 miles off Iranian coast. 90+ military targets pre-struck 13 March — oil infrastructure deliberately spared as leverage.",
+      feasibility: "Tactically feasible. Marines initial assault, 82nd Airborne secures airfield. Strategic folly per USNI, War on the Rocks, IISS, Defense Priorities.",
+      risk: "Iran can destroy its own oil terminal to deny it. Any Iranian strike on Marines triggers impossible political position for Trump. Spikes oil to $130-150+.",
+      iran_threat: "IRGC: 'all vital infrastructure of that regional country will without restriction become the target of relentless attacks.'"
+    },
+    target_2: {
+      name: "Qeshm Island",
+      description: "Largest island in Persian Gulf. Sits in horseshoe bend of Hormuz. Physical control of strait.",
+      feasibility: "Tactically feasible with MEU amphibious assault.",
+      risk: "Holding under Iranian mainland fire. Does not resolve nuclear question."
+    },
+    target_3: {
+      name: "Uranium counterproliferation raid",
+      description: "Physical seizure of Iran's enriched uranium stockpile. Trump explicit: 'We want the nuclear dust.'",
+      feasibility: "LEAST feasible. Isfahan storage too deep for conventional destruction. Special operations teams + 82nd airfield seizure for extraction airbridge.",
+      risk: "Partial seizure — worst possible outcome. Disperses nuclear material rather than securing it.",
+      key_unknown: "Covert sites unknown to IAEA and possibly to US intelligence."
+    },
+    expert_consensus: "USNI Proceedings, War on the Rocks, IISS, Defense Priorities all conclude: tactically feasible, strategically counterproductive. Will not compel Iran to open Hormuz. Will not collapse regime.",
+    iraq_comparison: "NOT Iraq 2003. Targeted raids and seizures. But: no clear endgame. Iran's asymmetric capabilities intact enough to 'make things hurt' per Cato Institute.",
+    ceasefire_extension_impact: "Wed 29 Apr PM: TRUMP'S FORMAL REJECTION of Iran's Mon proposal CONFIRMED via Axios phone interview. Israeli strikes killed 8 in southern Lebanon Wed including 3 RESCUE WORKERS. H-hour probability ~25-30%. Brent $118.03 prices the rejection. Path-up triggers: (a) operational order, (b) Hezbollah retaliation, (c) any kinetic Iranian response, (d) any mine-laying incident, (e) Iran-questioning of Pakistan mediation removes off-ramp, (f) further Isfahan fortification imagery.",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  egypt: {
+    egp_usd: 52.82,
+    egp_panic_threshold: 55,
+    status: "Managed stability under acute pressure — Wed 29 Apr PM: pound holding 52.82 despite Brent extending to $118.03 (~+6% CNBC) — CBE intervention apparent. Trump's formal rejection of Iran proposal + UAE OPEC exit imminent + Lebanon arc compounding + AAA gas $4.23 stack maximum pressure on fuel-subsidy bill and tourism corridor.",
+    imf_status: "EFF + RSF active — $5.2B disbursed of $8B. Wed 29 Apr PM: Brent $118.03 + Trump's Axios rejection restore worst-case stress on reserve burn assumptions; Goldman late-26 forecast $90 already $28+ below spot.",
+    gas_import_cost_monthly_bn: 2.5,
+    energy_rationing: true,
+    shop_closures_time: "21:00",
+    foreign_reserves_bn: 34,
+    reserves_danger_threshold_bn: 25,
+    reserves_pre_war_bn: 43.5,
+    reserves_series: {
+      labels: ["Jan'25","Feb'25","Mar'25","Apr'25","May'25","Jun'25","Jul'25","Aug'25","Sep'25","Oct'25","Nov'25","Dec'25","Jan'26","Feb'26","Mar'26","Apr'26"],
+      data:   [44.5, 44.3, 44.0, 43.8, 43.5, 43.3, 43.8, 44.1, 43.8, 43.5, 42.4, 41.2, 39.8, 38.1, 36.0, 34.0],
+      milestones: [
+        { index: 9,  label: "War onset",  sublabel: "Oct 2025",        color: "#ef4444" },
+        { index: 13, label: "Hormuz",     sublabel: "closed Feb '26",  color: "#f97316" },
+        { index: 14, label: "Suez −50%",  sublabel: "revenue halved",  color: "#f97316" }
+      ],
+      note: "Jan 2025: post-Ras El-Hekma + IMF EFF recovery. War onset Oct 2025 begins drawdown. Hormuz closure Feb 28 accelerates. Danger zone: $25B."
+    },
+    bond_spread_bps: 745,
+    suez_revenue_weekly_m: 95,
+    suez_pre_war_m: 190,
+    suez_ytd_2026_m: 449,
+    suez_ytd_2025_same_period_m: 368,
+    sisi_stability: "Low near-term removal risk but support base narrower than at any prior point. Military backing is conditional/transactional, not loyal.",
+    sisi_voter_support: "Effectively collapsed outside security-aligned rural/older segments (~25-35% genuine support).",
+    sisi_military_support: "Conditional and transactional. EAF backs Sisi to protect SCAF's economic empire.",
+    cairo_mood: "Grim and compressing. Streets dark and quiet after 9pm closures. Urban inflation 15.2% March 2026 (accelerating from 13.4% Feb). Fatalism and dark humour.",
+    urban_inflation_pct: 15.2,
+    urban_inflation_feb_pct: 13.4,
+    urban_inflation_trend: "accelerating",
+    oil_production_bpd: 519000,
+    refining_capacity_actual_bpd: 650000,
+    energy_import_bill_jan_bn: 1.2,
+    energy_rationing_start: "2026-03-28",
+    energy_closures_time: "21:00 daily (22:00 Thu/Fri)",
+    energy_timeline: {
+      pre_war_import_bill_bn: 1.2,
+      current_import_bill_bn: 2.5,
+      import_bill_increase_pct: 108,
+      peak_stress_window: "June-August 2026",
+      blackout_risk: "Government publicly denying rolling blackouts but burning fuel oil to prevent them",
+      earliest_meaningful_improvement: "Late 2027"
+    },
+    mediator_role: "Egypt part of UN-recognised mediator group with Pakistan, Turkey, Saudi Arabia.",
+    gcc_bailout_history: [
+      "2013 post-coup: $12-23B (Kuwait, Saudi, UAE) — approved Muslim Brotherhood removal",
+      "2015: Additional $6B CBE deposits",
+      "2016 devaluation: $4B (Saudi $3B, UAE $1B) — with pressure to comply with IMF",
+      "2022 Ukraine shock: $22B pledged",
+      "2024 Ras El-Hekma: $35B UAE — asset acquisition, not grant",
+      "Total since 2011: ~$114B"
+    ],
+    gcc_bailout_outlook: "Next bailout: smaller, slower, more conditional, more commercially extractive than any previous round. GCC states themselves under financial stress for first time — own war costs $120B+, interceptors depleted.",
+    three_triggers_egp_break: [
+      "Oil above $100 sustained 90+ days (Brent $118.03 Wed 29 Apr PM — eighth straight up-session, highest since June 2022)",
+      "Gulf support drying up (UAE OPEC exit 1 May fragments coordination)",
+      "Tourism collapse (Lebanon arc compounding Wed 29 Apr — 3 rescue workers killed)"
+    ],
+    iran_destroyed_scenario: "Counterintuitively WORSE for Egypt before better: refugee cascade westward, Gulf consumed by own reconstruction 12-24 months, Turkey fills regional vacuum.",
+    key_sisi_indicators: [
+      "Gulf financial support becoming conditional or delayed — not yet",
+      "Military officers publicly distancing from government — not visible",
+      "Subsidised baladi loaf price increasing — NOT YET — this is the red line",
+      "Security service defection or internal split — not visible"
+    ],
+    developments: [
+      "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTED Iran's Pakistan-mediated proposal in Axios call — closes near-term path to Hormuz reopening / Suez normalisation.",
+      "29 Apr 2026 (Wed PM): BRENT EXTENDED TO $118.03 (~+6% CNBC) — eighth straight session, highest since June 2022. AAA US gas $4.23. Pump-feed pressure on fuel-subsidy bill at maximum.",
+      "29 Apr 2026 (Wed): USD/EGP 52.82 — flat on Tue 52.84 despite Brent surge. CBE intervention apparent.",
+      "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 rescue workers; Israel threatened to 'burn' all of Lebanon. European tourism corridor takes a fresh hit.",
+      "29 Apr 2026 (Wed): IAEA Grossi confirms ~200kg HEU likely still at Isfahan since June 2025 — adds to counterproliferation-raid case.",
+      "29 Apr 2026 (Wed): Fed held rates 3.50-3.75% (8-4 dissent). Powell stepping down as chair mid-May.",
+      "28 Apr 2026 (Tue): UAE QUITS OPEC effective 1 May — UAE-Saudi rivalry historically a constraint on coordinated Egypt bailouts.",
+      "28 Apr 2026 (Tue): IDF struck Lebanon's BEKAA VALLEY for first time since 16 Apr ceasefire.",
+      "27 Apr 2026 (Mon evening): SISI-PATRUSHEV MEETING in Cairo on Suez Canal Industrial Zone + El Dabaa nuclear plant — Egypt-Russia practical economic coordination.",
+      "27 Apr 2026 (Mon PM): Goldman Sachs raised Brent late-2026 forecast to $90/bbl from $80.",
+      "26 Apr 2026: Pentagon 6-month Hormuz mine-clearing timeline reframes Egypt energy outlook.",
+      "22 Apr 2026: SCA Q1 figures ahead of 2025 ($449M vs $368M YTD) but still below pre-war pace."
+    ],
+    honest_assessment: "Egypt has been functionally insolvent on its own fundamentals for most of the last decade. Wed 29 Apr PM: Trump's FORMAL Axios rejection of Iran's proposal CONFIRMS that the path to a near-term Hormuz reopening is closed. Brent extended to $118.03 (~+6% CNBC) — eighth straight up-session, highest since June 2022; Goldman's late-26 forecast ($80→$90) is now $28+ below spot. The pound prints 52.82 (flat on Tue 52.84) despite Brent's surge — CBE intervention apparent. Bond spread at 745bps. Sisi-Patrushev (Suez/Dabaa) is a Russia-channel hedge becoming more salient as Pakistan track is in question. Lebanon arc compounding (3 rescue workers killed Wed) is a direct hit on European tourism corridor. The cliff remains open-ended in date but the slope steepened materially this week.",
+    investment_assessment: {
+      verdict: "DO NOT COMMIT — REVISIT H1 2027 AT EARLIEST",
+      verdict_color: "red",
+      summary: "Q4 2026 target was too optimistic. Civilian baseline: 15.2% inflation accelerating. Political baseline: Sisi voter support rock bottom. Military baseline: officer corps support conditional. Realistic entry window: H1 2027.",
+      bull_case: [
+        "FX arbitrage: EGP at 52.82/USD makes local-cost technical talent exceptionally cheap in USD terms.",
+        "Talent depth: Egypt produces ~60,000 STEM graduates/year.",
+        "Strategic location: UTC+2, Arabic/English bilingual, time-zone bridges EU and Gulf.",
+        "Distressed entry: Asset valuations at multi-year lows in USD terms.",
+        "International backstop: IMF EFF programme, Gulf bailout history, Suez strategic value.",
+        "Post-war reconstruction: Egypt best positioned as regional services hub."
+      ],
+      bear_case: [
+        "Reserves trajectory: $34B today, $25B danger threshold 6-9 months away without fresh Gulf support.",
+        "Energy rationing operational today. Direct productivity hit.",
+        "Currency fragility: EGP at 52.82 with panic threshold at 55.",
+        "SCAF structural risk: military runs 25-40% of formal economy.",
+        "Bond spread 745bps: capital markets pricing significant credit risk.",
+        "Brain drain pressure: best Egyptian engineers are mobile.",
+        "War proximity: Cairo not conflict zone but downstream effects degrade operating environment.",
+        "Subsidy reform overhang: IMF requires cuts SCAF blocks structurally."
+      ],
+      structural_concerns: [
+        "SCAF parallel economy: any asset acquisition risks military-linked entanglement.",
+        "Data sovereignty: Egyptian law requires certain data classes onshore.",
+        "Talent retention vs talent cost: FX arbitrage that makes Egypt cheap also creates retention risk."
+      ],
+      timing_verdict: "H1 2027 at the earliest, subject to: (1) ceasefire confirmed, (2) reserves >$32B, (3) EGP stable 60-90 days, (4) IMF tranche disbursed.",
+      recommendation: "No capital commitment until H1 2027 triggers confirmed. Permissible now: passive talent identification, market intelligence, legal SCAF-exposure mapping."
+    },
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  gcc_war_damage: {
+    total_arab_cost_bn: 120,
+    total_us_cost_bn: 47,
+    us_daily_burn_m: 500,
+    iran_strikes_uae: { ballistic_missiles: 438, drones: 2012, cruise_missiles: 19 },
+    iran_total_ballistic_across_gcc: 1200,
+    iran_total_drones_across_gcc: 4000,
+    gcc_interceptors_expended: 2400,
+    gcc_interceptors_pre_war: 2800,
+    gcc_interceptors_remaining_pct: { bahrain: 13, uae: 25, kuwait: 25, qatar: 60 },
+    cost_exchange_ratio: "82:1 in Iran's favour — Shahed $20-50k vs PAC-3 MSE $4.1M",
+    replenishment_timeline: "Lockheed Martin producing 650/year, target 2,000/year not achievable until 2030",
+    us_tomahawks_fired: 850,
+    us_tomahawk_inventory_pre_war: 4000,
+    us_tomahawk_annual_production: 100,
+    energy_infrastructure_struck: [
+      "QatarEnergy Ras Laffan + Mesaieed — LNG halted entirely, force majeure",
+      "Saudi Ras Tanura refinery — struck multiple times",
+      "Saudi Satorp, Ju'aymah, Manifa, Khurais, East-West pipeline",
+      "Kuwait Mina Al-Ahmadi refinery — multiple hits",
+      "Kuwait KPC HQ, KNPC — significant damage",
+      "Kuwait power + desalination plants",
+      "Kuwait International Airport — closed",
+      "Bahrain Bapco Energies — force majeure",
+      "Bahrain Gulf Petrochemical Industries — fire",
+      "UAE Habshan natural gas facility — suspended",
+      "UAE Ruwais refinery — multiple fires",
+      "UAE Fujairah port — periodically closed",
+      "UAE Jebel Ali port — fire",
+      "UAE AWS data centres — struck, Amazon suspended Gulf deliveries",
+      "Oman Sohar / Mina Al Fahal — resumed after closure"
+    ],
+    oil_production_drop_mbpd: 10,
+    aviation_losses_bn: 40,
+    daily_flights_cancelled_peak: 40000,
+    strategic_verdict: "GCC air defence posture permanently degraded regardless of ceasefire outcome. NPT fundamentally undermined.",
+    incidents: [
+      "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone interview — 'they are choking like a stuffed pig'.",
+      "29 Apr 2026 (Wed): Rubio softened verbally — 'better than what we thought' — but anchored on nuclear precondition.",
+      "29 Apr 2026 (Wed PM): BRENT $118.03 (~+6% CNBC) — eighth straight up-session, highest since June 2022.",
+      "29 Apr 2026 (Wed): USD/EGP 52.82 — flat despite Brent +4.74% surge; CBE intervention apparent.",
+      "29 Apr 2026 (Wed): Fed held rates 3.50-3.75% with 8-4 dissent (most since Oct 1992).",
+      "29 Apr 2026 (Wed): IAEA Grossi to AP — Iran's ~200kg HEU likely still at Isfahan since June 2025.",
+      "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon.",
+      "29 Apr 2026 (Wed): Hormuz Strait Monitor — 13 transits on Apr 28 (4 in / 9 out, Northern Corridor); recent average 7 vessels.",
+      "29 Apr 2026 (Wed): Pakistan mediators expect REVISED Iranian counter-proposal in coming days.",
+      "29 Apr 2026 (Wed): Pentagon told ABC7 — total US war cost $25 billion.",
+      "28 Apr 2026 (Tue): UAE QUITS OPEC AND OPEC+ effective 1 May 2026 — ending ~60 yrs membership.",
+      "28 Apr 2026 (Tue): TRUMP CLAIMS IRAN 'IN A STATE OF COLLAPSE'.",
+      "28 Apr 2026 (Tue): ISRAEL ORDERED FORCED DISPLACEMENT OF 16 SOUTH LEBANON TOWNS.",
+      "28 Apr 2026 (Tue PM): RUBIO HARDENED PUBLICLY — Bloomberg: 'US Rejects Iran's Control Over Strait of Hormuz Access'.",
+      "28 Apr 2026 (Tue PM): IDF STRUCK LEBANON'S BEKAA VALLEY — first time since the 16 Apr ceasefire.",
+      "28 Apr 2026 (Tue PM): Hezbollah leader Qassem rejected direct Israel-Lebanon talks.",
+      "27 Apr 2026 (Mon evening): SISI-PATRUSHEV meeting in Cairo on Suez/El Dabaa.",
+      "27 Apr 2026 (Mon PM): IRAN'S FORMAL WRITTEN PROPOSAL published.",
+      "27 Apr 2026 (Mon PM): PUTIN-ARAGHCHI MEETING CONCLUDED in St. Petersburg.",
+      "27 Apr 2026 (Mon PM): USS GEORGE H.W. BUSH CSG ARRIVED in CENTCOM — third US carrier.",
+      "27 Apr 2026 (Mon PM): Israeli strikes killed 14 in southern Lebanon Mon.",
+      "27 Apr 2026 (Mon PM): US blockade redirect tally 37 ships.",
+      "26 Apr 2026 (Sun): Pentagon told Congress — clearing Hormuz mines could take SIX MONTHS.",
+      "25 Apr 2026: Witkoff/Kushner Islamabad trip cancelled.",
+      "23 Apr 2026: Trump orders Navy to 'shoot and kill' mine-laying boats — formal ROE escalation.",
+      "21 Apr 2026: Hormuz transit collapsed to 3-ship 24h low.",
+      "19 Apr 2026: USS Spruance fires on engine room, seizes MV Touska."
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  hormuz: {
+    status: "Effectively closed — Wed 29 Apr PM: 37 ships redirected by US blockade. TRUMP FORMALLY REJECTED Iran's blockade-lift proposal in Axios phone call ('they're choking like a stuffed pig') — confirms blockade continues. 13 transits Apr 28 (4 in / 9 out, all Northern Corridor — Hormuz Strait Monitor / USNI); recent average ~7/day vs 125-140 pre-war; mostly dry bulk including sanctioned chemical tanker Vast Plus. ~20,000 seafarers stranded (Euronews). Polymarket 99.7% AGAINST normal Hormuz traffic by 30 Apr. Pentagon 6-month mine-clearing timeline holds.",
+    ships_monday: 16,
+    ships_24h: 13,
+    ships_recent_avg: 7,
+    vessels_turned_back_by_blockade: 37,
+    us_blockade_active: true,
+    iran_response: "Vowing retaliation for MV Touska. Joint military command: 'will soon respond and retaliate against this armed piracy'. Wed 29 Apr PM: Trump's FORMAL Axios rejection closes the blockade-lift channel. Iran's national security spokesperson questioning Pakistan's mediator legitimacy. House of Commons Library briefing notes Iran's 5-point counter-proposal includes recognition of Iranian sovereignty over Strait of Hormuz, security guarantees, war reparations.",
+    mv_touska: "Iranian cargo ship seized 19 Apr by USS Spruance. Iran demanding immediate release. Still held. Wed 29 Apr: blockade now explicitly anchored by Trump as 'somewhat more effective than the bombing'.",
+    iran_gunboats: "Fired on two Indian-flagged merchant vessels weekend ~17-18 Apr; IRGC seized MSC Francesca and Epaminondas 22 Apr.",
+    mine_threat: "Mines identified by Hegseth as KEY remaining obstacle. Pentagon told Congress it could take SIX MONTHS to clear. Trump (23 Apr) and Hegseth (24 Apr): Navy authorised to 'shoot to destroy' Iranian boats laying mines — no kinetic encounter under this ROE yet.",
+    pre_war_daily_barrels_m: 20,
+    current_daily_barrels_m: 1,
+    insurance_premium_pct: 5.0,
+    analyst_quote: "We had the most violent day in the strait on Saturday that we've had since the beginning of this crisis — Rory Johnston, Commodity Context (mid-April)",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  watchlist: {
+    items: [
+      { id: 1, label: "Iran's FORMAL proposal — TRUMP REJECTED Wed 29 Apr", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — REJECTED (Axios)", notes: "Wed 29 Apr PM: TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone interview — 'they're choking like a stuffed pig'. Rubio softened verbally — 'better than what we thought' — but anchored on nuclear precondition. Pakistan mediators expect a revised Iranian counter-proposal in coming days." },
+      { id: 2, label: "MV Touska — Iranian retaliation", deadline: "Hours-days", status: "CRITICAL", notes: "Iran joint military command 'will soon respond and retaliate'. Ship still held. New 'shoot to destroy' ROE on mine-laying boats means any kinetic Iranian response now risks immediate kinetic US response." },
+      { id: 4, label: "Ground operations — Kharg/Qeshm/uranium", deadline: "Open-ended", status: "POSTURED — UPGRADED", notes: "82nd Airborne HQ forward deployed. USS Bush CSG ARRIVED in CENTCOM (third US carrier). Wed 29 Apr probability next 14 days: ~25-30% (UP from 22-26% Tue) — Trump's formal Axios rejection CONFIRMED, Brent $116+, Lebanon arc compounding (3 rescue workers killed Wed). IAEA Grossi confirmed ~200kg HEU likely still at Isfahan since June 2025." },
+      { id: 5, label: "Nuclear counterproliferation raid — Isfahan fortification", deadline: "If ground ops commence", status: "HIGH", notes: "Trump explicit: 'We want the nuclear dust.' 200kg confirmed at Isfahan — too deep to destroy. Wed 29 Apr Grossi to AP confirms HEU likely there since June 2025." },
+      { id: 6, label: "Lebanon — escalation compounding (rescue workers killed Wed)", deadline: "~14 May", status: "ESCALATING — Compounding", notes: "Wed 29 Apr: Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS (Euronews); Israel threatened to 'burn' all of Lebanon. Fourth-rung escalation after Tue Bekaa Valley + Tue 16-town displacement order. Trump-extended truce to ~14 May effectively unraveling." },
+      { id: 7, label: "EGP — Brent $116, cliff sharpened", deadline: "Weeks-months", status: "Watch — Elevated", notes: "EGP 52.82 Wed 29 Apr PM — flat on Tue 52.84 despite Brent extending to $118.03 (~+6% CNBC); CBE intervention apparent. Brent at eighth straight up-session, highest since June 2022. Goldman late-2026 forecast $90 already $28+ below spot. Bond spread 745bps." },
+      { id: 8, label: "Beijing summit", deadline: "May 14-15", status: "Increasingly relevant", notes: "With Pakistan-mediated track in trouble, Beijing summit becomes more important as fallback architecture." },
+      { id: 10, label: "Mine-laying incident under new ROE", deadline: "Real-time", status: "HIGH", notes: "Trump (23 Apr) and Hegseth (24 Apr) authorised Navy to 'shoot to destroy'. First kinetic encounter under this ROE could rapidly collapse the open-ended ceasefire." },
+      { id: 12, label: "Second-wave inflation — goods channel not yet priced", deadline: "H2 2026", status: "MEDIUM-TERM WATCH", notes: "Wave 1 (oil price spike) priced at $116. Wave 2 (imported inflation through goods channel) has not arrived yet. Estimated lag: 6-10 weeks." },
+      { id: 13, label: "Egypt — invest / relocate technical resources?", deadline: "H1 2027 review", status: "ANALYTICAL WATCH", notes: "Q4 2026 target was too optimistic. DO NOT COMMIT, watch-only until H1 2027. Four trigger conditions: ceasefire, reserves >$32B, EGP stable 60 days, IMF tranche disbursed." },
+      { id: 14, label: "Pentagon 6-month Hormuz mine-clearing timeline", deadline: "Structural", status: "STRATEGIC", notes: "Pentagon told Congress fully clearing Iran's Hormuz mines could take SIX MONTHS. Even a diplomatic deal will not produce immediate Hormuz/Suez normalisation." },
+      { id: 19, label: "Iran's REVISED counter-proposal via Pakistan — expected days", deadline: "Days", status: "CRITICAL — INCOMING", notes: "Wed 29 Apr: Pakistan mediators expect revised Iranian counter-proposal in coming days (Pravda USA / Reuters). Iran's reported 5-point counter-proposal: end of US-Israeli attacks on Iran/Lebanon/Iraq, security guarantees, war reparations, recognition of Iranian sovereignty over Strait of Hormuz. Iran's national security spokesperson: Pakistan 'is not suitable as a mediator' — channel risk live." },
+      { id: 20, label: "IAEA Grossi confirms HEU at Isfahan since June 2025", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — Confirmed", notes: "Wed 29 Apr (AP): IAEA Director General Grossi told the AP that ~200kg of Iran's 60% HEU 'likely remains' at Isfahan since June 2025 12-day war. Stockpile potentially enables 'as many as 10 nuclear bombs' if weaponised." },
+      { id: 21, label: "Fed rate decision — Powell's last as chair (29 Apr)", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — Held with rare 8-4 dissent", notes: "Wed 29 Apr: Fed held target range 3.50-3.75% on 8-4 dissent — most since October 1992. Powell will step aside as chair mid-May but stay on Fed Board of Governors." },
+      { id: 22, label: "UAE OPEC exit effective 1 May — settlement watch", deadline: "1 May 2026", status: "STRUCTURAL — imminent", notes: "Wed 29 Apr: UAE exit from OPEC and OPEC+ takes effect 1 May 2026. Saudi has 25% idle capacity to offset (CNBC). Watch: Saudi production response, UAE quota deviation post-1 May." }
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  war: {
+    operation_name: "Operation Epic Fury",
+    day_number: 60,
+    start_date: "28 Feb 2026",
+    current_phase: "Open-ended ceasefire formally in place but DETERIORATING — Wed 29 Apr PM. TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone call. LEBANON COMPOUNDING: 3 rescue workers killed Wed; Israel threatened to 'burn' all of Lebanon. BRENT EXTENDED TO $118.03 (~+6% CNBC) — highest since June 2022. Fed held 3.50-3.75% with 8-4 dissent (most since Oct 1992); Powell stepping down as chair mid-May. IAEA Grossi confirmed ~200kg HEU likely still at Isfahan since June 2025. UAE OPEC exit takes effect 1 May. H-hour probability UPGRADED to ~25-30%.",
+    key_events: [
+      "28 Feb 2026: Operation Epic Fury begins — US joins Israeli campaign against Iran",
+      "13 Apr 2026: US naval blockade of Iran's ports begins; Kharg Island 90+ targets pre-struck",
+      "19 Apr 2026: USS Spruance seizes MV Touska",
+      "21 Apr 2026: Trump EXTENDS ceasefire indefinitely at Pakistan request",
+      "23 Apr 2026: Trump orders Navy to 'shoot and kill' boats laying mines — formal ROE escalation; Lebanon ceasefire extended to ~14 May",
+      "25 Apr 2026: Trump CANCELS Witkoff/Kushner trip; Araghchi flies to Oman, then Moscow",
+      "26 Apr 2026: Pentagon told Congress — 6-month timeline to clear Iran's Hormuz mines",
+      "27 Apr 2026 (Mon PM): IRAN'S FORMAL WRITTEN PROPOSAL published — reopen Hormuz, end war, postpone nuclear",
+      "27 Apr 2026 (Mon PM): PUTIN-ARAGHCHI MEETING CONCLUDED — Russia pledged support",
+      "27 Apr 2026 (Mon PM): Goldman raises Brent late-2026 forecast to $90/bbl from $80",
+      "27 Apr 2026 (Mon PM): USS GEORGE H.W. BUSH CSG ARRIVED in CENTCOM — third US carrier",
+      "27 Apr 2026 (Mon evening): SISI-PATRUSHEV meeting in Cairo on Suez/El Dabaa",
+      "28 Apr 2026 (Tue): TRUMP REJECTION FORMING; RUBIO HARDENED on TV; IDF struck Lebanon's BEKAA VALLEY (first since 16 Apr ceasefire); UAE ANNOUNCES EXIT FROM OPEC effective 1 May 2026",
+      "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTS Iran's Pakistan-mediated proposal in Axios phone interview — 'they're choking like a stuffed pig'",
+      "29 Apr 2026 (Wed): Rubio softens verbally — 'better than what we thought' — but anchors on nuclear precondition",
+      "29 Apr 2026 (Wed PM): BRENT EXTENDED TO $118.03 (~+6% CNBC) — eighth straight session, highest since June 2022",
+      "29 Apr 2026 (Wed): USD/EGP 52.82 — flat on Tue 52.84 despite Brent surge; CBE intervention apparent",
+      "29 Apr 2026 (Wed): Fed held rates 3.50-3.75% with 8-4 dissent (most since Oct 1992); Powell stepping down as chair mid-May",
+      "29 Apr 2026 (Wed): IAEA Grossi told AP — Iran's ~200kg of 60% HEU 'likely remains' at Isfahan since June 2025",
+      "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon",
+      "29 Apr 2026 (Wed): H-hour probability UPGRADED ~25-30% in next 14 days from Tue's ~22-26%"
+    ],
+    us_targets_struck: "9,000+",
+    us_combat_flights: "9,000+",
+    iran_vessels_destroyed: "120+",
+    us_service_members_killed: 15,
+    total_conflict_deaths: "4,000+",
+    iran_ballistic_missiles_down_pct: 90,
+    iran_drone_attacks_down_pct: 95,
+    mojtaba_status: "Active Supreme Leader. Directing ceasefire strategy. Not backing down.",
+    trump_stated_objectives: [
+      "Prevent Iranian nuclear weapon",
+      "Destroy missile capabilities",
+      "Forestall Iranian retaliation post-Israeli attack",
+      "Seize Iran's oil resources",
+      "Regime change — bring Iranian opposition to power",
+      "'We want the nuclear dust'"
+    ],
+    trump_domestic: "War started with 21% public support. Now two-thirds oppose. Gas at $4.05 nationally. No Congressional authorisation.",
+    senate_signals: "Wed 29 Apr PM: Trump's formal Axios rejection of Iran's proposal hardens hawks' position; dovish Republicans isolated. Brent at $118.03 (highest since June 2022) materially elevates the political cost-of-living vulnerability. Pentagon told ABC7 total US war cost to date $25B; Congressional appropriation question reopens.",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  scenarios: {
+    tonight: [
+      { name: "Trump rejection holds; drift / Iran revises proposal via Pakistan", prob: 38, oil: "$115-125", egypt: "Stress elevated — EGP holds 52-53 with CBE intervention", notes: "Wed 29 Apr PM revised base case: Trump's Axios rejection holds; Iran responds with revised counter-proposal in coming days. Probability DOWN from 42% Tue as the rejection has now resolved." },
+      { name: "Iran routes around Pakistan — Russia/Beijing or counter-offer with partial nuclear element", prob: 16, oil: "$95-110", egypt: "Mixed — EGP firms slightly", notes: "Iran's national security spokesperson questioning Pakistan's mediator role opens space for Russia or Beijing. Rubio's modest verbal softening creates a phone-channel back-door. Probability UP from 14% Tue." },
+      { name: "Iran retaliates kinetically (mine-laying / MV Touska / GCC strike)", prob: 25, oil: "$118-140", egypt: "Stress-to-crisis", notes: "Iran reads Trump's Axios rejection + Lebanon escalation as conclusive; IRGC acts unilaterally. Probability UP from 23% Tue." },
+      { name: "US launches ground operations", prob: 16, oil: "$120-150", egypt: "Crisis", notes: "Trump's Axios rejection + Brent $116 + Lebanon arc compounding all push higher. Probability UP from 14% Tue. USS Bush CSG operational accelerant." },
+      { name: "Counterproliferation nuclear raid", prob: 5, oil: "$135-170+", egypt: "Catastrophic", notes: "IAEA Grossi's AP confirmation Wed sharpens the target picture. Probability DOWN slightly from 7% as Isfahan storage depth still binds." }
+    ],
+    thirty_day: "Watch: Iran's REVISED counter-proposal expected via Pakistan in coming days. Whether Iran routes around Pakistan via Russia/Beijing. Witkoff/Kushner phone-channel reactivation possibility. Hormuz daily transits. EGP vs 55. First mine-laying incident under shoot-to-destroy ROE. Lebanon truce ~14 May expiry. UAE OPEC exit takes effect 1 May. Powell departure as Fed chair mid-May.",
+    sixty_day: "Brent spot vs futures gap. CBE reserve figures. Whether Iran's 'postpone nuclear' clause survives in any revised counter-proposal. UAE post-OPEC production policy. Beijing summit outcome (May 14-15). Second-wave inflation watch.",
+    egypt_specific: "If Iran's revised counter-proposal threads partial nuclear element + oil settles $90-100: Egypt muddles through 2026. If talks deadlocked and oil holds $115+ (current Brent $118.03 — already there): Egypt faces genuine crisis Q3 2026.",
+    egypt_investment: "HOLD on near-term commitment. Base case: reserves reach $28-30B by Q3 2026, forcing Gulf bailout — earliest credible entry window H1 2027. Bear case: Lebanon arc collapses fully, Brent sustains $125+, reserves breach $25B → abort. Bull case: Iran's revised counter-proposal threads partial nuclear element acceptable to phone-channel — probability ~16% on Wed 29 Apr.",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  predictions: {
+    track_record: { correct: 15, incorrect: 8, pending: 6 },
+    pending: [
+      { id: 9,  text: "Sisi stability 12-18 months", status: "PENDING", deadline: "Ongoing", notes: "Holding. Wed 29 Apr: Trump's formal Axios rejection of Iran's proposal closes near-term Hormuz reopening. No immediate political risk to Sisi but funding-conditions stress sharpened.", updated: "2026-04-29" },
+      { id: 12, text: "Beijing trade truce not ceasefire", status: "PENDING — DECISIVE NOW", deadline: "May 14-15", notes: "Wed 29 Apr: with Trump's formal Axios rejection of the Pakistan track, Beijing summit elevates from 'increasingly relevant' to potentially decisive fallback architecture.", updated: "2026-04-29" },
+      { id: 13, text: "Second Egypt fuel price adjustment", status: "PENDING — pressure intensifying", deadline: "Early-mid May", notes: "Wed 29 Apr PM Brent $118.03 (highest since June 2022). AAA US gas $4.23. IMF programme requires fuel-subsidy adjustment.", updated: "2026-04-29" },
+      { id: 25, text: "Ground operations commence — Kharg or Qeshm seizure", status: "PENDING — UPGRADED", deadline: "Next 14 days", notes: "Wed 29 Apr probability: ~25-30% in next 14 days, UP from 22-26% Tue / 20-25% Mon. Trump's formal Axios rejection CONFIRMED; Brent $116+; Lebanon arc compounding (3 rescue workers killed Wed).", updated: "2026-04-29" },
+      { id: 28, text: "Egypt foreign reserves breach $30B without fresh Gulf support", status: "PENDING — probability rising", deadline: "Q3 2026", notes: "Reserves at $34B. UAE OPEC exit (effective 1 May) fragments Gulf coordination further. Probability: ~60% within 6 months absent ceasefire/Gulf deal (UP from 55%).", updated: "2026-04-29" },
+      { id: 27, text: "First kinetic incident under new 'shoot to destroy' ROE", status: "PENDING — probability ticking up", deadline: "Days-weeks", notes: "Probability within 14 days: ~28-32% (UP from 25-28%). Trump's Axios rejection raises Iranian risk-appetite at the margin.", updated: "2026-04-29" },
+      { id: 32, text: "Iran's REVISED counter-proposal lands via Pakistan", status: "PENDING — incoming", deadline: "Days", notes: "Wed 29 Apr: Pakistan mediators expect revised Iranian counter-proposal in coming days. 5-point counter-proposal includes recognition of Iranian sovereignty over Strait of Hormuz. Probability of revised proposal landing within 7 days: ~60%.", updated: "2026-04-29" }
+    ],
+    resolved_correct_recent: [
+      { id: 30, text: "Trump publicly rejects Iran's formal proposal", notes: "Resolved Wed 29 Apr PM: Trump rejected via Axios phone interview — 'they're choking like a stuffed pig'. Public-rejection pathway was forecast as base case." },
+      { id: 26, text: "Iran produces 'unified proposal'", notes: "Resolved Mon 27 Apr PM: Iran's formal written proposal published via Axios/CNBC/WashPost/PBS." },
+      { id: 31, text: "Lebanon ceasefire fragile beyond southern buffer zone", notes: "Resolved Tue 28 Apr PM: IDF struck Lebanon's BEKAA VALLEY for the FIRST TIME since the 16 Apr ceasefire took effect." }
+    ],
+    resolved_incorrect: [
+      { id: 20, text: "Iranian cyberattack Gulf banking/OT", notes: "No confirmed breach. Deadline passed." },
+      { id: 21, text: "Capital flight exceeds $500B", notes: "~$271B pre-war baseline + undetermined war-period." },
+      { id: 22, text: "Brent $130+ sustained", notes: "Brent $118.03 Wed 29 Apr PM but sustained-above-$130 was the bar." },
+      { id: 23, text: "DIFC/QFC suspends operations", notes: "Both operational throughout." },
+      { id: 24, text: "Beijing written ceasefire framework", notes: "Pakistan/Egypt/Turkey delivered framework, not Beijing." }
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  travel: {
+    advisory_date: "2026-04-29 (21:28 UTC evening update)",
+    advisories: {
+      "Iran":         { level: "Do Not Travel", notes: "Active conflict. State Dept 'Leave Now' / Level 4 reaffirmed. Wed 29 Apr: Trump's formal Axios rejection of Iran's proposal CONFIRMED. H-hour UPGRADED ~25-30%. IAEA Grossi confirms ~200kg HEU likely still at Isfahan." },
+      "Kuwait":       { level: "Do Not Travel", notes: "Airport closed. Infrastructure damaged. Interceptors 75% depleted." },
+      "Israel":       { level: "Do Not Travel", notes: "Active conflict. Wed 29 Apr: Israeli strikes killed 8 in southern Lebanon incl 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon." },
+      "Lebanon":      { level: "Do Not Travel", notes: "Ceasefire formally extended to ~14 May but UNRAVELING — Wed 29 Apr Israeli strikes killed 8 incl 3 RESCUE WORKERS. Tue 28 Apr IDF struck Bekaa Valley for first time since 16 Apr truce. 2,500+ killed since Mar 2." },
+      "Iraq":         { level: "Do Not Travel", notes: "Iran-backed militias active." },
+      "Bahrain":      { level: "Do Not Travel", notes: "5th Fleet HQ — primary retaliation target. 87% interceptors expended." },
+      "Qatar":        { level: "Reconsider Travel", notes: "LNG revenue halted. Wed 29 Apr PM: Trump rejection + Brent $118.03 + Lebanon escalation keep kinetic risk elevated." },
+      "Saudi Arabia": { level: "Reconsider Travel", notes: "Refineries struck. UAE OPEC exit (1 May) intra-Gulf coordination signal." },
+      "UAE":          { level: "Reconsider Travel", notes: "Dubai/Abu Dhabi operating with disruption. UAE exit from OPEC/OPEC+ effective 1 May 2026." },
+      "Russia":       { level: "Exercise Caution", notes: "Mon 27 Apr Putin-Araghchi concluded with Russia pledging support for Iran." },
+      "Oman":         { level: "High Caution", notes: "Muscat functional. Omani back-channel role folded into Pakistan-mediated proposal Trump rejected Wed." },
+      "Egypt":        { level: "High Caution", notes: "Cairo/Alexandria operating. EGP 52.82 Wed 29 Apr PM (CBE intervention apparent). Brent $118.03 + Trump's confirmed rejection restore maximum fuel-subsidy pressure." },
+      "Jordan":       { level: "High Caution", notes: "Stable but exposed to spillover." },
+      "Turkey":       { level: "Exercise Caution", notes: "Istanbul/Ankara operational. Mediator role preserves access." }
+    },
+    summary: "HIGH alert posture — kinetic-war risk elevated; diplomatic outlook DEGRADED FURTHER Wed 29 Apr. TRUMP FORMALLY REJECTED IRAN'S PROPOSAL via Axios phone interview ('they're choking like a stuffed pig'). Rubio softened verbally back from Tue TV-hardening but anchored on nuclear precondition. ISRAELI STRIKES KILLED 8 IN SOUTHERN LEBANON INCLUDING 3 RESCUE WORKERS (Euronews); Israel threatened to 'burn' all of Lebanon. BRENT $118.03 (~+6% Wed PM, eighth straight up-session, highest since June 2022). USD/EGP 52.82 (CBE intervention). Fed held 3.50-3.75% with 8-4 dissent (most since Oct 1992); Powell stepping down as chair mid-May. IAEA Grossi to AP confirms ~200kg HEU likely still at Isfahan since June 2025. UAE OPEC exit takes effect 1 May. Three US carriers on station; 37 ships redirected by blockade. State Dept Iran 'Leave Now' reaffirmed. Iran/Iraq/Lebanon Level 4. Avoid all non-essential travel to Gulf, Levant, and Iraq.",
+    updated: "2026-04-29T21:28:06.000Z"
+  }
+
+});
+// === END DAILY ===
+</script>
 
 <script>
-// ── Tab navigation ──
 function showTab(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -624,7 +1780,6 @@ function showTab(id) {
   event.currentTarget.classList.add('active');
 }
 
-// ── Helpers ──
 function esc(s) {
   if (s == null) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -646,7 +1801,6 @@ function ts(dateStr) {
   catch(e) { return dateStr; }
 }
 
-// ── Sparkline ──
 var _chartMeta = {};
 
 function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
@@ -654,7 +1808,6 @@ function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
   var dw = W - pad.l - pad.r, dh = H - pad.t - pad.b;
   ctx.clearRect(0, 0, W, H);
 
-  // grid lines + Y labels
   ctx.strokeStyle = '#1c2333'; ctx.lineWidth = 0.5;
   [0, 0.25, 0.5, 0.75, 1].forEach(function(f) {
     var y = pad.t + dh * (1 - f);
@@ -664,7 +1817,6 @@ function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
     ctx.fillText(v.toFixed(v < 10 ? 1 : 0), pad.l - 6, y + 3.5);
   });
 
-  // war-start dashed line (index 5)
   if (data.length > 6) {
     var warX = pad.l + (5 / (data.length - 1)) * dw;
     ctx.strokeStyle = 'rgba(239,68,68,0.5)'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
@@ -674,7 +1826,6 @@ function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
     ctx.fillText('War', warX + 4, pad.t + 12);
   }
 
-  // area fill
   var fillColor = color.replace('rgb(', 'rgba(').replace(')', ',0.12)');
   ctx.beginPath();
   data.forEach(function(v, i) {
@@ -687,7 +1838,6 @@ function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
   ctx.closePath();
   ctx.fillStyle = fillColor; ctx.fill();
 
-  // line
   ctx.beginPath();
   ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
   data.forEach(function(v, i) {
@@ -697,13 +1847,11 @@ function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
   });
   ctx.stroke();
 
-  // end dot
   var lx = pad.l + dw, lv = data[data.length - 1];
   var ly = pad.t + dh * (1 - (lv - min) / (max - min));
   ctx.beginPath(); ctx.arc(lx, ly, 3.5, 0, Math.PI * 2);
   ctx.fillStyle = color; ctx.fill();
 
-  // X labels
   if (labels && labels.length) {
     ctx.fillStyle = '#6b7280'; ctx.font = '9px JetBrains Mono,monospace'; ctx.textAlign = 'center';
     var step = Math.max(1, Math.floor(labels.length / 10));
@@ -713,7 +1861,6 @@ function _paintChart(ctx, W, H, data, color, min, max, labels, crosshairIdx) {
     });
   }
 
-  // crosshair overlay
   if (crosshairIdx != null) {
     var ci = crosshairIdx;
     var cx = pad.l + (ci / (data.length - 1)) * dw;
@@ -743,10 +1890,8 @@ function drawSpark(canvasId, data, color, min, max, labels) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   _paintChart(ctx, cssW, cssH, data, color, min, max, labels, null);
 
-  // Store for hover
   _chartMeta[canvasId] = { data: data, labels: labels, color: color, min: min, max: max, cssW: cssW, cssH: cssH, dpr: dpr };
 
-  // Attach hover once
   if (!c._hoverReady) {
     c._hoverReady = true;
     var tt      = document.getElementById('chart-tooltip');
@@ -772,7 +1917,6 @@ function drawSpark(canvasId, data, color, min, max, labels) {
       if (tx + 150 > window.innerWidth)  tx = e.clientX - 160;
       if (ty < 6) ty = e.clientY + 16;
       tt.style.left = tx + 'px'; tt.style.top = ty + 'px';
-      // Redraw with crosshair
       var ctx2 = c.getContext('2d');
       ctx2.setTransform(m.dpr, 0, 0, m.dpr, 0, 0);
       _paintChart(ctx2, m.cssW, m.cssH, m.data, m.color, m.min, m.max, m.labels, idx);
@@ -789,7 +1933,6 @@ function drawSpark(canvasId, data, color, min, max, labels) {
   }
 }
 
-// ── Egypt Foreign Reserves Chart ──
 function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
   var c = document.getElementById(canvasId);
   if (!c) return;
@@ -817,7 +1960,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
   function xOf(i)  { return pad.l + (i / (data.length - 1)) * dw; }
   function yOf(v)  { return pad.t + dh * (1 - (v - minVal) / (maxVal - minVal)); }
 
-  // Grid lines
   ctx.strokeStyle = '#1c2333'; ctx.lineWidth = 0.5;
   var gridVals = [];
   var step = (maxVal - minVal) / 4;
@@ -829,7 +1971,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
     ctx.fillText('$' + v.toFixed(0) + 'B', pad.l - 6, y + 3.5);
   });
 
-  // Pre-war reference line
   var pwY = yOf(preWarBn);
   ctx.strokeStyle = 'rgba(99,102,241,0.5)'; ctx.lineWidth = 1; ctx.setLineDash([5, 4]);
   ctx.beginPath(); ctx.moveTo(pad.l, pwY); ctx.lineTo(cssW - pad.r, pwY); ctx.stroke();
@@ -837,7 +1978,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
   ctx.fillStyle = 'rgba(99,102,241,0.9)'; ctx.font = '9px JetBrains Mono,monospace'; ctx.textAlign = 'left';
   ctx.fillText('Pre-war $' + preWarBn + 'B', pad.l + 4, pwY - 4);
 
-  // Danger threshold band
   var dzY = yOf(dangerThreshold);
   ctx.fillStyle = 'rgba(239,68,68,0.07)';
   ctx.fillRect(pad.l, dzY, dw, cssH - pad.b - dzY);
@@ -847,7 +1987,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
   ctx.fillStyle = 'rgba(239,68,68,0.8)'; ctx.font = '9px JetBrains Mono,monospace'; ctx.textAlign = 'right';
   ctx.fillText('Danger $' + dangerThreshold + 'B', cssW - pad.r - 2, dzY - 4);
 
-  // Milestone vertical lines
   milestones.forEach(function(ms) {
     var mx = xOf(ms.index);
     ctx.strokeStyle = (ms.color || '#f97316') + '99'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
@@ -860,7 +1999,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
     ctx.fillText(ms.sublabel || '', mx, pad.t + 21);
   });
 
-  // Area fill
   ctx.beginPath();
   data.forEach(function(v, i) { i === 0 ? ctx.moveTo(xOf(i), yOf(v)) : ctx.lineTo(xOf(i), yOf(v)); });
   ctx.lineTo(xOf(data.length - 1), cssH - pad.b);
@@ -868,18 +2006,15 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
   ctx.closePath();
   ctx.fillStyle = 'rgba(251,191,36,0.10)'; ctx.fill();
 
-  // Line
   ctx.beginPath();
   ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
   data.forEach(function(v, i) { i === 0 ? ctx.moveTo(xOf(i), yOf(v)) : ctx.lineTo(xOf(i), yOf(v)); });
   ctx.stroke();
 
-  // End dot
   var li = data.length - 1;
   ctx.beginPath(); ctx.arc(xOf(li), yOf(data[li]), 4, 0, Math.PI * 2);
   ctx.fillStyle = color; ctx.fill();
 
-  // X labels
   ctx.fillStyle = '#6b7280'; ctx.font = '9px JetBrains Mono,monospace'; ctx.textAlign = 'center';
   var lstep = Math.max(1, Math.floor(labels.length / 8));
   labels.forEach(function(l, i) {
@@ -887,11 +2022,9 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
     ctx.fillText(l, xOf(i), cssH - 8);
   });
 
-  // Store for hover
   _chartMeta[canvasId] = { data: data, labels: labels, color: color, min: minVal, max: maxVal, cssW: cssW, cssH: cssH, dpr: dpr,
     _reservesExtra: { dangerThreshold: dangerThreshold, preWarBn: preWarBn, milestones: milestones, rs: rs } };
 
-  // Hover — reuse standard handler pattern
   if (!c._hoverReady) {
     c._hoverReady = true;
     var tt = document.getElementById('chart-tooltip');
@@ -909,7 +2042,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
       idx = Math.max(0, Math.min(idx, m.data.length - 1));
       var val  = m.data[idx];
       var lbl  = m.labels && m.labels[idx] ? m.labels[idx] : ('pt ' + idx);
-      // Check if milestone at this index
       var msNote = '';
       if (m._reservesExtra) {
         m._reservesExtra.milestones.forEach(function(ms) { if (ms.index === idx) msNote = '  ← ' + ms.label; });
@@ -921,7 +2053,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
       if (tx + 160 > window.innerWidth) tx = e.clientX - 170;
       if (ty < 6) ty = e.clientY + 16;
       tt.style.left = tx + 'px'; tt.style.top = ty + 'px';
-      // Crosshair
       var ctx2 = c.getContext('2d');
       ctx2.setTransform(m.dpr, 0, 0, m.dpr, 0, 0);
       var ex = m._reservesExtra;
@@ -949,7 +2080,6 @@ function drawReservesChart(canvasId, rs, dangerThreshold, preWarBn) {
   }
 }
 
-// ── Render all sections from GULF_RISK_DATA ──
 function render() {
   var D = window.GULF_RISK_DATA;
   if (!D) {
@@ -959,7 +2089,6 @@ function render() {
   var m = D._meta || {};
   var upd = ts(m.updated);
 
-  // Header
   document.getElementById('hdr-sub').textContent = 'Intelligence current to ' + (upd || '—');
   document.getElementById('hdr-day').textContent = 'Day ' + (m.day || '—');
   document.getElementById('hdr-ts').textContent = upd;
@@ -968,11 +2097,11 @@ function render() {
   document.getElementById('hdr-threat').textContent = tl;
   document.getElementById('hdr-threat').className = 'threat-pill threat-' + tl.replace(/\s/g,'_');
 
-  // Footer
   document.getElementById('ftr-left').textContent = 'Gulf & Egypt Risk Monitor — Op. Epic Fury Day ' + (m.day||'—');
   document.getElementById('ftr-right').textContent = 'Updated ' + upd;
 
-  // ── BRIEF ──
+  renderExcoTop(D, upd);
+
   document.getElementById('brief-upd').textContent = upd;
   document.getElementById('brief-headline').textContent = br.headline || '—';
   document.getElementById('brief-summary').textContent = br.summary || '';
@@ -982,7 +2111,6 @@ function render() {
   var devs = br.key_developments || [];
   document.getElementById('brief-devs').innerHTML = devs.map(function(d){return '<li>'+esc(d)+'</li>';}).join('');
 
-  // ── MARKETS ──
   var mx = D.metrics || {};
   document.getElementById('mkt-upd').textContent = ts(mx.updated) || upd;
   document.getElementById('mkt-boxes').innerHTML = [
@@ -998,7 +2126,6 @@ function render() {
   document.getElementById('mkt-notes').textContent = mx.brent_spot_note || '';
   document.getElementById('mkt-notes-upd').textContent = ts(mx.updated) || upd;
 
-  // Charts
   var cs = D.chart_series || {};
   var brentData = cs.brent || [];
   var egpData   = cs.egp || [];
@@ -1015,7 +2142,6 @@ function render() {
     if (cs.bab_el_mandeb && cs.bab_el_mandeb.length) drawSpark('bem-chart', cs.bab_el_mandeb, 'rgb(168,85,247)', cs.bem_min||0,   cs.bem_max||20,    xlabels, cs.war_start_index||6);
   }, 50);
 
-  // ── WATCHLIST ──
   var wl = D.watchlist || {};
   document.getElementById('wl-upd').textContent = ts(wl.updated) || upd;
   var items = wl.items || [];
@@ -1030,7 +2156,6 @@ function render() {
       +'</div></div>';
   }).join('');
 
-  // ── SCENARIOS ──
   var sc = D.scenarios || {};
   document.getElementById('sc-upd').textContent = ts(sc.updated) || upd;
   var tonight = sc.tonight || [];
@@ -1049,7 +2174,6 @@ function render() {
   document.getElementById('sc-90').textContent = sc.ninety_day || '';
   document.getElementById('sc-egypt').textContent = sc.egypt_specific || '';
 
-  // ── NUCLEAR ──
   var nu = D.nuclear || {};
   document.getElementById('nuc-upd').textContent = ts(nu.updated) || upd;
   document.getElementById('nuc-boxes').innerHTML = [
@@ -1069,7 +2193,6 @@ function render() {
   document.getElementById('nuc-gap').textContent = nu.key_gap || '';
   document.getElementById('nuc-verdict').textContent = nu.proliferation_verdict || '';
 
-  // ── GROUND OPS ──
   var go = D.ground_ops || {};
   document.getElementById('gnd-upd').textContent = ts(go.updated) || upd;
   document.getElementById('gnd-total').textContent = go.us_forces_total || '—';
@@ -1097,7 +2220,6 @@ function render() {
   document.getElementById('gnd-expert').textContent = go.expert_consensus || '';
   document.getElementById('gnd-iraq').textContent = go.iraq_comparison || '';
 
-  // ── GCC DAMAGE ──
   var dg = D.gcc_war_damage || {};
   document.getElementById('dmg-upd').textContent = ts(dg.updated) || upd;
   document.getElementById('dmg-boxes').innerHTML = [
@@ -1136,7 +2258,6 @@ function render() {
 
   document.getElementById('dmg-verdict').textContent = dg.strategic_verdict || '';
 
-  // ── EGYPT ──
   var eg = D.egypt || {};
   document.getElementById('eg-upd').textContent = ts(eg.updated) || upd;
   document.getElementById('eg-boxes').innerHTML = [
@@ -1146,7 +2267,6 @@ function render() {
     mbox('Bond spread', '+'+(eg.bond_spread_bps||'—')+'bps', 'red', 'Over UST')
   ].join('');
 
-  // Reserves chart
   var rs = eg.reserves_series;
   if (rs && rs.data && rs.data.length) {
     var rsNote = document.getElementById('reserves-note');
@@ -1182,7 +2302,6 @@ function render() {
   document.getElementById('eg-iran-destroyed').textContent = eg.iran_destroyed_scenario || '';
   document.getElementById('eg-honest').textContent = eg.honest_assessment || '';
 
-  // Investment assessment
   var inv = eg.investment_assessment;
   if (inv) {
     var invCard = document.getElementById('eg-investment-card');
@@ -1213,7 +2332,6 @@ function render() {
     if (invEl) invEl.innerHTML = invHtml;
   }
 
-  // ── HORMUZ ──
   var hz = D.hormuz || {};
   document.getElementById('hz-upd').textContent = ts(hz.updated) || upd;
   document.getElementById('hz-boxes').innerHTML = [
@@ -1234,7 +2352,6 @@ function render() {
 
   document.getElementById('hz-touska').textContent = hz.mv_touska || '';
 
-  // ── TRAVEL ──
   var tr = D.travel || {};
   document.getElementById('tr-upd').textContent = ts(tr.updated) || upd;
   document.getElementById('tr-summary').textContent = tr.summary || '';
@@ -1250,7 +2367,6 @@ function render() {
     +'</div>';
   }).join('');
 
-  // ── PREDICTIONS ──
   var pr = D.predictions || {};
   var tr2 = pr.track_record || {};
   document.getElementById('pr-track').innerHTML =
@@ -1278,10 +2394,8 @@ function render() {
     return predItem(p, 'INCORRECT');
   }).join('');
 
-  // Sources & data page
   renderSources();
 }
-
 
 function excoH(tag, cls, content) { return '<'+tag+(cls?' class="'+cls+'"':'')+'>'+content+'</'+tag+'>'; }
 function excoEsc(s) { return String(s||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -1369,19 +2483,18 @@ function buildExcoHTML(D) {
     '@media print{body{padding:12px 16px;font-size:10.5px}@page{margin:8mm}.xmetrics{grid-template-columns:repeat(4,1fr)}}'
   ].join('');
 
-  // Headline status
-  var cfColor = (br.ceasefire_status||'').indexOf('HOLD')<0 ? '#ef4444' : '#f97316';
+  var eb = D.exco_briefing || {};
+  var eca = D.energy_crisis_alert || {};
+  var ctb = D.cairo_travel_briefing || {};
+  var ti = D.trust_index || {};
+  var gc = D.government_commitments || {};
 
-  // Watchlist — critical items only
-  var wlItems = (wl.items||[]).filter(function(it){ return it.status && (it.status.indexOf('CRITICAL')>=0||it.status.indexOf('NEW')>=0||it.status.indexOf('ACTIVE')>=0); }).slice(0,8);
+  var html = '<html><head><meta charset="utf-8"><title>Gulf Risk EXCO Briefing — Day '+excoEsc(m.day)+'</title><style>'+css+'</style></head><body>';
 
-  var html = '<html><head><meta charset="utf-8"><title>Gulf Risk Exco — Day '+excoEsc(m.day)+'</title><style>'+css+'</style></head><body>';
-
-  // ── HEADER ──
   html += '<div class="xhdr">';
   html += '<div class="xhdr-left">'
-    +'<div class="xhdr-title">Gulf &amp; Egypt Risk Monitor</div>'
-    +'<div class="xhdr-sub">Operation Epic Fury &nbsp;·&nbsp; Executive Briefing &nbsp;·&nbsp; Intelligence current to '+excoEsc(upd)+'</div>'
+    +'<div class="xhdr-title">Gulf &amp; Egypt Risk Monitor — EXCO Briefing</div>'
+    +'<div class="xhdr-sub">Operation Epic Fury &nbsp;·&nbsp; Day '+excoEsc(m.day)+' &nbsp;·&nbsp; Intelligence current to '+excoEsc(upd)+'</div>'
     +'</div>';
   html += '<div class="xhdr-right">'
     +'<div class="x-threat" style="background:'+tlColor+'">'+excoEsc(tl)+'</div>'
@@ -1389,147 +2502,131 @@ function buildExcoHTML(D) {
     +'</div>';
   html += '</div>';
 
-  // ── METRIC TILES ──
+  if (eb.headline || eb.one_paragraph_summary) {
+    html += '<div class="xs" style="border-color:#1e293b;background:#0f172a;color:#e2e8f0;break-inside:avoid">'
+      +'<div class="xs-hdr" style="background:#1e293b;border-color:#1e293b"><span class="xs-num" style="background:#ef4444">★</span><span class="xs-title" style="color:#fbbf24">EXCO Headline</span></div>'
+      +'<div class="xs-body" style="background:#0f172a;color:#e2e8f0">'
+        +(eb.headline ? '<p class="xp" style="color:#fbbf24;font-weight:700;font-size:12px;margin-bottom:8px">'+excoEsc(eb.headline)+'</p>' : '')
+        +(eb.one_paragraph_summary ? '<p class="xp" style="color:#cbd5e1;font-size:11px;line-height:1.7">'+excoEsc(eb.one_paragraph_summary)+'</p>' : '')
+      +'</div></div>';
+  }
+
   html += '<div class="xmetrics">';
-  html += excoMetric('Brent Futures', '$'+(mx.brent_usd||'—')+'/bbl', mx.brent_week_range||'', '#ef4444');
-  html += excoMetric('Brent Spot', '$'+(mx.brent_spot_usd||'—')+'/bbl', 'Physical market', '#ef4444');
-  html += excoMetric('EGP / USD', eg.egp_usd||'—', 'Panic threshold: '+(eg.egp_panic_threshold||55), '#d97706');
-  html += excoMetric('Egypt Reserves', '$'+(eg.foreign_reserves_bn||'—')+'B', 'Danger zone: $'+(eg.reserves_danger_threshold_bn||25)+'B', '#d97706');
-  html += excoMetric('US Gas Avg', '$'+(mx.us_gas_average||'—')+'/gal', mx.us_gas_note||'', '#ef4444');
-  html += excoMetric('Suez Revenue/wk', '$'+(mx.suez_revenue_weekly_m||'—')+'M', 'Pre-war: $'+(mx.suez_pre_war_weekly_m||190)+'M', '#d97706');
-  html += excoMetric('Egypt Bond Spread', '+'+(mx.egypt_bond_spread_bps||'—')+'bps', 'Over UST', '#ef4444');
-  html += excoMetric('Hormuz Transits', (hz.ships_monday||'—')+' ships/day', 'Near blockade floor', '#ef4444');
+  html += excoMetric('Brent', '$'+(mx.brent_usd||'—'), mx.brent_week_range ? mx.brent_week_range.split('→').slice(-1)[0].trim() : '', '#ef4444');
+  html += excoMetric('USD/EGP official', mx.egp_usd||eg.egp_usd||'—', 'Panic threshold '+(eg.egp_panic_threshold||55), '#d97706');
+  html += excoMetric('US gas avg', '$'+(mx.us_gas_average||'—')+'/gal', mx.us_gas_note ? '' : 'AAA', '#ef4444');
+  html += excoMetric('Hormuz transits', (hz.ships_24h||hz.ships_monday||'—'), 'Pre-war 125-140/day', '#ef4444');
   html += '</div>';
 
-  // ── TWO-COLUMN GRID ──
-  html += '<div class="xgrid">';
-
-  // Col 1: Situation + Ceasefire
-  html += excoSection('01','Situation Summary','<p class="xp">'+excoEsc(br.headline)+'</p><p class="xp" style="color:#6b7280">'+excoEsc(br.summary)+'</p>');
-
-  // Col 2: Status rows
-  html += excoSection('02','Status',
-    excoRow('Ceasefire', br.ceasefire_status, cfColor)
-    +excoRow('Nuclear', br.nuclear_status, '#f97316')
-    +excoRow('Ground ops', br.ground_op_status, '#ef4444')
-    +excoRow('Hormuz', hz.status, '#ef4444')
-    +excoRow('US blockade', hz.us_blockade_active?'ACTIVE':'—', '#ef4444')
-    +excoRow('Mine ROE', 'Shoot to destroy authorised', '#ef4444')
-  );
-
-  html += '</div><div class="xgrid">';
-
-  // Nuclear
-  html += excoSection('03','Nuclear Situation',
-    excoRow('Stockpile', (nu.confirmed_stockpile_kg||'—')+'kg @ '+(nu.confirmed_enrichment_pct||60)+'%', '#ef4444')
-    +excoRow('Weapons equiv.', nu.weapons_equivalent||'—', '#ef4444')
-    +excoRow('Breakout (HEU)', nu.breakout_time_to_weapons_grade||'—', '#f97316')
-    +excoRow('Breakout (device)', nu.breakout_time_to_device||'—', '#f97316')
-    +excoRow('IAEA access', nu.iaea_access||'—', '#d97706')
-    +excoRow('Key gap', nu.key_gap||'—', '#374151')
-  );
-
-  // Ground Ops
-  var t1=go.target_1||{}, t2=go.target_2||{}, t3=go.target_3||{};
-  html += excoSection('04','Ground Operations',
-    excoRow('Status', go.status||'—', '#ef4444')
-    +excoRow('US forces in region', go.us_forces_total||'—', '#374151')
-    +excoRow('Target 1', t1.name||'—', '#ef4444')
-    +excoRow('Target 2', t2.name||'—', '#ef4444')
-    +excoRow('Target 3', t3.name||'—', '#ef4444')
-    +excoRow('Expert consensus', go.expert_consensus||'—', '#6b7280')
-  );
-
-  html += '</div><div class="xgrid">';
-
-  // Egypt
-  html += excoSection('05','Egypt',
-    excoRow('EGP/USD', (eg.egp_usd||'—')+' [panic: '+(eg.egp_panic_threshold||55)+']', '#d97706')
-    +excoRow('Foreign reserves', '$'+(eg.foreign_reserves_bn||'—')+'B [danger: $'+(eg.reserves_danger_threshold_bn||25)+'B]', '#d97706')
-    +excoRow('Pre-war reserves', '$'+(eg.reserves_pre_war_bn||43.5)+'B', '#6b7280')
-    +excoRow('Gas import/month', '$'+(eg.gas_import_cost_monthly_bn||'—')+'B at current oil', '#ef4444')
-    +excoRow('Bond spread', '+'+(eg.bond_spread_bps||'—')+'bps', '#ef4444')
-    +excoRow('IMF status', eg.imf_status||'—', '#374151')
-    +excoRow('Sisi stability', eg.sisi_stability||'—', '#374151')
-  );
-
-  // GCC War Damage
-  html += excoSection('06','GCC War Damage',
-    excoRow('Arab states total cost', '$'+(dg.total_arab_cost_bn||'—')+'B', '#ef4444')
-    +excoRow('US total cost', '$'+(dg.total_us_cost_bn||'—')+'B', '#f97316')
-    +excoRow('GCC interceptors expended', (dg.gcc_interceptors_expended||'—')+' of '+(dg.gcc_interceptors_pre_war||'—'), '#ef4444')
-    +excoRow('Cost exchange ratio', dg.cost_exchange_ratio||'—', '#374151')
-    +excoRow('Oil output drop', (dg.oil_production_drop_mbpd||'—')+'M bpd at peak', '#d97706')
-    +excoRow('Iran missiles on GCC', (dg.iran_total_ballistic_across_gcc||'—')+' ballistic total', '#6b7280')
-  );
-
-  html += '</div>';
-
-  // Scenarios tonight
-  if (tonight.length) {
-    var scBody = tonight.map(function(s) {
-      var probColor = s.prob>=40?'#ef4444':s.prob>=20?'#f97316':'#6b7280';
-      return '<div class="xsc-row">'
-        +'<div class="xsc-prob" style="color:'+probColor+'">'+excoEsc(s.prob)+'<div class="xsc-prob-pct">%</div></div>'
-        +'<div><div class="xsc-name">'+excoEsc(s.name)+'</div>'
-        +'<div class="xsc-note">Oil: '+excoEsc(s.oil)+' &nbsp;·&nbsp; Egypt: '+excoEsc(s.egypt)+'</div>'
-        +'<div class="xsc-note" style="margin-top:2px">'+excoEsc(s.notes)+'</div>'
-        +'</div></div>';
+  if (eb.top_indicators_with_current_readings && eb.top_indicators_with_current_readings.length) {
+    var indBody = eb.top_indicators_with_current_readings.map(function(it){
+      return '<div class="xr"><div class="xr-label">'+excoEsc(it.indicator)+'</div>'
+        +'<div class="xr-val" style="color:#374151">'+excoEsc(it.current||'—')+' &nbsp;<span style="color:#9ca3af;font-weight:400">'+excoEsc(it.direction||'')+'</span> &nbsp;<span style="color:#dc2626;font-size:9px">break: '+excoEsc(it.break_level||'—')+'</span></div></div>';
     }).join('');
-    html += excoSection('07',"Tonight's Scenarios", scBody);
+    html += excoSection('01','Top Indicators · current vs break level', indBody);
   }
 
-  // Outlook
-  html += excoSection('08','30 / 60 / 90 Day Outlook',
-    excoRow('30 days', sc.thirty_day||'—', '#374151')
-    +excoRow('60 days', sc.sixty_day||'—', '#374151')
-    +excoRow('90 days', sc.ninety_day||'—', '#374151')
-    +excoRow('Egypt specific', sc.egypt_specific||'—', '#374151')
-  );
+  if (eca.headline || eca.summary) {
+    var ecaBody = (eca.headline ? '<p class="xp" style="font-weight:700;color:#b91c1c;margin-bottom:6px">'+excoEsc(eca.headline)+'</p>' : '')
+      +(eca.summary ? '<p class="xp" style="color:#374151">'+excoEsc(eca.summary)+'</p>' : '')
+      +(eca.current_measures ? '<p class="xp" style="margin-top:8px;font-weight:700;color:#374151">Current measures</p>' : '')
+      +(eca.current_measures||[]).map(function(s){return '<div class="xdev-item">'+excoEsc(s)+'</div>';}).join('')
+      +(eca.blackout_risk ? '<div style="background:#fef3c7;border-left:3px solid #d97706;padding:8px;border-radius:3px;margin-top:8px">'
+          +'<strong>Blackout window:</strong> '+excoEsc(eca.blackout_risk.summer_window||'—')+' &nbsp;·&nbsp; '
+          +'Jul probability: '+excoEsc(eca.blackout_risk.probability_some_blackouts_july||'—')+' &nbsp;·&nbsp; '
+          +'Jun probability: '+excoEsc(eca.blackout_risk.probability_some_blackouts_june||'—')
+          +'</div>' : '');
+    html += excoSection('02','Energy Crisis Alert', ecaBody);
+  }
 
-  // Key developments + watchlist
-  html += '<div class="xgrid">';
-  var devsBody = (br.key_developments||[]).map(function(d){ return '<div class="xdev-item">'+excoEsc(d)+'</div>'; }).join('');
-  html += excoSection('09','Key Developments', devsBody);
+  if (ctb.headline) {
+    var ins = ctb.insurance_alert || {};
+    var ctbBody = '<p class="xp" style="font-weight:700;color:#b91c1c">'+excoEsc(ctb.headline)+'</p>'
+      +(ins.priority ? '<div style="background:#fee2e2;border-left:3px solid #b91c1c;padding:8px;border-radius:3px;margin:6px 0"><strong style="color:#b91c1c">'+excoEsc(ins.priority)+'</strong>'
+          +(ins.bottom_line ? '<p class="xp" style="margin-top:4px;color:#374151">'+excoEsc(ins.bottom_line)+'</p>' : '')
+          +'</div>' : '')
+      +'<p class="xp" style="font-weight:700;color:#374151;margin-top:6px">Required cover types</p>'
+      +(ins.required_cover_types||[]).map(function(s){return '<div class="xdev-item">'+excoEsc(s)+'</div>';}).join('')
+      +'<p class="xp" style="font-weight:700;color:#374151;margin-top:8px">Recommended Marriott (verify before booking)</p>'
+      +(ctb.cairo_marriott_options||[]).slice(0,2).map(function(mt){
+        return '<div class="xdev-item"><strong>'+excoEsc(mt.property)+'</strong> — '+excoEsc(mt.area||'')+(mt.recommendation ? ' · '+excoEsc(mt.recommendation) : '')+'</div>';
+      }).join('')
+      +(ctb.abort_triggers_pre_departure && ctb.abort_triggers_pre_departure.tier_1_immediate_abort ? '<p class="xp" style="font-weight:700;color:#b91c1c;margin-top:8px">Abort triggers — Tier 1 (immediate)</p>' : '')
+      +(ctb.abort_triggers_pre_departure && ctb.abort_triggers_pre_departure.tier_1_immediate_abort||[]).map(function(s){return '<div class="xdev-item" style="border-left:2px solid #b91c1c;padding-left:12px">'+excoEsc(s)+'</div>';}).join('')
+      +(ctb.revised_safety_assessment ? '<div style="background:#fffbeb;border-left:3px solid #d97706;padding:8px;border-radius:3px;margin-top:8px;font-size:10px;color:#78350f">'+excoEsc(ctb.revised_safety_assessment)+'</div>' : '');
+    html += excoSection('03','Cairo Travel Briefing — '+excoEsc(ctb.trip_dates||'June 2026'), ctbBody);
+  }
 
-  var wlItems = (wl.items||[]).filter(function(it){
-    return it.status && (it.status.indexOf('CRITICAL')>=0||it.status.indexOf('NEW')>=0||it.status.indexOf('ACTIVE')>=0);
-  }).slice(0,8);
-  var wlBody = wlItems.map(function(it){
-    var sc2 = it.status||'WATCH';
-    var bc = sc2.indexOf('CRITICAL')>=0?'xb-red':sc2.indexOf('NEW')>=0?'xb-blue':'xb-amber';
-    return '<div class="xwl-item"><span class="xwl-status '+bc+'">'+excoEsc(sc2.split(' ')[0])+'</span>'
-      +'<span class="xwl-label">'+excoEsc(it.label||it.text||'')+'</span></div>';
-  }).join('');
-  html += excoSection('10','Critical Watchlist', wlBody||'<p class="xp" style="color:#9ca3af">No critical items.</p>');
-  html += '</div>';
-
-  // Egypt investment assessment
-  var inv = eg.investment_assessment;
-  if (inv) {
-    var invColor = inv.verdict_color==='red'?'#ef4444':inv.verdict_color==='green'?'#16a34a':'#d97706';
-    var invBody = '<div style="font-size:12px;font-weight:700;color:'+invColor+';margin-bottom:8px">'+excoEsc(inv.verdict)+'</div>'
-      +'<p class="xp" style="margin-bottom:8px">'+excoEsc(inv.summary)+'</p>'
-      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">'
-      +'<div><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#16a34a;margin-bottom:4px">Bull Case</div>'
-      +(inv.bull_case||[]).map(function(b){ return '<div style="font-size:10px;padding:3px 0 3px 10px;position:relative;border-bottom:1px solid #f3f4f6;line-height:1.4"><span style="position:absolute;left:0;color:#16a34a">+</span>'+excoEsc(b)+'</div>'; }).join('')+'</div>'
-      +'<div><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#dc2626;margin-bottom:4px">Bear Case</div>'
-      +(inv.bear_case||[]).map(function(b){ return '<div style="font-size:10px;padding:3px 0 3px 10px;position:relative;border-bottom:1px solid #f3f4f6;line-height:1.4"><span style="position:absolute;left:0;color:#dc2626">−</span>'+excoEsc(b)+'</div>'; }).join('')+'</div>'
+  if (ti.monthly_series && ti.monthly_series.labels) {
+    var ms = ti.monthly_series;
+    var lab = ms.labels[ms.labels.length-1] || '';
+    var gccLatest = ms.gcc_trust ? ms.gcc_trust[ms.gcc_trust.length-1] : '—';
+    var isrLatest = ms.israeli_trust ? ms.israeli_trust[ms.israeli_trust.length-1] : '—';
+    var euLatest  = ms.eu_trust ? ms.eu_trust[ms.eu_trust.length-1] : '—';
+    var tiBody = '<p class="xp" style="color:#6b7280;font-style:italic">'+excoEsc(ti.label_caveat||ti.description||'')+'</p>'
+      +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px">'
+        +'<div style="border:1px solid #d1fae5;background:#f0fdf4;padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:#065f46;text-transform:uppercase">GCC</div><div style="font-size:24px;font-weight:800;color:#059669">'+excoEsc(gccLatest)+'/100</div></div>'
+        +'<div style="border:1px solid #dbeafe;background:#eff6ff;padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:#1e40af;text-transform:uppercase">ISRAEL</div><div style="font-size:24px;font-weight:800;color:#2563eb">'+excoEsc(isrLatest)+'/100</div></div>'
+        +'<div style="border:1px solid #fef3c7;background:#fffbeb;padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:#92400e;text-transform:uppercase">EU</div><div style="font-size:24px;font-weight:800;color:#d97706">'+excoEsc(euLatest)+'/100</div></div>'
       +'</div>'
-      +'<div style="background:#fffbeb;border-left:3px solid #d97706;padding:8px;border-radius:3px;margin-bottom:6px"><strong>Timing:</strong> '+excoEsc(inv.timing_verdict)+'</div>'
-      +'<div style="background:#f0fdf4;border-left:3px solid #16a34a;padding:8px;border-radius:3px"><strong>Recommendation:</strong> '+excoEsc(inv.recommendation)+'</div>';
-    html += excoSection('11','Egypt — Invest / Relocate Technical Resources?', invBody);
+      +'<p class="xp" style="font-size:9px;color:#9ca3af;margin-top:6px;text-align:center">'+excoEsc(lab)+' &nbsp;·&nbsp; crisis threshold: '+excoEsc(ms.crisis_threshold||30)+' &nbsp;·&nbsp; series: '+excoEsc((ms.labels||[]).join(' › '))+'</p>';
+    html += excoSection('04','Trust Direction Tracker — Monthly', tiBody);
   }
 
-  // Analyst note
-  if (m.analyst_note) {
-    html += '<div class="xs" style="border-color:#fde68a;background:#fffbeb">'
-      +'<div class="xs-hdr" style="background:#fef3c7;border-color:#fde68a"><span class="xs-num" style="background:#92400e">★</span><span class="xs-title">Analyst Assessment</span></div>'
-      +'<div class="xs-body"><p class="xp" style="font-style:italic;color:#78350f">'+excoEsc(m.analyst_note)+'</p></div>'
+  if (gc.commitments && gc.commitments.length) {
+    var gcBody = (gc.commitments||[]).map(function(co){
+      return '<div style="padding:8px 10px;border-bottom:1px solid #f3f4f6;break-inside:avoid">'
+        +'<div style="font-size:11px;font-weight:700;color:#111;margin-bottom:3px">'+excoEsc(co.headline||'')+'</div>'
+        +(co.actual ? '<div style="font-size:10px;color:#374151;line-height:1.5"><strong>Actual:</strong> '+excoEsc(co.actual)+'</div>' : '')
+        +(co.break_probability ? '<div style="font-size:9px;color:#dc2626;font-weight:600;margin-top:3px;letter-spacing:0.04em">Break probability: '+excoEsc(co.break_probability)+'</div>' : '')
+        +'</div>';
+    }).join('');
+    html += excoSection('05','Government Commitments — Break Probability', gcBody);
+  }
+
+  if (eb.five_key_questions_for_exco && eb.five_key_questions_for_exco.length) {
+    var qBody = eb.five_key_questions_for_exco.map(function(q){
+      var sevColor = q.severity==='high'?'#b91c1c':q.severity==='medium'?'#d97706':'#374151';
+      return '<div style="padding:8px 10px;border-left:3px solid '+sevColor+';background:#fafafa;margin-bottom:6px;border-radius:0 4px 4px 0">'
+        +'<div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px">'+excoEsc(q.question||'')+'</div>'
+        +'<div style="font-size:10px;color:#374151;line-height:1.5">'+excoEsc(q.recommendation||'')+'</div>'
       +'</div>';
+    }).join('');
+    html += excoSection('06','Five Key Questions for EXCO', qBody);
   }
 
-  // Footer
+  var signalsArr = eb.signals_not_yet_reflected_in_mainstream || eb.what_mainstream_is_missing || [];
+  var bullArr = eb.bull_case_triggers_to_watch || [];
+  if (signalsArr.length || bullArr.length) {
+    html += '<div class="xgrid">';
+    if (signalsArr.length) {
+      var sBody = signalsArr.map(function(s){return '<div class="xdev-item">'+excoEsc(s)+'</div>';}).join('');
+      html += excoSection('07','Signals not yet reflected in mainstream', sBody);
+    }
+    if (bullArr.length) {
+      var bBody = bullArr.map(function(s){return '<div class="xdev-item" style="border-left:2px solid #16a34a;padding-left:12px">'+excoEsc(s)+'</div>';}).join('');
+      html += excoSection('08','Bull-case triggers to watch', bBody);
+    }
+    html += '</div>';
+  }
+
+  if (eb.recommended_actions && eb.recommended_actions.length) {
+    var actBody = eb.recommended_actions.map(function(a, i){
+      return '<div class="xdev-item"><strong>'+(i+1)+'.</strong> '+excoEsc(a)+'</div>';
+    }).join('');
+    html += excoSection('09','Recommended actions', actBody);
+  }
+
+  if (eb.source_grade) {
+    var sg = eb.source_grade;
+    var sgBody = '<p class="xp" style="font-size:10px;color:#374151"><strong>High:</strong> '+excoEsc(sg.high_grade||'—')+'</p>'
+      +'<p class="xp" style="font-size:10px;color:#374151"><strong>Medium:</strong> '+excoEsc(sg.medium_grade||'—')+'</p>'
+      +(sg.live_data_dealer_quotes ? '<p class="xp" style="font-size:10px;color:#374151"><strong>Live dealer quotes:</strong> '+excoEsc(sg.live_data_dealer_quotes)+'</p>' : '')
+      +'<p class="xp" style="font-size:10px;color:#374151"><strong>Low / pre-war:</strong> '+excoEsc(sg.low_grade_or_pre_war||'—')+'</p>'
+      +(sg.note ? '<p class="xp" style="font-size:9px;color:#9ca3af;margin-top:4px;font-style:italic">'+excoEsc(sg.note)+'</p>' : '');
+    html += excoSection('10','Source grade', sgBody);
+  }
+
   html += '<div class="xfooter">'
     +'<span>Gulf &amp; Egypt Risk Monitor — Operation Epic Fury Day '+excoEsc(m.day)+'</span>'
     +'<span>Generated from gulf-risk-data.js — no external API calls &nbsp;·&nbsp; '+excoEsc(upd)+'</span>'
@@ -1581,7 +2678,128 @@ function printExco() {
   }
 }
 
-// ── DATA & SOURCES PAGE ──
+function renderExcoTop(D, upd) {
+  if (D.energy_crisis_alert) {
+    var ea = D.energy_crisis_alert;
+    document.getElementById('exco-energy-alert').style.display = '';
+    document.getElementById('exco-energy-upd').textContent = ts(ea.updated) || upd;
+    document.getElementById('exco-energy-headline').textContent = ea.headline || '';
+    document.getElementById('exco-energy-summary').textContent = ea.summary || '';
+    document.getElementById('exco-energy-measures').innerHTML = (ea.current_measures || []).map(function(m){return '<li>'+esc(m)+'</li>';}).join('');
+    var br2 = ea.blackout_risk || {};
+    var blines = [];
+    if (br2.summer_window) blines.push('<li><b>Window:</b> '+esc(br2.summer_window)+'</li>');
+    if (br2.probability_some_blackouts_july) blines.push('<li><b>Jul probability:</b> '+esc(br2.probability_some_blackouts_july)+'</li>');
+    if (br2.probability_some_blackouts_june) blines.push('<li><b>Jun probability:</b> '+esc(br2.probability_some_blackouts_june)+'</li>');
+    if (br2.impact_for_business_traveller) blines.push('<li><b>Traveller impact:</b> '+esc(br2.impact_for_business_traveller)+'</li>');
+    document.getElementById('exco-energy-blackout').innerHTML = blines.join('');
+    document.getElementById('exco-energy-precedent').textContent = ea.precedent_2024 || '';
+  }
+
+  if (D.cairo_travel_briefing) {
+    var c = D.cairo_travel_briefing;
+    document.getElementById('exco-cairo-briefing').style.display = '';
+    document.getElementById('exco-cairo-upd').textContent = ts(c.updated) || upd;
+    document.getElementById('exco-cairo-headline').textContent = c.headline || '';
+    var ins = c.insurance_alert || {};
+    document.getElementById('exco-cairo-ins-priority').textContent = ins.priority || '';
+    document.getElementById('exco-cairo-ins-bottom').textContent = ins.bottom_line || '';
+    document.getElementById('exco-cairo-ins-types').innerHTML = (ins.required_cover_types || []).map(function(t){return '<li>'+esc(t)+'</li>';}).join('');
+    var providerArr = ins.provider_categories_to_request || ins.recommended_providers || [];
+    document.getElementById('exco-cairo-ins-providers').innerHTML = providerArr.map(function(t){return '<li>'+esc(t)+'</li>';}).join('');
+    document.getElementById('exco-cairo-marriotts').innerHTML = (c.cairo_marriott_options || []).map(function(m){
+      return '<div class="exco-marriott">'
+        +'<div class="exco-marriott-name">'+esc(m.property||'')+'</div>'
+        +(m.area ? '<div class="exco-marriott-area">'+esc(m.area)+'</div>' : '')
+        +(m.airport_distance ? '<div class="exco-marriott-area">Airport: '+esc(m.airport_distance)+'</div>' : '')
+        +(m.recommendation ? '<div class="exco-marriott-rec">'+esc(m.recommendation)+'</div>' : '')
+      +'</div>';
+    }).join('');
+    var abort = c.abort_triggers_pre_departure || {};
+    var abortHtml = '';
+    if (Array.isArray(abort)) {
+      abortHtml = '<ul class="exco-list">' + abort.map(function(t){return '<li>'+esc(t)+'</li>';}).join('') + '</ul>';
+    } else {
+      if (abort.tier_1_immediate_abort) abortHtml += '<div class="exco-abort-tier exco-abort-tier-1"><div class="exco-abort-tier-label">Tier 1 — Immediate abort</div><ul class="exco-list">'+abort.tier_1_immediate_abort.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>';
+      if (abort.tier_2_high_concern_review_immediately) abortHtml += '<div class="exco-abort-tier exco-abort-tier-2"><div class="exco-abort-tier-label">Tier 2 — Same-day review</div><ul class="exco-list">'+abort.tier_2_high_concern_review_immediately.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>';
+      if (abort.tier_3_yellow_flag_monitor) abortHtml += '<div class="exco-abort-tier exco-abort-tier-3"><div class="exco-abort-tier-label">Tier 3 — Yellow flag</div><ul class="exco-list">'+abort.tier_3_yellow_flag_monitor.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul></div>';
+    }
+    document.getElementById('exco-cairo-abort').innerHTML = abortHtml;
+    document.getElementById('exco-cairo-assessment').textContent = c.revised_safety_assessment || c.current_threat_level || '';
+  }
+
+  if (D.trust_index) {
+    var ti = D.trust_index;
+    document.getElementById('exco-trust-index').style.display = '';
+    document.getElementById('exco-trust-upd').textContent = ts(ti.updated) || upd;
+    document.getElementById('exco-trust-caveat').textContent = ti.label_caveat || ti.description || '';
+    var ms = ti.monthly_series || {};
+    var labels = ms.labels || [];
+    var snapshotHtml = '';
+    if (labels.length) {
+      var latest = labels[labels.length-1] || '';
+      var gccLatest = (ms.gcc_trust && ms.gcc_trust[ms.gcc_trust.length-1]) || '—';
+      var isrLatest = (ms.israeli_trust && ms.israeli_trust[ms.israeli_trust.length-1]) || '—';
+      var euLatest  = (ms.eu_trust && ms.eu_trust[ms.eu_trust.length-1]) || '—';
+      snapshotHtml = '<div class="exco-trust-readings">'
+        +'<div class="exco-trust-card" style="border:1px solid rgba(16,185,129,0.4)"><div class="exco-trust-card-label" style="color:#10b981">GCC</div><div class="exco-trust-card-val" style="color:#10b981">'+gccLatest+'/100</div></div>'
+        +'<div class="exco-trust-card" style="border:1px solid rgba(59,130,246,0.4)"><div class="exco-trust-card-label" style="color:#3b82f6">ISRAEL</div><div class="exco-trust-card-val" style="color:#3b82f6">'+isrLatest+'/100</div></div>'
+        +'<div class="exco-trust-card" style="border:1px solid rgba(245,158,11,0.4)"><div class="exco-trust-card-label" style="color:#f59e0b">EU</div><div class="exco-trust-card-val" style="color:#f59e0b">'+euLatest+'/100</div></div>'
+        +'<div style="margin-left:auto;font-size:10px;color:var(--muted);align-self:center">'+esc(latest)+' · crisis threshold: '+esc(ms.crisis_threshold||30)+'</div>'
+        +'</div>';
+      snapshotHtml += '<div style="font-size:10px;color:var(--muted);margin-bottom:6px">Monthly series ('+labels.join(' › ')+'): GCC ['+(ms.gcc_trust||[]).join(' › ')+'] · ISR ['+(ms.israeli_trust||[]).join(' › ')+'] · EU ['+(ms.eu_trust||[]).join(' › ')+']</div>';
+    }
+    document.getElementById('exco-trust-snapshot').innerHTML = snapshotHtml;
+    var sigHtml = '';
+    var sbp = ti.signals_by_party || {};
+    if (sbp.gcc) sigHtml += '<div class="exco-sublabel" style="color:#10b981">GCC signals</div><ul class="exco-list">'+sbp.gcc.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul>';
+    if (sbp.israel) sigHtml += '<div class="exco-sublabel" style="color:#3b82f6">Israeli signals</div><ul class="exco-list">'+sbp.israel.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul>';
+    if (sbp.eu) sigHtml += '<div class="exco-sublabel" style="color:#f59e0b">EU signals</div><ul class="exco-list">'+sbp.eu.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul>';
+    document.getElementById('exco-trust-signals').innerHTML = sigHtml;
+  }
+
+  if (D.government_commitments) {
+    var gc = D.government_commitments;
+    document.getElementById('exco-govt-commits').style.display = '';
+    document.getElementById('exco-gc-upd').textContent = ts(gc.updated) || upd;
+    document.getElementById('exco-gc-desc').textContent = gc.description || '';
+    document.getElementById('exco-gc-list').innerHTML = (gc.commitments || []).map(function(co){
+      return '<div class="exco-gc-row">'
+        +'<div class="exco-gc-headline">'+esc(co.headline || '')+'</div>'
+        +(co.promised   ? '<div class="exco-gc-meta"><b>Promised:</b> '+esc(co.promised)+'</div>'   : '')
+        +(co.historical ? '<div class="exco-gc-meta"><b>Historical:</b> '+esc(co.historical)+'</div>' : '')
+        +(co.actual     ? '<div class="exco-gc-actual"><b>Actual:</b> '+esc(co.actual)+'</div>'     : '')
+        +(co.break_probability ? '<div class="exco-gc-prob">Break probability: '+esc(co.break_probability)+'</div>' : '')
+      +'</div>';
+    }).join('');
+  }
+
+  if (D.exco_briefing) {
+    var eb = D.exco_briefing;
+    document.getElementById('exco-briefing-card').style.display = '';
+    document.getElementById('exco-brf-upd').textContent = ts(eb.updated) || upd;
+    document.getElementById('exco-brf-headline').textContent = eb.headline || '';
+    document.getElementById('exco-brf-summary').textContent = eb.one_paragraph_summary || '';
+    document.getElementById('exco-brf-questions').innerHTML = (eb.five_key_questions_for_exco || []).map(function(q){
+      var sevCls = 'exco-q-sev-'+(q.severity||'medium').replace(/[^a-z]/g,'');
+      return '<div class="exco-q-card '+sevCls+'">'
+        +'<div class="exco-q-text">'+esc(q.question || '')+'</div>'
+        +'<div class="exco-q-rec">'+esc(q.recommendation || '')+'</div>'
+      +'</div>';
+    }).join('');
+    document.getElementById('exco-brf-indicators').innerHTML = (eb.top_indicators_with_current_readings || []).map(function(it){
+      return '<div class="exco-indicator">'
+        +'<div class="exco-indicator-name">'+esc(it.indicator)+'</div>'
+        +'<div class="exco-indicator-current">'+esc(it.current||'')+' '+esc(it.direction || '')+'</div>'
+      +'</div>';
+    }).join('');
+    var signalsArr = eb.signals_not_yet_reflected_in_mainstream || eb.what_mainstream_is_missing || [];
+    document.getElementById('exco-brf-signals').innerHTML = signalsArr.map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
+    document.getElementById('exco-brf-bull').innerHTML = (eb.bull_case_triggers_to_watch || []).map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
+    document.getElementById('exco-brf-actions').innerHTML = (eb.recommended_actions || []).map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
+  }
+}
+
 function renderSources() {
   var D = window.GULF_RISK_DATA;
   if (!D) return;
@@ -1592,7 +2810,6 @@ function renderSources() {
 
   document.getElementById('src-upd').textContent = ts(m.updated);
 
-  // ── Data points table ──
   var datapoints = [
     { group: 'Market', field: 'Brent futures', value: '$'+(mx.brent_usd||'—')+'/bbl', source: 'TradingEconomics / Investing.com', freq: 'Daily' },
     { group: 'Market', field: 'Brent spot', value: '$'+(mx.brent_spot_usd||'—')+'/bbl', source: 'Physical market', freq: 'Daily' },
@@ -1651,14 +2868,12 @@ function renderSources() {
   dpHtml += '</tbody></table>';
   document.getElementById('src-datapoints').innerHTML = dpHtml;
 
-  // ── Stale fields ──
   var stale = ctx._stale_fields || [];
   var staleHtml = stale.length
     ? stale.map(function(f){ return '<div class="srow"><span class="srow-label" style="color:var(--amber)">⚠ '+esc(f)+'</span><span class="srow-val amber">UNVERIFIED</span></div>'; }).join('')
     : '<div style="font-size:11px;color:var(--green);padding:8px 0">✓ No stale fields flagged</div>';
   document.getElementById('src-stale').innerHTML = staleHtml;
 
-  // ── Verification checklist ──
   var checklist = ctx.key_figures_to_verify_daily || [];
   var clHtml = checklist.map(function(item, i) {
     return '<div style="display:flex;gap:10px;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px">'
@@ -1668,7 +2883,6 @@ function renderSources() {
   }).join('');
   document.getElementById('src-checklist').innerHTML = clHtml || '<div style="color:var(--dim);font-size:11px">No checklist defined</div>';
 
-  // ── Sources ──
   var sources = m.sources || [];
   var srcHtml = sources.map(function(s) {
     return '<div style="font-size:11px;color:var(--text);padding:4px 0 4px 12px;position:relative;border-bottom:1px solid var(--border);line-height:1.4">'
@@ -1677,15 +2891,12 @@ function renderSources() {
   document.getElementById('src-sources').innerHTML = srcHtml || '<div style="color:var(--dim);font-size:11px">No sources listed</div>';
 }
 
-// ── Boot: fetch live data from Gist, fall back to baked-in if offline ──
 (function() {
   var GIST_URL = 'https://gist.githubusercontent.com/paulcoomber/5387a9dee0799b3e4ede0dc5fef28c61/raw/gulf-risk-data.js';
 
   function boot() {
-    // Already loaded (baked-in combined file) — render immediately
     if (window.GULF_RISK_DATA) { render(); return; }
 
-    // Fetch live from Gist
     var hl = document.getElementById('brief-headline');
     if (hl) hl.textContent = 'Loading intelligence data…';
     fetch(GIST_URL + '?t=' + Date.now())
