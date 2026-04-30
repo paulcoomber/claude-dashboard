@@ -305,6 +305,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .exco-trust-card-val{font-size:18px;font-weight:700;font-family:var(--mono)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.exco-review-status{background:rgba(0,0,0,0.25);border-radius:6px;padding:8px 12px;margin:4px 0 10px;border-left:3px solid var(--good,#10b981)}
+.exco-review-status-row{display:flex;align-items:center;gap:10px;font-size:11px;flex-wrap:wrap}
+.exco-review-health{font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:0.06em;padding:2px 8px;border-radius:3px}
+.exco-review-health.green{background:rgba(16,185,129,0.18);color:#10b981;border:1px solid rgba(16,185,129,0.4)}
+.exco-review-health.amber{background:rgba(232,160,32,0.18);color:var(--amber);border:1px solid rgba(232,160,32,0.4)}
+.exco-review-health.red{background:rgba(239,68,68,0.18);color:var(--red2);border:1px solid rgba(239,68,68,0.4)}
+.exco-review-meta{color:var(--muted);font-size:11px;font-family:var(--mono)}
+.exco-review-summary{font-size:11px;color:var(--text);line-height:1.5;margin-top:6px}
 
 </style>
 </head>
@@ -405,6 +413,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 
     <div class="card exco-critical" id="exco-briefing-card" style="display:none">
       <div class="card-title"><span class="exco-pill exco-pill-critical">EXCO</span> EXCO BRIEFING <span class="card-upd" id="exco-brf-upd"></span></div>
+      <div class="exco-review-status" id="exco-review-status" style="display:none">
+        <div class="exco-review-status-row">
+          <span class="exco-review-health" id="exco-review-health">GREEN</span>
+          <span class="exco-review-meta" id="exco-review-meta"></span>
+        </div>
+        <div class="exco-review-summary" id="exco-review-summary"></div>
+      </div>
       <div class="exco-headline" id="exco-brf-headline"></div>
       <div class="exco-summary" id="exco-brf-summary"></div>
       <div class="grid2">
@@ -1175,6 +1190,41 @@ Object.assign(window.GULF_RISK_DATA, {
     rendering_status: {
       shell_renderer_verified: false,
       note: "The priority and display_order flags on this dashboard are convention-based. The current shell renderer has not been visually verified to surface the new EXCO sections prominently. Open https://paulcoomber.github.io/middle-east-tracker/ and confirm trust_index, government_commitments, energy_crisis_alert, cairo_travel_briefing, and exco_briefing each appear with appropriate prominence. If they do not, the shell needs an update — separate work item."
+    },
+
+    weekly_review_status: {
+      priority: "ELEVATED",
+      display_order: "TOP",
+      description: "Freshness indicator for the weekly critical review pass. Auto-populated by the weekly scheduled task each Friday. EXCO readers should look at this BEFORE trusting the EXCO sections — if last_run is more than 14 days ago, the picture may be stale.",
+      last_run_iso:        "2026-04-29T23:55:00.000Z",
+      last_run_human:      "29 April 2026 — initial seeding from interactive session (not a scheduled run)",
+      next_run_expected:   "Friday 09:00 UTC weekly (Cowork scheduled task)",
+      cadence:             "Weekly · Friday 09:00 UTC",
+      run_count_total:     0,
+      run_count_scheduled: 0,
+      run_count_manual:    1,
+      last_run_findings_summary: "Initial structural setup. Six of eleven critical-review fixes applied: trust_index relabelled as direction tracker; insurance providers softened to categories; Cairo Marriott specifics flagged for verification; signals_not_yet_reflected_in_mainstream + bull_case_triggers_to_watch + indicator_caveats added; abort triggers tiered into three levels; source-grade matrix extended.",
+      fields_updated_last_run: [
+        "exco_briefing.signals_not_yet_reflected_in_mainstream",
+        "exco_briefing.bull_case_triggers_to_watch",
+        "exco_briefing.indicator_caveats",
+        "exco_briefing.source_grade",
+        "trust_index.label_caveat + methodology",
+        "cairo_travel_briefing.insurance_alert.provider_categories_to_request",
+        "cairo_travel_briefing.cairo_marriott_options[0].verification_status",
+        "cairo_travel_briefing.abort_triggers_pre_departure (tiered)"
+      ],
+      escalation_active: false,
+      escalation_note: "No tier-1 abort triggers fired in last review. No coverup-widening evidence beyond the existing 68% premium claim (single-source, flagged).",
+      open_critical_review_items: [
+        "Verify or hard-replace the 68% black-market premium with multi-source number",
+        "Verify the $45-50B hot money figure",
+        "Add explicit review_cadence to government_commitments and energy_crisis_alert (only added to trust_index and exco_briefing for now)",
+        "Track quantitative replacements for the trust index when CDS / deposit / FDI data are consistently available",
+        "Confirm shell renderer surfaces all five EXCO sections prominently (visual verification)"
+      ],
+      health: "GREEN — initial seed. Status will turn AMBER if last_run is >14 days old, RED if >28 days.",
+      updated: "2026-04-29T23:55:00.000Z"
     },
 
     critical_review_protocol: {
@@ -2803,6 +2853,29 @@ function renderExcoTop(D, upd) {
     var eb = D.exco_briefing;
     document.getElementById('exco-briefing-card').style.display = '';
     document.getElementById('exco-brf-upd').textContent = ts(eb.updated) || upd;
+
+    var wrs = eb.weekly_review_status;
+    if (wrs) {
+      var wrsEl = document.getElementById('exco-review-status');
+      wrsEl.style.display = '';
+      var healthCls = 'green', healthText = 'GREEN';
+      if (wrs.last_run_iso) {
+        var ageDays = (Date.now() - Date.parse(wrs.last_run_iso)) / (1000 * 60 * 60 * 24);
+        if (ageDays > 28)      { healthCls = 'red';   healthText = 'RED — STALE'; }
+        else if (ageDays > 14) { healthCls = 'amber'; healthText = 'AMBER — DUE'; }
+      }
+      if (wrs.escalation_active) { healthCls = 'red'; healthText = 'RED — ESCALATION'; }
+      var healthEl = document.getElementById('exco-review-health');
+      healthEl.textContent = healthText;
+      healthEl.className = 'exco-review-health ' + healthCls;
+      var metaText = 'Last review: ' + (wrs.last_run_human || ts(wrs.last_run_iso) || '—')
+        + ' · Next: ' + (wrs.next_run_expected || '—')
+        + ' · Cadence: ' + (wrs.cadence || 'weekly')
+        + ' · Runs: ' + (wrs.run_count_total || 0);
+      document.getElementById('exco-review-meta').textContent = metaText;
+      document.getElementById('exco-review-summary').textContent = wrs.last_run_findings_summary || '';
+    }
+
     document.getElementById('exco-brf-headline').textContent = eb.headline || '';
     document.getElementById('exco-brf-summary').textContent = eb.one_paragraph_summary || '';
     document.getElementById('exco-brf-questions').innerHTML = (eb.five_key_questions_for_exco || []).map(function(q){
