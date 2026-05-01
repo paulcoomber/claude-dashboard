@@ -2739,7 +2739,19 @@ function buildExcoHTML(D) {
     '.xwl-item:last-child{border-bottom:none}',
     '.xwl-status{font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;flex-shrink:0}',
     '.xwl-label{font-size:11px;color:#374151}',
-    '@media print{body{padding:12px 16px;font-size:10.5px}@page{margin:8mm}.xmetrics{grid-template-columns:repeat(4,1fr)}}'
+    '.xspark-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;break-inside:avoid}',
+    '.xspark-card{border:1px solid #e5e7eb;border-radius:5px;padding:8px 10px 6px;background:#ffffff;break-inside:avoid;position:relative}',
+    '.xspark-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ef4444,#d97706,#3b82f6,#22c55e);border-radius:5px 5px 0 0;opacity:0.5}',
+    '.xspark-head{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:3px}',
+    '.xspark-label{font-family:"SF Mono",ui-monospace,Consolas,monospace;font-size:8.5px;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;line-height:1.2}',
+    '.xspark-val{font-size:13px;font-weight:700;color:#111;font-family:"SF Mono",ui-monospace,Consolas,monospace;font-feature-settings:"tnum";line-height:1;white-space:nowrap}',
+    '.xspark-svg{width:100%;height:38px;display:block;margin-top:2px}',
+    '.xspark-foot{display:flex;justify-content:space-between;align-items:baseline;font-family:"SF Mono",ui-monospace,Consolas,monospace;font-size:8.5px;color:#6b7280;margin-top:3px}',
+    '.xspark-foot .delta-up{color:#dc2626;font-weight:700}',
+    '.xspark-foot .delta-dn{color:#16a34a;font-weight:700}',
+    '.xspark-foot .delta-flat{color:#9ca3af;font-weight:700}',
+    '.xspark-source{font-family:"SF Mono",ui-monospace,Consolas,monospace;font-size:9px;color:#6b7280;margin-top:6px;padding-top:6px;border-top:1px dotted #e5e7eb;line-height:1.5}',
+    '@media print{body{padding:12px 16px;font-size:10.5px}@page{margin:8mm}.xmetrics{grid-template-columns:repeat(4,1fr)}.xspark-grid{grid-template-columns:repeat(4,1fr)}.xspark-card::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}}'
   ].join('');
 
   var eb = D.exco_briefing || {};
@@ -2776,6 +2788,86 @@ function buildExcoHTML(D) {
   html += excoMetric('US gas avg', '$'+(mx.us_gas_average||'—')+'/gal', mx.us_gas_note ? '' : 'AAA', '#ef4444');
   html += excoMetric('Hormuz transits', (hz.ships_24h||hz.ships_monday||'—'), 'Pre-war 125-140/day', '#ef4444');
   html += '</div>';
+
+  var pcs = D.chart_series || {};
+  if (pcs.labels && pcs.labels.length){
+    function pSpark(arr, color, gid, min, max, warIdx){
+      var W=200, H=38, padX=3, padY=4;
+      var n = (arr||[]).length;
+      var f = (arr||[]).filter(function(v){ return v != null && !isNaN(v); });
+      if (f.length < 2) return '<svg class="xspark-svg" viewBox="0 0 '+W+' '+H+'"></svg>';
+      if (min == null) min = Math.min.apply(null, f);
+      if (max == null) max = Math.max.apply(null, f);
+      if (max === min) max = min + 1;
+      function x(i){ return padX + (i/(n-1))*(W-2*padX); }
+      function y(v){ if (v==null||isNaN(v)) return null; return H-padY - ((v-min)/(max-min))*(H-2*padY); }
+      var pts = [];
+      for (var i=0;i<n;i++){ var yy=y(arr[i]); if(yy!=null) pts.push(x(i).toFixed(1)+','+yy.toFixed(1)); }
+      if (pts.length<2) return '';
+      var firstX = pts[0].split(',')[0], lastX = pts[pts.length-1].split(',')[0];
+      var areaPath = 'M' + firstX + ',' + (H-padY) + ' L' + pts.join(' L') + ' L' + lastX + ',' + (H-padY) + ' Z';
+      var linePath = 'M' + pts.join(' L');
+      var lastIdx = n-1;
+      var lastY = y(arr[lastIdx]);
+      var warMarker = '';
+      if (warIdx != null && warIdx >= 0 && warIdx < n){
+        var wx = x(warIdx).toFixed(1);
+        warMarker = '<line x1="'+wx+'" y1="'+padY+'" x2="'+wx+'" y2="'+(H-padY)+'" stroke="#dc2626" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.55"/>';
+      }
+      var endDot = (lastY != null) ? '<circle cx="'+x(lastIdx).toFixed(1)+'" cy="'+lastY.toFixed(1)+'" r="1.8" fill="'+color+'"/>' : '';
+      return '<svg class="xspark-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'
+        + '<defs><linearGradient id="'+gid+'" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.22"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs>'
+        + '<path d="'+areaPath+'" fill="url(#'+gid+')"/>'
+        + warMarker
+        + '<path d="'+linePath+'" fill="none" stroke="'+color+'" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>'
+        + endDot
+        + '</svg>';
+    }
+    function pDelta(arr){
+      var f = (arr||[]).filter(function(v){ return v != null && !isNaN(v); });
+      if (f.length < 2) return { p:null, dir:'flat' };
+      var first = f[0], last = f[f.length-1];
+      if (first === 0) return { p:null, dir:'flat' };
+      var p = ((last-first)/Math.abs(first))*100;
+      return { p:p, dir: Math.abs(p)<0.5 ? 'flat' : (p>0 ? 'up' : 'dn') };
+    }
+    function pPct(p){ if (p==null) return '—'; var s = p>=0?'+':''; return s + Number(p).toFixed(1) + '%'; }
+    function pFmt(n, dp){ if (n==null||isNaN(n)) return '—'; return Number(n).toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
+
+    var warStart = (pcs.war_start_index != null) ? pcs.war_start_index : null;
+    var pGraphs = [
+      { key:'brent',  label:'Brent (USD/bbl)',     color:'#ef4444', dp:2, prefix:'$', current:mx.brent_usd,        min:pcs.brent_min,  max:pcs.brent_max  },
+      { key:'egp',    label:'USD/EGP',             color:'#d97706', dp:2, prefix:'',  current:mx.egp_usd,          min:pcs.egp_min,    max:pcs.egp_max    },
+      { key:'hormuz', label:'Hormuz transits/day', color:'#3b82f6', dp:0, prefix:'',  current:mx.hormuz_ships_24h, min:pcs.hormuz_min, max:pcs.hormuz_max },
+      { key:'suez',   label:'Suez transits/day',   color:'#16a34a', dp:0, prefix:'',  current:null,                min:pcs.suez_min,   max:pcs.suez_max   }
+    ];
+    var firstLabel = pcs.labels[0] || '';
+    var lastLabel  = pcs.labels[pcs.labels.length - 1] || '';
+    var pHtml = '';
+    pGraphs.forEach(function(g, i){
+      var arr = pcs[g.key] || [];
+      var arrF = arr.filter(function(v){ return v != null && !isNaN(v); });
+      var last = arrF.length ? arrF[arrF.length-1] : null;
+      var dispVal = (g.current != null) ? g.current : last;
+      var d = pDelta(arr);
+      pHtml += '<div class="xspark-card">'
+        + '<div class="xspark-head">'
+          + '<div class="xspark-label">'+excoEsc(g.label)+'</div>'
+          + '<div class="xspark-val">'+(dispVal!=null ? excoEsc(g.prefix) + pFmt(dispVal, g.dp) : '—')+'</div>'
+        + '</div>'
+        + pSpark(arr, g.color, 'xsg-'+g.key, g.min, g.max, warStart)
+        + '<div class="xspark-foot">'
+          + '<span>'+excoEsc(firstLabel)+' &rarr; '+excoEsc(lastLabel)+'</span>'
+          + '<span class="delta-'+d.dir+'">'+(d.p==null?'—':pPct(d.p))+'</span>'
+        + '</div>'
+      + '</div>';
+    });
+    html += '<div class="xspark-grid">' + pHtml + '</div>';
+    if (pcs.source_note){
+      var srcText = pcs.source_note.length > 280 ? pcs.source_note.slice(0,277) + '…' : pcs.source_note;
+      html += '<div class="xspark-source">Trend window: '+excoEsc(firstLabel)+' &rarr; '+excoEsc(lastLabel)+'. Dashed red line = war start (28 Feb 2026). '+excoEsc(srcText)+'</div>';
+    }
+  }
 
   if (eb.top_indicators_with_current_readings && eb.top_indicators_with_current_readings.length) {
     var indBody = eb.top_indicators_with_current_readings.map(function(it){
