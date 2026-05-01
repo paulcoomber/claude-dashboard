@@ -942,6 +942,64 @@ Object.assign(window.GULF_RISK_DATA, {
     updated: "2026-04-29T21:28:06.000Z"
   },
 
+  egypt_emergency_measures: {
+    priority: "HIGH",
+    display_order: "TOP",
+    description: "Structured tracker of Egyptian emergency economic measures imposed during the 2026 Iran war. Each entry carries status (ACTIVE/LIFTED/PARTIAL), since/until dates, the underlying decree, and a verifiable source URL. Updated by the weekly review and daily refresh. Surfaced on the mobile dashboard.",
+    last_verified_iso: "2026-05-01T09:30:00.000Z",
+    monthly_gas_import_bill: {
+      pre_war_usd_m: 560,
+      current_usd_m: 1650,
+      multiplier: 2.95,
+      source: "Daily News Egypt 28 Mar 2026 / Aawsat",
+      url: "https://www.dailynewsegypt.com/2026/03/28/egypt-mandates-early-shop-closures-partial-remote-work-as-iran-war-doubles-fuel-bill-to-2-5bn/"
+    },
+    measures: [
+      {
+        label: "Sunday remote-work mandate (de-facto 4-day in-office week)",
+        status: "ACTIVE",
+        since: "2026-04-05",
+        until: "2026-05-31 (extended via cabinet approval; under further extension review)",
+        decree: "PM Decree No. 982 of 2026",
+        source: "Ahram Online / Egypt Independent / EnterpriseAM",
+        url: "https://english.ahram.org.eg/NewsContentP/1/566969/Egypt/Egypt-cabinet-approves-continued-remote-work-on-Su.aspx",
+        notes: "All employees in specified entities WFH on Sundays. Critical sectors exempted. Egyptian work week is Sun-Thu (5 days), so this is effectively a 4-day in-office week. Cabinet extended through May 2026."
+      },
+      {
+        label: "9pm shop / mall / restaurant closures",
+        status: "LIFTED",
+        since: "2026-03-28",
+        until: "2026-04-26 (cabinet reversed)",
+        decree: "PM Decree No. 909 of 2026",
+        source: "Semafor / FMT / The National / Egypt Independent / Aawsat",
+        url: "https://www.semafor.com/article/04/27/2026/cairo-nightlife-returns-after-a-month-of-early-closure-measures",
+        notes: "Required closure 9pm Sun-Wed, 10pm Thu-Fri (later 11pm). Cabinet reversed 26 April after review found business damage outweighed energy savings. Normal hours restored (11pm; midnight on summer weekends). Decree only ran ~one month — looks like a controlled climbdown rather than a structural posture change."
+      },
+      {
+        label: "Fuel-oil burn for power generation",
+        status: "ACTIVE",
+        since: "2026-04-24",
+        until: "ongoing through summer 2026",
+        decree: "MEES report (no formal decree)",
+        source: "MEES Apr 24 2026",
+        url: "https://www.mees.com/2026/4/24/power-water/egypt-plans-fuel-burn-to-avoid-power-blackouts/ca91ecc0-3fca-11f1-8223-7f0c561a512a",
+        notes: "Egypt increasing fuel-oil imports for power generation as it faces LNG procurement difficulties + fluctuating Israeli gas supply. Same playbook as 2024 — when government messaging said no blackouts and blackouts arrived in June anyway."
+      },
+      {
+        label: "Public-sector lighting / commercial display dimming",
+        status: "PARTIAL",
+        since: "2026-03-28",
+        until: "ongoing (selectively, post-26-April reversal)",
+        decree: "PM Decree No. 909 of 2026 (companion measure)",
+        source: "Aawsat / Middle East Eye / The National",
+        url: "https://english.aawsat.com/business/5255933-egypt-imposes-business-curfew-counter-soaring-fuel-costs",
+        notes: "Reduced lighting on government buildings + restrictions on commercial display ads. Some elements continue post-26-April closure reversal but coverage thinning."
+      }
+    ],
+    bottom_line: "Egypt walked back the most-visible curfew (9pm closures) on 26 April after one month — Egyptians 'expressed relief' (The National) — but underlying fuel-cost crisis unchanged: monthly gas import bill ~$1.65B, 2.95x pre-war. Sunday WFH continues through May. Fuel-oil-for-power burn live. The rollback risks repeating the 2024 playbook (government denied blackouts; June 2024 blackouts arrived anyway). Read the rollback as PR-grade relief, not structural improvement.",
+    review_protocol: "Refresh on every weekly review. Cross-check status of each measure against (a) the source outlet, (b) at least one independent corroboration, (c) any new cabinet/PM decree. Flag any measure where source URL goes 404 or content diverges from claim."
+  },
+
   energy_crisis_alert: {
     priority: "CRITICAL",
     alert_color: "red",
@@ -1128,13 +1186,13 @@ Object.assign(window.GULF_RISK_DATA, {
       priority: "ELEVATED",
       display_order: "TOP",
       description: "Freshness indicator for the weekly critical review pass. Auto-populated by the weekly scheduled task each Friday. EXCO readers should look at this BEFORE trusting the EXCO sections — if last_run is more than 14 days ago, the picture may be stale.",
-      last_run_iso:        "2026-05-01T09:15:00.000Z",
-      last_run_human:      "01 May 2026 — second weekly pass today (auto-fire after morning manual seed). Q4 hit on energy-crisis content: government REVERSED 9pm closures + dimmed lighting on 28 Apr per The National; stable.js updated.",
+      last_run_iso:        "2026-05-01T09:30:00.000Z",
+      last_run_human:      "01 May 2026 — third weekly pass today (revisit prompted by user pushback on Kuwait deposit FIRED tag). Walk-back applied; new validation discipline added to memory; new egypt_emergency_measures tracker added; 4 new signals captured (Kuwait public spat, EGX foreign net selling, PIF rhetoric-vs-action, ADQ→L'imad re-org).",
       next_run_expected:   "Friday 09:00 UTC weekly (Cowork scheduled task: weekly-exco-critical-review)",
       cadence:             "Weekly · Friday 09:00 UTC",
-      run_count_total:     2,
+      run_count_total:     3,
       run_count_scheduled: 1,
-      run_count_manual:    1,
+      run_count_manual:    2,
       escalation_active:   false,
       last_run_findings_summary: "Auto-fire run #2. Decision-relevant: Q4 stale-claim hit — Egypt energy rationing visible measures (9pm closures + dimmed street lighting) REVERSED 28 Apr 2026 per The National after review found business-activity damage outweighed energy savings; partial WFH + fuel-oil burn HOLD. Updated energy_crisis_alert headline, current_measures, consumer_visible_signs, and top_indicators energy rationing posture row to mark rollback. Today official EGP pulled back from yesterday's 53.73 break to ~53 — CBE defence held overnight. No new bull triggers; no Cairo trip flip; cover-up direction stable not widening today. UAE OPEC exit effective today but ~2M bpd offshore shut-in by Hormuz blockade limits immediate market impact.",
       fields_updated_last_run: [
@@ -1199,13 +1257,17 @@ Object.assign(window.GULF_RISK_DATA, {
       "Black market structural premium reportedly widened from 52% to 68% in 2026 (single-source — see indicator caveats); live dealer-quote premium ~5-6% (sarfegp Apr 24)",
       "Egyptian companies divesting locally is happening below the visible reporting threshold (anecdotal; not yet aggregated)",
       "GCC-Egypt relationship described as 'under pressure' (Arab Center DC) — most coverage still implies stable",
-      "Mandated 1-day-WFH (Apr 2026) is the first such mandate this year — reported but not framed as significant"
+      "Mandated 1-day-WFH (Apr 2026) is the first such mandate this year — reported but not framed as significant",
+      "Kuwait public spat with Egypt Apr 2026: commentator Safa Al-Hashem publicly called for withdrawal of $2B Kuwaiti CBE deposit; Egypt Ministry of Information condemned; al-Hashem referred to Kuwaiti public prosecutor; Kuwaiti FM emergency Cairo visit 19 Apr to do diplomatic damage control (Alhurra). Deposits remain rolling but on structural lock-in, not GCC confidence — borrower-side framing of '$18.3B deposit floor protected' overstates voluntariness.",
+      "EGX foreign net selling continued late Apr 2026 — ~EGP 19.5bn (~$370M) net foreign sell 28 Apr alone (MEObserver); Egyptian + 'Arab' investors absorbing. Single-source: 'Arab' label may or may not include GCC; needs second-source separation before claiming GCC-specific divestment, but the directional outflow is real.",
+      "PIF rhetoric vs action gap (Q3-Q4 2025): public posture (March 2026 FII Miami, governor) committed to global investments; ACTION: US-listed equity holdings cut $19.4B → $12.9B Q3→Q4 2025 (Arab News) — 33% reduction in 3 months. Reuters: three Gulf states reviewing SWF deployment to offset Iran war losses. Egypt portfolio status during this rebalance: opaque — public commitment necessary but not sufficient.",
+      "ADQ folded into new SWF entity 'L'imad' under Abu Dhabi crown prince Khaled bin Mohamed Al Nahyan (January 2026 per Middle East Insider — SINGLE SOURCE / weak outlet, needs corroboration). If accurate, transfers Ras Al-Hekma $35B portfolio decision-making to a different decision-maker; portfolio review risk worth tracking but FLAGGED UNVERIFIED."
     ],
     bull_case_triggers_to_watch: [
       "Iran accepts a partial nuclear concession that allows the blockade to lift",
       "Beijing summit (May 14-15) produces a written framework that holds for >7 days — TRACKING (China + Pakistan 5-point proposal Mar 31; Wang Yi mediation activity ongoing; no breakthrough yet)",
       "Lebanon truce extended past mid-June with no further IDF strikes north of Litani",
-      "Fresh GCC bailout deposit announced (any size) — would re-anchor trust_index — *FIRED 2026-04 (Kuwait $2B deposit RENEWED; Egyptian Finance Minister + CBE Governor confirm GCC will not withdraw $18.3B deposit floor while EFF active; AGBI / EnterpriseAM Apr 2026)*",
+      "Fresh GCC bailout deposit announced (any size) — would re-anchor trust_index — *CONTESTED (per 2026-05-01 weekly revisit). EnterpriseAM 9 Apr: CBE *looking to renew* the $2B Kuwaiti deposit (still pending); FDI conversion of $4B Kuwaiti deposits STALLED by regional war. The earlier FIRED tag relied on Egyptian-side messaging only. Kuwaiti-side data shows the opposite: public withdrawal calls by Kuwaiti commentator Safa Al-Hashem, Egypt MoI condemnation, Al-Hashem referred to Kuwaiti public prosecutor, Kuwaiti FM emergency Cairo visit 19 Apr to do diplomatic damage control (Alhurra). Deposits ROLLING under structural lock-in (KIA Ekuity ~$1.8B Egyptian equity portfolio incl 15% Sumed pipeline; ADQ $35B Ras Al-Hekma anchors UAE; pulling deposits would crater EGP and devastate own equity holdings) — not voluntary GCC confidence in Egypt.*",
       "IMF June review approves a clean tranche disbursement with no fresh waivers required",
       "Hormuz transits return above 30/day sustained for 7 days",
       "Brent returns below $100 sustained for 14 days",
@@ -1378,6 +1440,29 @@ Object.assign(window.GULF_RISK_DATA, {
       "GOV.UK FCDO — Egypt travel advice (current advisories)",
       "travel.state.gov — Iran/Iraq/Lebanon Level 4"
     ],
+    critical_review_revisit: {
+      ts: "2026-05-01T09:30:00.000Z",
+      pass_type: "weekly-revisit-after-user-pushback",
+      run_number: "2.1 (revisit of run #2 / equivalent to run #3 by counter)",
+      reason: "User pushback on the 'Kuwait deposit FIRED' bull-trigger mark from manual run #1 — asked: is it verified from Kuwaiti media? what is the gossip in Kuwait? could it be a false flag? are GCC selling stakes? Walk-back required.",
+      what_was_wrong: "Manual run #1 marked 'Fresh GCC bailout deposit announced' bull trigger as FIRED based on Egyptian-side framing only (AGBI/EnterpriseAM/Egypt Independent/EgyptToday + CBE Governor + Finance Minister assurances). 'What would Paul ask?' validation discipline was not applied: no Kuwaiti-side source was checked, single-side sourcing, the 'renewal' was actually still pending per EnterpriseAM 9 Apr ('CBE looking to renew'), and the structural-lock argument (Kuwait can't pull because its $1.8B+ Ekuity equity + Sumed pipeline stake would be devastated by EGP collapse) was the actual load-bearing reason for the rolling deposit, not voluntary GCC confidence.",
+      kuwait_side_evidence_now_added: [
+        "Alhurra: Kuwaiti commentator Safa Al-Hashem publicly called for withdrawal of $2B CBE deposit; referred to Kuwaiti public prosecutor; Egypt Ministry of Information condemned; Kuwaiti FM Jarrah Jaber Al-Ahmad Al-Sabah did emergency Cairo visit and met Sisi 19 Apr 2026 to do diplomatic damage control",
+        "EnterpriseAM 9 Apr 2026: 'CBE looks to renew $2B Kuwaiti deposit as regional conflict stalls FDI conversions' — present tense, still pending",
+        "Arab Center DC: 'Egypt and the Gulf — A Relationship under Pressure' (Apr 2026)",
+        "Carnegie: Gulf monarchies caught between Iran's desperation and US recklessness; resentment over Egypt's failure to provide military support"
+      ],
+      gcc_divestment_signals_searched: [
+        "KIA / Ekuity Egypt-stake reductions: NO direct evidence in public sources, but SWF disclosure 'notoriously opaque' per Arab Center DC — absence-of-evidence ≠ evidence-of-absence",
+        "ADQ → L'imad re-org under Khaled bin Mohamed Al Nahyan (Jan 2026) per Middle East Insider — SINGLE SOURCE / weak outlet; portfolio-review risk if confirmed but flag as unverified",
+        "EGX foreign net selling continued late Apr 2026 (~EGP 19.5bn out 28 Apr per MEObserver); 'Arab' vs 'foreign' separation unclear in single source",
+        "Saudi PIF: public commitment to global investments (March 2026 FII Miami) BUT US-listed equity holdings cut $19.4B → $12.9B Q3→Q4 2025 (Arab News) = -33% in 3 months. Reuters: three Gulf states reviewing SWF deployment to offset Iran war losses. Egypt portfolio status during this rebalance: opaque."
+      ],
+      egypt_measures_status_recheck_correction: "Manual run #1 said 'Energy crisis content holds' — wrong. Status as of 2026-05-01: 9pm shop/mall/restaurant closures LIFTED 26 April 2026 (cabinet reversal — also caught by auto-fire run #2); Sunday remote-work mandate ACTIVE and EXTENDED through May 2026 (PM Decree 982); fuel-oil burn for power generation ACTIVE since ~24 Apr; public-sector lighting/display dimming PARTIAL. Monthly gas import bill ~$1.65B (2.95x pre-war $560M). New structured tracker added in stable.js as `egypt_emergency_measures` and surfaced on mobile.",
+      bull_trigger_correction: "FIRED → CONTESTED on `bull_case_triggers_to_watch` Kuwait/GCC deposit entry.",
+      escalation_active: false,
+      validation_discipline_added_to_memory: "New feedback memory `gulf_risk_paul_filter_validation.md` codifies the 'What would Paul ask?' check before any future bull/bear trigger mark, source-grade verdict, or 'risk contained' claim. Includes 7-step checklist and explicit failure-mode reference (this run)."
+    },
     critical_review_findings: {
       ts: "2026-05-01T09:15:00.000Z",
       pass_type: "weekly",
