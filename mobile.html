@@ -442,6 +442,25 @@ Object.assign(window.GULF_RISK_DATA, {
     priority: "CRITICAL",
     display_order: "TOP",
     audience: "Executive committee — supports general activities and decision-making. Distinguishes mainstream-headline framing from on-the-ground signals.",
+    weekly_review_status: {
+      priority: "ELEVATED",
+      display_order: "TOP",
+      description: "Freshness indicator for the weekly critical review pass. Auto-populated by the weekly scheduled task each Friday. EXCO readers should look at this BEFORE trusting the EXCO sections — if last_run is more than 14 days ago, the picture may be stale.",
+      last_run_iso:        "2026-05-01T08:55:00.000Z",
+      last_run_human:      "01 May 2026 — first weekly critical-review pass after re-instating the field; ran manually before scheduled-task auto-fire.",
+      next_run_expected:   "Friday 09:00 UTC weekly (Cowork scheduled task: weekly-exco-critical-review)",
+      cadence:             "Weekly · Friday 09:00 UTC",
+      run_count_total:     1,
+      run_count_scheduled: 0,
+      run_count_manual:    1,
+      escalation_active:   false,
+      last_run_findings_summary: "Initial weekly run. Decision-relevant: Kuwait $2B deposit confirmed RENEWED (April 2026) and CBE/Finance Minister assurance that GCC $18.3B deposit floor will not be withdrawn while EFF active — bull-case trigger Fresh GCC bailout deposit announced FIRED. Black-market live dealer-quote gap NARROWED to ~2-3% from 5-6% range — unusual after EGP broke 53.73; under-watch as possible head-fake. Two indicators near-break (USD/EGP official 53 vs 55 panic; black-market ~54.2 vs 60 break). UAE OPEC exit takes effect today — already reflected in dashboard. No Cairo trip recommendation flip; UK FCDO Egypt advice unchanged. No escalation triggered.",
+      fields_updated_last_run: [
+        "weekly_review_status (created — was missing since 30 Apr recovery)",
+        "exco_briefing.bull_case_triggers_to_watch (Kuwait/GCC deposit trigger marked FIRED with date)",
+        "today daily _meta.critical_review_findings (appended — pass_type weekly)"
+      ]
+    },
     headline: "EXCO BRIEF — Egypt + Gulf risk profile materially worse than mainstream framing; energy crisis structural; June Cairo travel requires specialty insurance + abort plan",
 
     one_paragraph_summary: "Egypt is in a slow-motion cover-up. Headline metrics (reserves $52.83B end-Mar, IMF program active, EGP at 52.82 official) are press-release-grade and lag the underlying stress. Real signals: black-market premium 68% structural / 5-6% live and widening; CBE net foreign assets -$4.2B Q1; hot money $45-50B at risk; open calls in Kuwaiti media to withdraw the $2B Kuwaiti CBE deposit; energy rationing live with 9pm closures + mandated 1-day-WFH; government denying summer blackouts while burning fuel oil to defer them (the same playbook that failed in 2024). GCC trust index at 38/100 — lowest reading since Q1 series began; EU and Israeli trust both falling. Trip-level implication: Cairo June 2026 is GO with proper specialty insurance + abort triggers, NO-GO without. Beijing summit May 14-15 + Lebanon truce expiry mid-May are the natural decision gate.",
@@ -499,9 +518,9 @@ Object.assign(window.GULF_RISK_DATA, {
     ],
     bull_case_triggers_to_watch: [
       "Iran accepts a partial nuclear concession that allows the blockade to lift",
-      "Beijing summit (May 14-15) produces a written framework that holds for >7 days",
+      "Beijing summit (May 14-15) produces a written framework that holds for >7 days — TRACKING (China + Pakistan 5-point proposal Mar 31; Wang Yi mediation activity ongoing; no breakthrough yet)",
       "Lebanon truce extended past mid-June with no further IDF strikes north of Litani",
-      "Fresh GCC bailout deposit announced (any size) — would re-anchor trust_index",
+      "Fresh GCC bailout deposit announced (any size) — would re-anchor trust_index — *FIRED 2026-04 (Kuwait $2B deposit RENEWED; Egyptian Finance Minister + CBE Governor confirm GCC will not withdraw $18.3B deposit floor while EFF active; AGBI / EnterpriseAM Apr 2026)*",
       "IMF June review approves a clean tranche disbursement with no fresh waivers required",
       "Hormuz transits return above 30/day sustained for 7 days",
       "Brent returns below $100 sustained for 14 days",
@@ -673,7 +692,33 @@ Object.assign(window.GULF_RISK_DATA, {
       "World Bank — Egypt external debt + interest due Apr 2026 → end 2026: $38.65B",
       "GOV.UK FCDO — Egypt travel advice (current advisories)",
       "travel.state.gov — Iran/Iraq/Lebanon Level 4"
-    ]
+    ],
+    critical_review_findings: {
+      ts: "2026-05-01T08:55:00.000Z",
+      pass_type: "weekly",
+      run_number: 1,
+      q1_source_grade: "1 single-source claim still flagged: 68% black-market structural premium (specialist outlets, single-source). Standard Chartered Jan 5 pre-war previously cleared. $34B operative reserves analyst-derived single-source — caveat documented in indicator_caveats. No new pre-war source slipped in this cycle.",
+      q2_official_vs_parallel: "Official EGP ~53 (CBE managed); sarfegp dealer-quote ~54.2. Live gap ~2.3% — NARROWED from 5-6% range earlier in week. Status: WITHIN BAND (under 5%). Direction: NARROWING — unusual given EGP broke 52.82 → 53.73 yesterday. Watch closely; could be head-fake before next leg, or genuine CBE defence holding.",
+      q3_bull_triggers_fired: "1 trigger FIRED: Fresh GCC bailout deposit announced — Kuwait $2B deposit RENEWED (Apr 2026 per AGBI/EnterpriseAM/EgyptIndependent); Finance Minister + CBE Governor confirm $18.3B GCC deposit floor protected while EFF active. Beijing summit (May 14-15) — China + Pakistan 5-point proposal Mar 31 + active Wang Yi mediation; not yet written framework that holds >7 days. TRACKING.",
+      q4_stale_claims: "exco_briefing.bull_case_triggers_to_watch updated to mark Kuwait/GCC deposit trigger FIRED. signals_not_yet_reflected_in_mainstream entry on 68% structural premium retained but should carry a caveat that today live dealer-quote gap is narrower (~2-3%). cairo_travel_briefing — UK FCDO Egypt advice unchanged (Cairo, Alex, Luxor, Aswan, Red Sea resorts safe with sensible precautions; North Sinai all-travel-against; partial South Sinai). Dashboard alignment: HOLDS.",
+      q5_near_break_indicators: "2 NEAR BREAK: (a) USD/EGP official 53 vs 55 panic threshold — distance 3.6%, within 10%, NEAR BREAK; (b) USD/EGP black-market live ~54.2 vs 60+ break — distance 9.7%, within 10%, NEAR BREAK. Brent $111.63 vs $130 sustained — 14% (not near). Hormuz 6 vs <5 break — 17% (not near per protocol 10% rule). H-hour 25-30% vs 40%+ — 25-37% (not near).",
+      q6_recommendation_shift: "No flips. Cairo trip Q1: CONDITIONAL GO holds (Kuwait deposit + Beijing mediation slightly dampen worst-case but kinetic risk + open-ended posture remain). EGP exposure Q2: REDUCE holds (today narrow live-gap could be head-fake; EFF protection is tactical not structural). Counterparty/supplier/comms recommendations unchanged.",
+      q7_coverup_direction: "MIXED. Live dealer-quote gap narrowed (stabilising at new managed level after yesterday break) BUT CBE NFA underneath continues to fall ($29.5B Jan → $27.4B Feb per Daily News Egypt / Mindcron). Press-release reserves figure $52.83B end-Mar holds (April figure not yet released). Net direction: STABLE-WITH-WIDENING-UNDERNEATH (mixed signal, neither unambiguously narrowing nor widening on top-line).",
+      escalation_active: false,
+      escalation_reason_if_any: "None. Q5 found 2 near-break indicators (both EGP) but both already reflected in dashboard daily content. Q6 no Cairo-trip flip. Q7 mixed not unambiguously widening with new evidence.",
+      sources_consulted: [
+        "sarfegp / blackmarketlive — live dealer EGP quotes May 2026",
+        "Daily News Egypt 2 Mar 2026 — Egypt banking sector NFA $29.5B Jan / $27.39B Feb",
+        "Egypt Independent / AGBI / EnterpriseAM — Kuwait $2B deposit renewal Apr 2026",
+        "EgyptToday — Finance Minister + CBE Governor GCC $18.3B floor assurance",
+        "MEES 24 Apr 2026 — Egypt fuel burn for power generation",
+        "Al Jazeera / CNBC / Washington Post / WAM 28-29 Apr 2026 — UAE OPEC exit confirmed effective 1 May",
+        "GOV.UK FCDO Egypt travel advice — current page (Cairo/Alex/Luxor/Aswan/Red Sea safe with caveats)",
+        "Bloomberg / Foreign Policy 29 Apr 2026 — IAEA Grossi Iran HEU stockpile assessment",
+        "Kathmandu Post / CNBC — China Iran mediation ahead of May 14-15 Xi-Trump summit",
+        "Egyptian Streets / Amwal Al Ghad / Ahram Online — baladi bread LE0.20 holds 2026"
+      ]
+    }
   },
 
   chart_series: {
