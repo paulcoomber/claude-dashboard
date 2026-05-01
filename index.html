@@ -8,6 +8,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gulf & Egypt Risk Monitor — Day 52</title>
+<script>
+/* Mobile redirect — sends phones/tablets to mobile.html unless ?desktop=1 is set. */
+(function(){
+  try{
+    var qs = window.location.search || "";
+    var override = /[?&]desktop=1\b/.test(qs);
+    var session = false;
+    try { session = window.sessionStorage && sessionStorage.getItem("gulf_risk_force_desktop") === "1"; } catch(e){}
+    if (override) { try { sessionStorage.setItem("gulf_risk_force_desktop","1"); } catch(e){} }
+    if (override || session) return;
+    var ua = navigator.userAgent || "";
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod|IEMobile|BlackBerry|Opera Mini/i.test(ua);
+    var narrow = (typeof window.matchMedia === "function") && window.matchMedia("(max-width: 640px)").matches;
+    if (isMobile || narrow) {
+      window.location.replace("mobile.html" + (qs || ""));
+    }
+  }catch(e){ /* fail open to desktop */ }
+})();
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap');
 
@@ -284,6 +303,24 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
 .exco-abort-tier-1 .exco-abort-tier-label{color:var(--red2)}
 .exco-abort-tier-2 .exco-abort-tier-label{color:var(--amber)}
 .exco-abort-tier-3 .exco-abort-tier-label{color:var(--muted)}
+
+.exco-spark-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+@media(max-width:760px){.exco-spark-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.exco-spark-grid{grid-template-columns:1fr}}
+.exco-spark-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.18));border:1px solid var(--border2);border-radius:6px;padding:10px 12px 8px;position:relative;overflow:hidden}
+.exco-spark-card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,160,32,0.35),transparent)}
+.exco-spark-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.exco-spark-label{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;line-height:1.25}
+.exco-spark-val{font-size:15px;font-weight:700;color:var(--text);font-family:var(--mono);font-feature-settings:"tnum";line-height:1;white-space:nowrap}
+.exco-spark-svg{width:100%;height:46px;display:block;margin-top:4px}
+.exco-spark-foot{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;letter-spacing:0.02em}
+.exco-spark-foot .delta{font-weight:700}
+.exco-spark-foot .delta.up{color:var(--red2)}
+.exco-spark-foot .delta.dn{color:var(--green)}
+.exco-spark-foot .delta.flat{color:var(--dim)}
+.exco-spark-source{font-family:var(--mono);font-size:10px;color:var(--dim);line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px dotted rgba(255,255,255,0.08)}
+.exco-spark-legend{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-left:10px}
+.exco-spark-legend::before{content:"";display:inline-block;width:14px;height:0;border-top:1px dashed var(--red);opacity:0.7}
 .exco-q-card{background:rgba(0,0,0,0.2);padding:8px 10px;border-radius:4px;margin-bottom:6px}
 .exco-q-text{font-weight:600;font-size:11px;color:var(--text);margin-bottom:4px;line-height:1.4}
 .exco-q-rec{font-size:11px;color:var(--text);line-height:1.5}
@@ -446,6 +483,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
         <div class="exco-sublabel">Recommended actions</div>
         <ol class="exco-list" id="exco-brf-actions"></ol>
       </div>
+    </div>
+
+    <div class="card exco-high" id="exco-trends-card" style="display:none">
+      <div class="card-title"><span class="exco-pill exco-pill-high">TRENDS</span> EXCO METRIC TRENDS — since 28 Jan 2026 <span class="card-upd" id="exco-trends-upd"></span><span class="exco-spark-legend">war start (28 Feb)</span></div>
+      <div class="exco-spark-grid" id="exco-trends-grid"></div>
+      <div class="exco-spark-source" id="exco-trends-source"></div>
     </div>
   </div>
 
@@ -1192,41 +1235,6 @@ Object.assign(window.GULF_RISK_DATA, {
       note: "The priority and display_order flags on this dashboard are convention-based. The current shell renderer has not been visually verified to surface the new EXCO sections prominently. Open https://paulcoomber.github.io/middle-east-tracker/ and confirm trust_index, government_commitments, energy_crisis_alert, cairo_travel_briefing, and exco_briefing each appear with appropriate prominence. If they do not, the shell needs an update — separate work item."
     },
 
-    weekly_review_status: {
-      priority: "ELEVATED",
-      display_order: "TOP",
-      description: "Freshness indicator for the weekly critical review pass. Auto-populated by the weekly scheduled task each Friday. EXCO readers should look at this BEFORE trusting the EXCO sections — if last_run is more than 14 days ago, the picture may be stale.",
-      last_run_iso:        "2026-04-29T23:55:00.000Z",
-      last_run_human:      "29 April 2026 — initial seeding from interactive session (not a scheduled run)",
-      next_run_expected:   "Friday 09:00 UTC weekly (Cowork scheduled task)",
-      cadence:             "Weekly · Friday 09:00 UTC",
-      run_count_total:     0,
-      run_count_scheduled: 0,
-      run_count_manual:    1,
-      last_run_findings_summary: "Initial structural setup. Six of eleven critical-review fixes applied: trust_index relabelled as direction tracker; insurance providers softened to categories; Cairo Marriott specifics flagged for verification; signals_not_yet_reflected_in_mainstream + bull_case_triggers_to_watch + indicator_caveats added; abort triggers tiered into three levels; source-grade matrix extended.",
-      fields_updated_last_run: [
-        "exco_briefing.signals_not_yet_reflected_in_mainstream",
-        "exco_briefing.bull_case_triggers_to_watch",
-        "exco_briefing.indicator_caveats",
-        "exco_briefing.source_grade",
-        "trust_index.label_caveat + methodology",
-        "cairo_travel_briefing.insurance_alert.provider_categories_to_request",
-        "cairo_travel_briefing.cairo_marriott_options[0].verification_status",
-        "cairo_travel_briefing.abort_triggers_pre_departure (tiered)"
-      ],
-      escalation_active: false,
-      escalation_note: "No tier-1 abort triggers fired in last review. No coverup-widening evidence beyond the existing 68% premium claim (single-source, flagged).",
-      open_critical_review_items: [
-        "Verify or hard-replace the 68% black-market premium with multi-source number",
-        "Verify the $45-50B hot money figure",
-        "Add explicit review_cadence to government_commitments and energy_crisis_alert (only added to trust_index and exco_briefing for now)",
-        "Track quantitative replacements for the trust index when CDS / deposit / FDI data are consistently available",
-        "Confirm shell renderer surfaces all five EXCO sections prominently (visual verification)"
-      ],
-      health: "GREEN — initial seed. Status will turn AMBER if last_run is >14 days old, RED if >28 days.",
-      updated: "2026-04-29T23:55:00.000Z"
-    },
-
     critical_review_protocol: {
       headline: "PAUL FILTER — every scheduled run must pass the dashboard through this seven-question check before publishing. Findings recorded in daily _meta.critical_review_findings.",
       rationale: "Without this step, mechanical refreshes ship stale claims with fresh numbers stamped on top. Paul has explicitly asked for this — assume he WILL ask these questions next time he reads the dashboard, and answer them before he has to.",
@@ -1295,45 +1303,49 @@ Object.assign(window.GULF_RISK_DATA, {
 
 });
 // === END STABLE ===
-// === BEGIN DAILY: gulf-risk-data-daily-2026-04-30.js ===
+// === BEGIN DAILY: gulf-risk-data-daily-2026-05-01.js ===
 
 window.GULF_RISK_DATA = window.GULF_RISK_DATA || {};
 
 Object.assign(window.GULF_RISK_DATA, {
 
   _meta: {
-    updated: "2026-04-30T06:07:00.000Z",
-    day: 61,
-    analyst_note: "Day 61 — Thu 30 Apr morning UTC update. OVERNIGHT (Wed close → Thu Asia/early-Europe sessions): BRENT EXTENDED FURTHER to ~$119.85 (TradingEconomics intraday print $120.30 most recent; Investing.com $118.90; OilPriceAPI $118.90) — ninth-straight up-session, holding the highest level since June 2022 with Trump's Axios rejection of the Pakistan-mediated proposal still anchoring. USD/EGP HOLDS 52.82 — CBE intervention persists into Thu morning. US AAA RETAIL GASOLINE CORRECTED DOWN to $4.03/gal (verified AAA Thu 30 Apr) — Wed's $4.23 datum appears to have been a stale or regional outlier; AAA national average has held in the $4.03-$4.04 corridor through April despite Brent's surge (pump-feed lag is now the operative narrative). EGYPT URBAN INFLATION 15.2% Mar 2026 (CAPMAS / CBE — accelerating from 13.4% Feb; highest since May 2025) confirmed. EGYPT FX RESERVES (OFFICIAL CBE) $52.8B end-Mar 2026 — official press-release grade; the dashboard's analyst-grade adjusted reserves figure ($34B) remains the operative number for decision-making per the cover-up thesis. SUEZ: SCA lifted the 15% transit-fee discount for large containerships effective 7 Apr — fee normalisation on declining traffic, not recovery. HORMUZ: still trickle — Apr 28 print 13 transits holds; no fresh Apr 29 daily figure published yet. IAEA Grossi's Wed AP confirmation of ~200kg HEU likely at Isfahan since June 2025 stands. NO MATERIAL OVERNIGHT NEWS CATALYSTS on Iran rejection / Lebanon / Hormuz kinetic — Pakistan-mediated revised counter-proposal still awaited. H-hour probability HOLDS ~25-30% in next 14 days. EXCO READOUT unchanged — see exco_briefing, energy_crisis_alert, cairo_travel_briefing, trust_index, government_commitments.",
+    updated: "2026-05-01T06:07:57.000Z",
+    day: 63,
+    analyst_note: "Day 63 — Fri 1 May 06:07 UTC MORNING update. NEW HEADLINE: White House announces Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC), removing the key Congressional pressure valve that would have forced an authorisation vote. This is a deliberate political-cover instrument: it lets Trump maintain the open-ended ceasefire/blockade posture indefinitely without a Hill confrontation, but it also removes the moderating constraint markets and Senate doves were pricing as a near-term off-ramp. BRENT: June contract expired Thursday at $114.01 (after intraday wartime high $126); July front-month opened Friday +1.11% to ~$111.63 — net DOWN ~$2.4 on contract rollover but still well above the $90s base. AAA US national gasoline holds $4.03/gal — pump-feed lag intact. EGP: pound holds near 53 after yesterday break (52.82 → 53.73); 30-day range now 51.75-54.69 (Wise) — first stress test of CBE capacity to defend the new level. EGYPT POLITICAL: Sisi NEAR-STATE-OF-ECONOMIC-EMERGENCY framing from yesterday holds; $3B emergency IMF loan request still in considering phase; $38.65B external debt repayment schedule through end-2026 unchanged. HORMUZ: traffic still ~5-10 vessels/day per CNN/Bloomberg visual deep dives — yesterday 20-transit print was a localised lift, not a trend reversal. IAEA: stockpile picture unchanged (440.9kg HEU at Isfahan since June 2025); access still suspended since 28 Feb 2026 (cameras disabled, seals removed) — IAEA cannot verify. DIPLOMACY: stalemate. UAE OPEC exit takes effect TODAY (1 May) — first material structural-coordination break inside Gulf bloc. H-hour probability HOLDS ~25-30%. The deadline-halt is the day most decision-grade datum: it lengthens the time horizon for the open-ended posture and weakens the Hill-pressure thesis EXCO has been weighting.",
     sources: [
-      "TradingEconomics 30 Apr 2026 — Brent crude $120.30 (most recent intraday print)",
-      "Investing.com / OilPriceAPI 30 Apr 2026 — Brent $118.90 — $119.85 mid, ninth straight up-session",
-      "AAA Fuel Prices 30 Apr 2026 — US national average $4.031/gal (CORRECTED from Wed's $4.23)",
-      "exchangerates.org 30 Apr 2026 — USD/EGP 52.82 (flat overnight; CBE intervention)",
-      "EgyptToday / SIS 30 Apr 2026 — CBE official reserves $52.8B end-March 2026",
-      "Daily News Egypt / CBE 30 Apr 2026 — Egypt urban headline CPI 15.2% March 2026 vs 13.4% Feb",
-      "Maritime News / SCA 30 Apr 2026 — Suez Canal lifted 15% large-containership transit-fee discount effective 7 Apr",
-      "Axios 29 Apr 2026 — Trump rejects Iran offer to reopen Hormuz, end war",
-      "CNBC / CBS News / NBC News / NPR / Al Jazeera 29 Apr 2026 — coverage of Trump rejection",
-      "CNBC 29 Apr 2026 — Brent crude tops $118 ($118.03) after Trump blockade comments — eighth straight session of gains, highest since June 2022",
-      "TradingEconomics 29 Apr 2026 — Brent crude $116.53 (+4.74%) earlier session close",
-      "exchangerates.org 29 Apr 2026 — USD/EGP 52.82",
-      "Hormuz Strait Monitor / Bloomberg / USNI 28-29 Apr — 13 transits on Apr 28 (4 in / 9 out, Northern Corridor)",
-      "Al-Monitor / IBTimes / CNN visualisation 29 Apr — Hormuz traffic at trickle",
-      "Euronews 29 Apr 2026 — Israeli strikes kill 8 in southern Lebanon including 3 rescue workers",
-      "AP / WashPost / WSLS 29 Apr 2026 — IAEA Grossi: HEU likely still at Isfahan",
-      "Yahoo Finance / CNBC / Bloomberg 29 Apr 2026 — Fed holds rates 8-4 dissent; Powell stepping down as chair",
-      "Pravda USA 29 Apr 2026 — Pakistani mediators expect second Iranian offer",
-      "Organiser / EADaily 27-29 Apr 2026 — Iran: Pakistan not suitable as mediator",
-      "House of Commons Library 29 Apr 2026 — 5-point Iranian counter-proposal context",
-      "ABC7 LA 29 Apr 2026 — Pentagon: $25B war cost",
-      "Bloomberg / CNN / WashPost / NPR 28 Apr 2026 — UAE quits OPEC effective 1 May",
-      "Pakistan Today / The National / Haaretz 28 Apr 2026 — Bekaa Valley strikes; 16-town displacement order",
-      "Axios 27 Apr 2026 — Iran's formal proposal: reopen Hormuz, postpone nuclear",
-      "Reuters / Moscow Times 27 Apr 2026 — Putin-Araghchi meeting concluded",
-      "TheMediaLine 27 Apr 2026 — 37 ships redirected by US blockade",
-      "CNBC 27 Apr — Goldman raises Brent late-2026 forecast to $90",
-      "AAA Fuel Prices 29 Apr 2026 — US average $4.23/gal regular unleaded",
+      "CNBC 1 May 2026 — Oil rises as White House says Iran ceasefire halts 60-day war deadline (July Brent +1.11% to ~$111.63)",
+      "TradingEconomics / oilprice.com 1 May 2026 — Brent July front-month ~$111.63 after Thursday June expiry $114.01 (intraday wartime high $126.41)",
+      "Wise / xe.com 1 May 2026 — USD/EGP ~53 area; 30-day range 51.7493-54.6931, average 53.0422",
+      "AAA Fuel Prices 1 May 2026 — US national average $4.031/gal (stable across pump-feed lag)",
+      "CNN / Bloomberg 30 Apr 2026 — Hormuz traffic at trickle (5-10 vessels/day) — visual deep dive",
+      "Wikipedia / Al Jazeera 1 May 2026 — 2026 Iran war ceasefire — Trump maintains blockade; deadline-halt by White House removes Congressional pressure valve",
+      "TradingEconomics 30 Apr 2026 — Brent crude pulled back to $114.22 (down 3.2%) after intraday wartime high of $126",
+      "CNBC 30 Apr 2026 — Oil prices: Brent surged to $126 wartime high then retreated on US-Iran escalation fears",
+      "BusinessToday 30 Apr 2026 — Brent crude surges to $120 per barrel, highest since 2022",
+      "Fortune 30 Apr 2026 — Current price of oil as of April 30, 2026",
+      "AAA Fuel Prices 30 Apr 2026 — US national average $4.031/gal (national figure stable; pump-feed lag persists)",
+      "tradingeconomics.com / Investing.com 30 Apr 2026 PM — USD/EGP rose to 53.73, +1.34% on the day (BREAK from CBE intervention level 52.82)",
+      "Pound Sterling Live 30 Apr 2026 — USD/EGP history",
+      "EgyptToday / SIS — Egypt foreign reserves $52.83B end-March 2026 (latest CBE figure; April number not yet published)",
+      "CBE / CAPMAS 30 Apr 2026 — Egypt urban headline CPI 15.2% March 2026 (CBE press release)",
+      "Ahram Online 30 Apr 2026 — Egypt national annual inflation 13.5% Mar (national basket; food/transport drove)",
+      "Maritime News / SCA — Suez Canal 56 vessels/day in early April; 15% large-containership fee discount lifted 7 Apr",
+      "Shipping Telegraph 30 Apr 2026 — SCA reported $449M in Suez revenue YTD 2026 ahead of $368M YTD 2025",
+      "Hormuz Strait Monitor 29 Apr 2026 — 20 transits (6 in / 14 out; Northern 13, Southern 7); Gulf-wide 902 vessels",
+      "USNI / CNN visual 29 Apr 2026 — Hormuz traffic at trickle; week of 30 Mar-5 Apr saw 76 transits (post-conflict high)",
+      "Wikipedia / House of Commons Library 30 Apr 2026 — 2026 Iran war ceasefire status; open-ended ceasefire continuing",
+      "Al Jazeera 28 Apr 2026 — Iran offers US deal to reopen Hormuz, postpone nuclear talks; what is in latest proposal",
+      "Axios 27 Apr 2026 — Iran offers US deal to reopen Hormuz, postpone nuclear talks (Pakistan mediation)",
+      "ABC News 30 Apr 2026 — Khamenei: Iran will guard nuclear and missile technologies",
+      "Washington Post / Foreign Policy / AP 29 Apr 2026 — IAEA Grossi: 440.9kg of 60% HEU likely still at Isfahan since June 2025",
+      "IAEA GOV/2026/8 27 Feb 2026 — Iran verification and monitoring reference document",
+      "Arms Control Association — Status of Iran nuclear programme",
+      "EgyptToday 30 Apr 2026 — El-Sisi: Egypt in 'near state of economic emergency' on war energy shock",
+      "Middle East Monitor 22 Apr 2026 — Iran war used as a pretext for harsh measures in Egypt",
+      "Al Jazeera 7 Apr 2026 — Egypt cuts fuel amid power crisis (9pm shutdowns + WFH)",
+      "Foreign Policy 9 Mar 2026 — Sisi's Egypt faces fallout from Iran strikes",
+      "OilPrice.com — A Hormuz Shock Could Push Egypt to the Brink",
       "Atlantic Council Apr 2026 — A crisis in Egypt could be a warning sign for the global economy",
       "Atlantic Council Apr 2026 — They have been exposed: Iran war upends Gulf states",
       "Mada Masr 23 Apr 2026 — Energy subsidies down, export subsidies up in new budget draft",
@@ -1341,41 +1353,46 @@ Object.assign(window.GULF_RISK_DATA, {
       "Arab Center DC Apr 2026 — Egypt and the Gulf: A Relationship under Pressure",
       "African Business Apr 2026 — Egypt on frontline of Iran war's economic disruption",
       "MEES 24 Apr 2026 — Egypt Plans Fuel Burn To Avoid Power Blackouts",
-      "Al Jazeera 7 Apr 2026 — From 9pm shutdowns to remote work: Egypt cuts fuel amid power crisis",
+      "World Bank — Egypt external debt + interest due Apr 2026 → end 2026: $38.65B",
       "GOV.UK FCDO — Egypt travel advice (current advisories)",
       "travel.state.gov — Iran/Iraq/Lebanon Level 4"
     ]
   },
 
   chart_series: {
-    labels: ["28 Jan","4 Feb","11 Feb","18 Feb","25 Feb","28 Feb","4 Mar","11 Mar","18 Mar","25 Mar","1 Apr","4 Apr","7 Apr","8 Apr","10 Apr","13 Apr","14 Apr","15 Apr","17 Apr","18 Apr","20 Apr","21 Apr","22 Apr","23 Apr","24 Apr","25 Apr","26 Apr","27 Apr","28 Apr","29 Apr","30 Apr"],
-    brent:         [70,   68,   67,    67.5,  69,    72,    85,   110,  118,   112,   108,   111,  109,  91,   96,    103,   95,    99,    88,    96,    97,    95.22, 93.80, 96.50, 101.40, 105.33, 105.33, 108.11, 111.16, 118.03, 119.85],
-    egp:           [47.2, 47.5, 47.8,  48.2,  48.9,  49.5,  51.2, 52.8, 53.5,  53.9,  54.1,  54.5, 54.62,54.69,54.25, 53.37, 53.09, 52.50, 51.92, 51.80, 51.75, 51.73, 51.75, 52.05, 52.62, 52.62, 52.62, 52.55, 52.84, 52.82, 52.82],
-    hormuz:        [54,   53,   52,    50,    48,    48,    42,   38,   40,    35,    30,    28,   22,   25,   20,    5,     8,     12,    14,    16,    16,    3,     5,     4,     5,     3,     4,     4,     4,     6,     6],
-    suez:          [32,   32,   31,    30,    30,    29,    26,   24,   23,    22,    21,    20,   20,   20,   19,    18,    18,    20,    19,    21,    22,    22,    23,    23,    22,    20,    19,    19,    19,    19,    19],
-    bab_el_mandeb: [16,   15,   15,    14,    13,    12,    10,   9,    8,     7,     7,     6,    6,    5,    5,     4,     4,     4,     3,     4,     5,     5,     5,     5,     4,     4,     4,     4,     4,     4,     4],
+    labels: ["28 Jan","4 Feb","11 Feb","18 Feb","25 Feb","28 Feb","4 Mar","11 Mar","18 Mar","25 Mar","1 Apr","4 Apr","7 Apr","8 Apr","10 Apr","13 Apr","14 Apr","15 Apr","17 Apr","18 Apr","20 Apr","21 Apr","22 Apr","23 Apr","24 Apr","25 Apr","26 Apr","27 Apr","28 Apr","29 Apr","30 Apr","1 May"],
+    brent:         [70,   68,   67,    67.5,  69,    72,    85,   110,  118,   112,   108,   111,  109,  91,   96,    103,   95,    99,    88,    96,    97,    95.22, 93.80, 96.50, 101.40, 105.33, 105.33, 108.11, 111.16, 118.03, 114.22, 111.63],
+    egp:           [47.2, 47.5, 47.8,  48.2,  48.9,  49.5,  51.2, 52.8, 53.5,  53.9,  54.1,  54.5, 54.62,54.69,54.25, 53.37, 53.09, 52.50, 51.92, 51.80, 51.75, 51.73, 51.75, 52.05, 52.62, 52.62, 52.62, 52.55, 52.84, 52.82, 53.73, 53.00],
+    hormuz:        [54,   53,   52,    50,    48,    48,    42,   38,   40,    35,    30,    28,   22,   25,   20,    5,     8,     12,    14,    16,    16,    3,     5,     4,     5,     3,     4,     4,     4,     6,     20,    6],
+    suez:          [32,   32,   31,    30,    30,    29,    26,   24,   23,    22,    21,    20,   20,   20,   19,    18,    18,    20,    19,    21,    22,    22,    23,    23,    22,    20,    19,    19,    19,    19,    19,    19],
+    bab_el_mandeb: [16,   15,   15,    14,    13,    12,    10,   9,    8,     7,     7,     6,    6,    5,    5,     4,     4,     4,     3,     4,     5,     5,     5,     5,     4,     4,     4,     4,     4,     4,     4,     4],
     war_start_index: 5,
     brent_min: 60,  brent_max: 125,
     egp_min:   45,  egp_max:   57,
     hormuz_min: 0,  hormuz_max: 60,
     suez_min:   0,  suez_max:   40,
     bem_min:    0,  bem_max:    20,
-    source_note: "Verified through Thu 30 Apr 2026 ~06:07 UTC. 30 Apr Brent ~$119.85 (TradingEconomics intraday $120.30 most recent; Investing/OilPriceAPI $118.90) — ninth straight up-session, highest since June 2022. EGP 52.82 (flat overnight; CBE intervention persists). Hormuz: latest published daily print remains 13 transits on Apr 28 (Hormuz Strait Monitor); no fresh Apr 29 figure yet. AAA US gas CORRECTED to $4.03/gal (Wed's $4.23 was stale/outlier)."
+    source_note: "Verified through Fri 1 May 2026 ~06:07 UTC MORNING update. Brent: June contract expired Thu $114.01; July front-month opened Fri +1.11% to ~$111.63 (CNBC) — contract-rollover effect plus White House announcement that Iran ceasefire HALTS the 60-day War Powers Act deadline removes Congressional pressure valve. EGP: holds ~53 after yesterday break to 53.73; 30-day range 51.75-54.69 (Wise). Hormuz: returns to trickle ~6 ships/day after yesterday localised 20-transit print. AAA US gas $4.031/gal (stable, pump-feed lag continues)."
   },
 
   brief: {
-    headline: "Day 61 (Thu 30 Apr 06:07 UTC morning): Brent extends overnight to ~$119.85 (TradingEconomics intraday $120.30) — ninth-straight up-session, highest since June 2022; AAA US gas CORRECTED to $4.03 (Wed $4.23 was stale); USD/EGP holds 52.82 (CBE intervention persists overnight); Egypt urban inflation confirmed 15.2% (Mar) accelerating from 13.4% (Feb); Suez Authority lifted 15% large-containership transit-fee discount effective 7 Apr (fee-normalisation on falling traffic, not recovery); Hormuz Apr 28 print of 13 still latest; Iran revised counter-proposal still awaited; H-hour probability holds 25-30%",
-    summary: "Thursday 30 April 06:07 UTC morning update — overnight extends, no rupture. Brent printed an intraday high of $120.30 (TradingEconomics) and is trading ~$118.90-$119.85 across feeds (Investing/OilPriceAPI), a ninth-straight up-session and the highest level since June 2022. The drivers are Wed's settled facts not fresh news: Trump's Axios rejection of Iran's Pakistan-mediated proposal still anchors; UAE OPEC exit takes effect tomorrow (1 May); Lebanon arc compounding from Wed (8 killed incl 3 rescue workers) priced. Two material data corrections / refreshes vs the Wed evening print: (1) AAA US national gasoline average prints $4.03/gal Thu morning — Wed's $4.23 datum appears to have been stale or a regional outlier, with AAA national figures having held in the $4.03-$4.04 corridor through April despite Brent's surge (pump-feed lag is the operative narrative); (2) Egypt urban headline CPI confirmed at 15.2% for March (CAPMAS / CBE), accelerating from 13.4% in February — highest reading since May 2025, driven by the 14-17% fuel-price hike in early March and broad-based food/transport/housing pass-through. USD/EGP holds 52.82 overnight — CBE intervention has persisted across the Brent surge; the press-release / market-signal divergence (official $52.8B reserves vs analyst-grade $34B; managed 52.82 vs 68% structural black-market premium) is the operative interpretive frame. Suez: SCA lifted the 15% transit-fee discount for large containerships effective 7 April — fee normalisation on declining traffic, NOT a recovery signal. Hormuz traffic still at a trickle — Apr 28's 13-transit print remains the latest published daily figure; no fresh Apr 29 number yet. Three-carrier US posture, ROE for kinetic mine-laying response, and IAEA Grossi's Wed AP confirmation of ~200kg HEU likely still at Isfahan since June 2025 all stand. Pakistan mediators continue to await Iran's REVISED counter-proposal; Iran's national security spokesperson questioning Pakistan's suitability as mediator means channel risk remains live. H-hour probability holds ~25-30% in next 14 days. The Brent floor for ground operations ($115-150 forecaster band) is now LIVE: spot is $4-5 inside the lower band.",
+    headline: "Day 63 (Fri 1 May 06:07 UTC morning): NEW — White House says Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) — removes key Congressional pressure valve, signals Trump intent to maintain open-ended ceasefire/blockade indefinitely. Brent: June contract expired Thu $114.01 (intraday wartime high $126); July front-month +1.11% to ~$111.63 Friday morning. EGP holds ~53 after yesterday break to 53.73 — first CBE defence test at new level. UAE OPEC exit takes effect TODAY (1 May). Hormuz back to ~6 ships/day after yesterday 20-transit print (one-day lift, not trend). IAEA stockpile picture unchanged; access suspended since 28 Feb. H-hour probability HOLDS ~25-30%; deadline-halt removes one moderating pressure.",
+    summary: "Friday 1 May 06:07 UTC MORNING update — DECISION-GRADE NEW DATUM. (1) WHITE HOUSE HALTS 60-DAY WAR POWERS DEADLINE. CNBC reports the White House announced Friday that the Iran ceasefire HALTS the running 60-day War Powers Act clock — the Congressional authorisation deadline that doves had been pricing as a near-term off-ramp. This is a deliberate political-cover instrument: it lets Trump maintain the open-ended ceasefire/blockade posture indefinitely without a Hill confrontation. The Senate-pressure thesis EXCO has been weighting weakens; the timeline for the kinetic decision lengthens but the ceiling on it does not. (2) BRENT. June contract expired Thursday $114.01 after intraday wartime high $126.41; July front-month opened Friday +1.11% to ~$111.63 (CNBC). Net DOWN ~$2.4 on contract rollover effect; still well above the pre-war $90s base and above the Goldman late-2026 $90 forecast by ~$22. (3) EGP. Pound holds near 53 after yesterday break to 53.73 — first CBE defence test at the new managed level. 30-day range 51.7493-54.6931 per Wise. The press-release reserves figure ($52.83B end-March) remains visibly disconnected from operative cash position; cover-up thesis intact. (4) HORMUZ. Traffic returns to ~5-10 ships/day per CNN/Bloomberg visual coverage — yesterday 20-transit print was a localised lift, not a trend reversal. (5) IAEA. Stockpile picture unchanged: 440.9kg of 60% HEU at Isfahan since June 2025; access still suspended since 28 Feb 2026 (cameras disabled, seals removed) — IAEA cannot verify stockpile location, strike damage, or covert enrichment. (6) STRUCTURAL. UAE OPEC exit takes effect TODAY (1 May) — first material structural-coordination break inside Gulf bloc since the war began; Saudi 25% idle capacity backstops near-term but deviation watch begins. (7) DIPLOMACY. Stalemate intact. Khamenei nuclear/missile guard reaffirmation from yesterday holds; Trump-Iran proposal rejection holds. H-hour probability HOLDS ~25-30% next 14 days; deadline-halt removes one moderating pressure without raising kinetic odds.",
     threat_level: "HIGH",
     key_developments: [
-      "Good Morning from Paul! The date is 30th April, 2026 and here are most recent changes. Last update at 06:07.",
-      "NEW (Thu 30 Apr 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 — TradingEconomics intraday print $120.30 most recent; Investing.com / OilPriceAPI $118.90; ninth-straight up-session; highest since June 2022.",
-      "NEW (Thu 30 Apr 06:07 UTC): AAA US AVERAGE GASOLINE CORRECTED to $4.03/gal — Wed's $4.23 datum appears stale/outlier; AAA national has held $4.03-$4.04 through April despite Brent surge. Pump-feed lag (6-10 wks) is the operative narrative.",
-      "NEW (Thu 30 Apr 06:07 UTC): EGYPT URBAN HEADLINE CPI 15.2% Mar 2026 (CAPMAS/CBE) — accelerating from 13.4% Feb; highest reading since May 2025; driven by Mar fuel hike (14-17%) + broad-based food/transport/housing pass-through.",
-      "NEW (Thu 30 Apr 06:07 UTC): EGYPT OFFICIAL CBE FX RESERVES $52.8B end-Mar 2026 (SIS / EgyptToday) — press-release-grade figure; analyst-adjusted operative figure remains $34B per cover-up thesis.",
-      "NEW (Thu 30 Apr 06:07 UTC): SUEZ CANAL AUTHORITY LIFTED 15% TRANSIT-FEE DISCOUNT for large containerships effective 7 Apr — fee normalisation on declining traffic, NOT recovery.",
-      "NEW (Thu 30 Apr 06:07 UTC): USD/EGP holds 52.82 overnight — CBE intervention persists across Brent's overnight extension.",
-      "NEW (Thu 30 Apr 06:07 UTC): NO MATERIAL OVERNIGHT NEWS CATALYSTS on Iran rejection / Lebanon kinetic / Hormuz mine-laying — Pakistan-mediated revised counter-proposal still awaited.",
+      "Good Morning from Paul! The date is 1st May, 2026 and here are most recent changes. Last update at 06:07.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes the Congressional pressure valve doves had been pricing as the near-term off-ramp; political cover for Trump to maintain open-ended ceasefire/blockade indefinitely.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): BRENT — June contract expired Thursday $114.01 (after intraday wartime high $126.41); July front-month opened Friday +1.11% to ~$111.63. Net DOWN ~$2.4 on contract rollover; still ~$22 above Goldman late-2026 $90 forecast.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level. 30-day USD/EGP range 51.75-54.69 (Wise).",
+      "NEW (Fri 1 May 06:07 UTC MORNING): HORMUZ traffic returns to ~5-10 ships/day per CNN/Bloomberg visual coverage — yesterday 20-transit print was a localised lift, not a trend reversal.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): UAE OPEC EXIT TAKES EFFECT TODAY (1 May) — first material structural-coordination break inside Gulf bloc since war began. Saudi 25% idle capacity backstops; UAE quota deviation watch begins.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): IAEA stockpile picture unchanged — 440.9kg of 60% HEU at Isfahan since June 2025; IAEA access still suspended since 28 Feb 2026 (cameras disabled, seals removed); IAEA cannot verify stockpile location, strike damage, or covert enrichment.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): AAA US national gasoline holds $4.031/gal — pump-feed lag remains operative narrative.",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): EGP BREAK 52.82 → 53.73 (+1.34%) intraday — first material move from CBE-managed level since intervention began.",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): Brent intraday wartime high $126 on US-Iran action briefing reports, then ~3.2% pullback to $114.22; ninth-straight up-session streak ENDS.",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): Sisi publicly declared Egypt in NEAR STATE OF ECONOMIC EMERGENCY (EgyptToday); Cairo considering $3B emergency IMF loan; $38.65B external debt + interest due Apr 2026 → end 2026 (World Bank).",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): Khamenei — Iran will 'guard' nuclear and missile technologies. Trump administration assembling international coalition to reopen Hormuz.",
+      "Holding (Thu 30 Apr morning): Brent ~$119.85 morning print; USD/EGP held 52.82 morning; AAA US gas corrected to $4.03; Egypt urban CPI 15.2% Mar (vs 13.4% Feb) confirmed; SCA lifted 15% large-containership transit-fee discount effective 7 Apr; CBE official reserves $52.83B end-Mar (analyst-adjusted operative remains $34B).",
       "Holding (Wed 29 Apr): EXCO BRIEFING ADDED (29 Apr 21:28 UTC): see exco_briefing — five key questions, top indicators, what mainstream is missing, recommended actions. Source-grade matrix included.",
       "Holding: STABLE SECTION — energy_crisis_alert (PRIORITY: CRITICAL): government burning fuel oil to defer summer blackouts; mandated 1-day-WFH; 9pm closures; June peak-demand danger window.",
       "Holding: STABLE SECTION — trust_index: GCC trust 38/100, Israeli 35/100, EU 42/100. GCC at lowest since series began Q1 2026. Crisis threshold = 30.",
@@ -1415,25 +1432,25 @@ Object.assign(window.GULF_RISK_DATA, {
       "GOP and Democrat split on ground invasion; no Congressional authorisation.",
       "Death toll: 4,000+ across conflict."
     ],
-    ceasefire_status: "OPEN-ENDED AND DETERIORATING — Thu 30 Apr 06:07 UTC morning: Wed status holds with overnight Brent extension. Trump's Axios rejection of Iran's Mon proposal is the anchor: 'I don’t want to lift the blockade... they’re choking like a stuffed pig'. Rubio still anchored on 'definitively prevents them from sprinting to a nuclear weapon'. Public-rejection pathway CONFIRMED. Lebanon arc continues to compound from Wed (8 killed incl 3 rescue workers); no fresh overnight kinetic. Hegseth: blockade continues 'as long as it takes' — 37 ships redirected. Three US carriers on station. Brent ~$119.85 prices the rejection further.",
-    nuclear_status: "Iran does not have a deployable weapon. ~200kg 60%-enriched at Isfahan likely still there since June 2025 (Grossi to AP 29 Apr) — enough for as many as 10 bombs if weaponised. Total declared stockpile 440.9kg of 60% HEU per IAEA Feb 2026 GOV/2026/8 board paper. IAEA: lack of access to verify previously declared HEU/LEU for over 8 months is a matter of proliferation concern; no evidence Iran has a viable weapon design or detonation system but stockpile + access denial = serious concern. Trump Wed: 'I don't want them to have a nuclear weapon... blockade is somewhat more effective than the bombing'. Rubio anchored on 'definitively prevents them from sprinting'.",
-    ground_op_status: "Not Iraq. Targeted raids: Kharg Island seizure (90% Iran oil exports), Qeshm Island (Hormuz control), counterproliferation uranium seizure. H-hour probability HOLDS ~25-30% in next 14 days as of Thu 30 Apr 06:07 UTC. Drivers unchanged from Wed: Trump's formal Axios rejection anchored, Brent ~$119.85 removing cost-of-living constraint, Lebanon arc compounding, Iran questioning Pakistan's mediation legitimacy. IAEA Grossi's AP confirmation of ~200kg HEU likely at Isfahan since June 2025 sharpens counterproliferation-raid intelligence picture.",
-    next_flashpoint: "Iran's REVISED counter-proposal via Pakistan — expected in coming days. Whether Trump's Axios rejection moves to Truth Social or formal presser. Hezbollah retaliation for compounding Lebanon strikes — collapse of the Trump-extended Lebanon truce ahead of ~14 May expiry now near-term-likely. First mine-laying incident under shoot-to-destroy ROE. MV Touska retaliation still live. Beijing summit May 14-15 now decisive. Whether IRGC hardliners act unilaterally now that the proposal track is dead.",
-    updated: "2026-04-30T06:07:00.000Z"
+    ceasefire_status: "OPEN-ENDED AND INSTITUTIONALISING — Fri 1 May 06:07 UTC MORNING: White House announced today that the Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC). This converts the open-ended posture from a tactical stance into an indefinite institutional one — removes the Congressional pressure valve and weakens the dove-led Senate AUMF push. Trump-Iran stalemate holds: Khamenei nuclear/missile guard reaffirmation intact; Trump-Iran proposal rejection intact; US precondition (enrichment suspended ≥10 years, HEU removed) unchanged. International-coalition-to-reopen-Hormuz initiative continues. Hegseth: blockade continues 'as long as it takes' — 37 ships redirected. Three US carriers on station. Lebanon arc continues to compound (~14 May truce expiry approaching). UAE OPEC exit takes effect today.",
+    nuclear_status: "Iran does not have a deployable weapon. IAEA stockpile figure 440.9kg of 60% HEU — enough for ~10 weapons if weaponised. Majority likely still at Isfahan since June 2025. IAEA access TERMINATED 28 Feb 2026 (cameras disabled, seals removed from all declared facilities) — the IAEA cannot verify the extent of strike damage, the status of enriched-material stockpiles, or whether covert enrichment continues. Khamenei (30 Apr) reaffirmed Iran will 'guard' nuclear and missile tech. US precondition: enrichment suspended ≥10 years and HEU removed from country. Trump-Iran proposal rejection holds. No evidence of weaponisation, but stockpile + access denial = serious proliferation concern.",
+    ground_op_status: "Not Iraq. Targeted raids: Kharg Island seizure (90% Iran oil exports), Qeshm Island (Hormuz control), counterproliferation uranium seizure. H-hour probability HOLDS ~25-30% in next 14 days as of Fri 1 May 06:07 UTC MORNING. White House halt of 60-day War Powers Act deadline today removes the Congressional pressure-valve and lengthens the political horizon for the kinetic decision; does not raise base-case kinetic odds in the next 14-day window. Khamenei reaffirmation (Iran will guard nuclear/missile tech) keeps diplomatic off-ramp closed. International coalition to reopen Hormuz initiative ongoing. IAEA stockpile picture (440.9kg HEU at Isfahan, access suspended since 28 Feb) remains the counterproliferation case. Lebanon arc continues to compound; ~14 May truce expiry approaching.",
+    next_flashpoint: "Whether the White House 60-day-deadline-halt triggers any Senate AUMF counter-move (initial signals on Hill Friday). Whether US-led international coalition forms to reopen Hormuz. EGP defence at 53 holding vs second leg toward 54-55 panic threshold. Egypt $3B emergency IMF loan request formalisation. UAE post-OPEC production policy first day signals. April CBE inflation print (early May release). Lebanon ~14 May truce expiry. First mine-laying incident under shoot-to-destroy ROE. MV Touska retaliation still live. Beijing summit May 14-15. Whether Trump-Iran briefing escalates to operational order or remains posturing.",
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   metrics: {
-    _verified: "2026-04-30T06:07:00.000Z",
-    _stale_fields: ["metrics.suez_revenue_weekly_m", "metrics.hormuz_ships_24h (latest published is Apr 28 — Apr 29 daily not yet released)"],
-    brent_usd: 119.85,
+    _verified: "2026-05-01T06:07:57.000Z",
+    _stale_fields: ["metrics.suez_revenue_weekly_m", "metrics.egypt_official_reserves_apr_bn (April CBE figure not yet published; expected early May)", "metrics.urban_inflation_apr (April CPI release not yet published; expected early May)"],
+    brent_usd: 111.63,
     brent_spot_usd: null,
-    brent_week_range: "$99.13 Mon AM open → $108.11 Mon close → $111.16 Tue PM → $116.53 Wed close → $118.03 Wed late → $119.85 Thu 30 Apr morning (TradingEconomics intraday $120.30 most recent; Investing/OilPriceAPI $118.90)",
-    brent_spot_note: "Thu 30 Apr 06:07 UTC: Brent ~$119.85 — ninth straight up-session, holding the highest level since June 2022. Overnight extended on continued absence of any de-escalation signal post Trump's Wed Axios rejection. Drivers unchanged: Trump rejection anchored, UAE OPEC exit effective tomorrow (1 May), Lebanon arc compounding priced, IAEA Grossi confirming ~200kg HEU likely still at Isfahan. Goldman late-2026 forecast $90 now $30 below spot. Forecasters' ground-ops floor of $115-150 is LIVE — spot $4-5 inside lower band.",
-    wti_usd: 95.08,
-    us_gas_average: 4.03,
-    us_gas_note: "CORRECTED Thu 30 Apr (AAA): national average $4.03/gal. Wed evening print of $4.23 was stale/regional outlier; AAA national has held $4.03-$4.04 through April despite Brent surge from $90s to $119+. Pump lag is operative — expect 7-14 day pull-through if Brent holds $118+. Second-wave goods-channel inflation lag 6-10 weeks.",
-    egp_usd: 52.82,
-    egp_week_high: 52.84,
+    brent_week_range: "$99.13 Mon AM open → $108.11 Mon close → $111.16 Tue PM → $116.53 Wed close → $118.03 Wed late → $119.85 Thu morning → INTRADAY HIGH $126.41 (wartime high) → $114.01 Thu June expiry → $111.63 Fri July front-month +1.11% (CNBC). Net week-over-week: UP ~$12 from Mon $99.13 base; week ends with contract rollover compressing the spike.",
+    brent_spot_note: "Fri 1 May 06:07 UTC MORNING: Brent July front-month ~$111.63 (CNBC, +1.11%) — the front-month rolled over from June ($114.01 Thu close after intraday wartime high $126.41). Net DOWN ~$2.4 from Thursday close on rollover effect; still ~$22 above Goldman late-2026 $90 forecast. The CNBC headline driver: White House announcement that the Iran ceasefire HALTS the 60-day War Powers Act deadline — removes Congressional pressure valve. UAE OPEC exit takes effect TODAY (1 May) — first day-of-effect price action to watch. Brent now sits BELOW the $115-150 ground-ops forecaster floor.",
+    wti_usd: 92.50,
+    us_gas_average: 4.031,
+    us_gas_note: "Fri 1 May 06:07 UTC MORNING (AAA): national average $4.031/gal — stable. AAA national has held $4.03-$4.04 through April despite Brent surge from $90s to $119+ before contract-rollover compression. Pump lag still operative — pull-through dependent on whether Brent re-tests $120+. Second-wave goods-channel inflation lag 6-10 weeks unchanged.",
+    egp_usd: 53.00,
+    egp_week_high: 53.73,
     egp_panic_threshold: 55,
     egypt_bond_spread_bps: 745,
     suez_revenue_weekly_m: null,
@@ -1443,11 +1460,11 @@ Object.assign(window.GULF_RISK_DATA, {
     suez_fee_discount_status: "15% transit-fee discount for large containerships LIFTED effective 7 Apr 2026 — fee normalisation on declining traffic, not recovery signal",
     egypt_urban_cpi_mar_2026_pct: 15.2,
     egypt_urban_cpi_feb_2026_pct: 13.4,
-    egypt_official_reserves_end_mar_bn: 52.8,
-    egypt_official_reserves_note: "Press-release grade (CBE/SIS Mar 2026); analyst-adjusted operative figure remains $34B per cover-up thesis",
+    egypt_official_reserves_end_mar_bn: 52.83,
+    egypt_official_reserves_note: "Press-release grade ($52.83B end-Mar 2026, CBE/SIS); analyst-adjusted operative figure remains $34B per cover-up thesis. April CBE figure expected in coming days (early May release window). Cover-up thesis intact after yesterday EGP break 52.82 → 53.73; today pull-back to ~53 is the first CBE defence test at the new managed level.",
     hormuz_ships_monday: 16,
-    hormuz_ships_24h: 13,
-    hormuz_ships_recent_avg: 7,
+    hormuz_ships_24h: 6,
+    hormuz_ships_recent_avg: 8,
     hormuz_vessel_incidents_total: 37,
     sp500: 7137,
     nasdaq: 24698,
@@ -1457,14 +1474,14 @@ Object.assign(window.GULF_RISK_DATA, {
     fed_funds_target_high: 3.75,
     fed_dissent: "8-4 (most since Oct 1992) — Miran/Hammack/Kashkari/Logan dissented; Powell to step aside as chair mid-May, retain Board seat",
     goldman_brent_forecast_late_2026: 90,
-    hormuz_status: "Effectively closed. Wed 29 Apr PM: 37 ships redirected by US blockade. Trump's formal Axios rejection anchors continued blockade. 13 transits Apr 28 (4 in / 9 out, Northern Corridor); recent average ~7/day vs 125-140 pre-war. Polymarket 99.7% AGAINST normal Hormuz traffic by 30 Apr. Pentagon 6-month mine-clearing timeline holds. Three US CSGs on station.",
+    hormuz_status: "Effectively closed. Fri 1 May 06:07 UTC MORNING: traffic returns to ~5-10 ships/day per CNN/Bloomberg visual coverage; yesterday 20-transit Apr 29 print was a localised lift, not a trend reversal. ~5% of pre-war flow. 37 ships redirected by US blockade. Trump administration assembling international coalition to reopen Hormuz; White House 60-day-deadline halt today removes Congressional moderating pressure. Pentagon 6-month mine-clearing timeline holds. Three US CSGs on station.",
     iea_assessment: "Largest supply disruption in history of global oil market",
     imf_growth_warning: "Global growth will take hit even if ceasefire holds — Hormuz uncertainty persistent drag",
-    updated: "2026-04-30T06:07:00.000Z"
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   ground_ops: {
-    status: "POSTURED — Thu 30 Apr 06:07 UTC morning: H-hour probability HOLDS ~25-30% in next 14 days. No fresh kinetic / diplomatic catalyst overnight. USS George H.W. Bush CSG in CENTCOM (third US carrier alongside Lincoln + Ford). Drivers unchanged: Trump's Axios rejection of Iran's proposal anchored, Brent ~$119.85 (ninth straight up-session, highest since June 2022) eliminating cost-of-living constraint, Lebanon arc compounding from Wed, Iran questioning Pakistan's mediation legitimacy. IAEA Grossi's Wed AP confirmation of ~200kg HEU likely still at Isfahan since June 2025 sharpens counterproliferation-raid intelligence picture. Pentagon told ABC7 total US war cost to date $25 billion.",
+    status: "POSTURED — Fri 1 May 06:07 UTC MORNING: H-hour probability HOLDS ~25-30% in next 14 days. Material new datum: White House announcement that Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) removes the Congressional pressure-valve that had been a moderating constraint on the open-ended posture. Lengthens political horizon for the kinetic decision without raising base-case kinetic odds in the 14-day window. Khamenei nuclear/missile guard reaffirmation closes diplomatic off-ramp. USS George H.W. Bush CSG in CENTCOM (third US carrier alongside Lincoln + Ford). International-coalition-to-reopen-Hormuz initiative continues. IAEA stockpile (440.9kg HEU at Isfahan since June 2025; access suspended since 28 Feb) remains the counterproliferation case. Pentagon told ABC7 total US war cost to date $25 billion.",
     us_forces_total: "50,000+ in region and rising",
     forces_deployed: [
       "31st MEU — 2,500 Marines + sailors, USS Tripoli — IN THEATER",
@@ -1498,15 +1515,15 @@ Object.assign(window.GULF_RISK_DATA, {
     },
     expert_consensus: "USNI Proceedings, War on the Rocks, IISS, Defense Priorities all conclude: tactically feasible, strategically counterproductive. Will not compel Iran to open Hormuz. Will not collapse regime.",
     iraq_comparison: "NOT Iraq 2003. Targeted raids and seizures. But: no clear endgame. Iran's asymmetric capabilities intact enough to 'make things hurt' per Cato Institute.",
-    ceasefire_extension_impact: "Wed 29 Apr PM: TRUMP'S FORMAL REJECTION of Iran's Mon proposal CONFIRMED via Axios phone interview. Israeli strikes killed 8 in southern Lebanon Wed including 3 RESCUE WORKERS. H-hour probability ~25-30%. Brent $118.03 prices the rejection. Path-up triggers: (a) operational order, (b) Hezbollah retaliation, (c) any kinetic Iranian response, (d) any mine-laying incident, (e) Iran-questioning of Pakistan mediation removes off-ramp, (f) further Isfahan fortification imagery.",
-    updated: "2026-04-30T06:07:00.000Z"
+    ceasefire_extension_impact: "Fri 1 May 06:07 UTC MORNING: White House halt of 60-day War Powers Act deadline INSTITUTIONALISES the open-ended posture — Trump can maintain blockade and ceasefire indefinitely without Hill confrontation. H-hour probability HOLDS ~25-30%; the pressure-valve removal lengthens the political horizon but does not raise the kinetic-base-case in 14 days. Path-up triggers UNCHANGED: (a) operational order, (b) Hezbollah retaliation, (c) any kinetic Iranian response, (d) any mine-laying incident, (e) international-coalition formation gives political cover, (f) further Isfahan fortification imagery, (g) Egypt-IMF emergency loan triggers reading of regional contagion. NEW path-down trigger: Senate AUMF counter-move forcing authorisation vote despite the deadline halt — initial Hill response watch Friday.",
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   egypt: {
-    egp_usd: 52.82,
+    egp_usd: 53.00,
     egp_panic_threshold: 55,
-    status: "Managed stability under acute pressure — Thu 30 Apr 06:07 UTC: pound holds 52.82 OVERNIGHT despite Brent extending to ~$119.85 (TradingEconomics intraday $120.30) — CBE intervention persisting. Press-release-grade reserves print $52.8B end-Mar (CBE) but analyst-adjusted operative figure remains $34B. Urban inflation 15.2% Mar (vs 13.4% Feb) confirmed. AAA US gas CORRECTED to $4.03 — pump-feed lag is operative narrative; subsidy-bill pressure remains structural not yet acute on this datum.",
-    imf_status: "EFF + RSF active — $5.2B disbursed of $8B. Wed 29 Apr PM: Brent $118.03 + Trump's Axios rejection restore worst-case stress on reserve burn assumptions; Goldman late-26 forecast $90 already $28+ below spot.",
+    status: "STRESS — managed regime UNDER TEST — Fri 1 May 06:07 UTC MORNING: USD/EGP holds near 53 after yesterday break 52.82 → 53.73 (+1.34%). First CBE defence test at the new managed level. 30-day USD/EGP range now 51.75-54.69 (Wise). Sisi NEAR STATE OF ECONOMIC EMERGENCY framing from yesterday holds; $3B emergency IMF loan request still in considering phase; $38.65B external debt + interest due Apr 2026 → end 2026 (World Bank). Urban inflation 15.2% Mar (vs 13.4% Feb) confirmed; April CBE CPI release due in coming days. Cover-up thesis intact — press-release reserves $52.83B remain visibly detached from operative cash position.",
+    imf_status: "EFF + RSF active — $5.2B disbursed of $8B. Fri 1 May MORNING: Cairo emergency-IMF-loan-up-to-$3B consideration unchanged; formal request not yet on the IMF Board agenda. EGP defence at 53 today + $38.65B debt repayment schedule through end-2026 are the trigger conditions. Goldman late-26 Brent forecast $90 now ~$22 below spot. Watch April CBE CPI print and any quiet IMF Article IV signal in early-May release window.",
     gas_import_cost_monthly_bn: 2.5,
     energy_rationing: true,
     shop_closures_time: "21:00",
@@ -1531,7 +1548,7 @@ Object.assign(window.GULF_RISK_DATA, {
     sisi_stability: "Low near-term removal risk but support base narrower than at any prior point. Military backing is conditional/transactional, not loyal.",
     sisi_voter_support: "Effectively collapsed outside security-aligned rural/older segments (~25-35% genuine support).",
     sisi_military_support: "Conditional and transactional. EAF backs Sisi to protect SCAF's economic empire.",
-    cairo_mood: "Grim and compressing. Streets dark and quiet after 9pm closures. Urban inflation CONFIRMED 15.2% March 2026 (CAPMAS/CBE; accelerating from 13.4% Feb; highest since May 2025). Fatalism and dark humour.",
+    cairo_mood: "Grim and compressing. Streets dark and quiet after 9pm closures. Urban inflation 15.2% March 2026 (CAPMAS/CBE; accelerating from 13.4% Feb; highest since May 2025); April print due in coming days. Sisi NEAR STATE OF ECONOMIC EMERGENCY framing from yesterday holds in mainstream press; fatalism and dark humour deepening on Cairo street level.",
     urban_inflation_pct: 15.2,
     urban_inflation_feb_pct: 13.4,
     urban_inflation_trend: "accelerating",
@@ -1559,7 +1576,7 @@ Object.assign(window.GULF_RISK_DATA, {
     ],
     gcc_bailout_outlook: "Next bailout: smaller, slower, more conditional, more commercially extractive than any previous round. GCC states themselves under financial stress for first time — own war costs $120B+, interceptors depleted.",
     three_triggers_egp_break: [
-      "Oil above $100 sustained 90+ days (Brent $118.03 Wed 29 Apr PM — eighth straight up-session, highest since June 2022)",
+      "Oil above $100 sustained 90+ days (Brent ~$111.63 Fri 1 May July front-month, contract-rollover from $114.01 Thu June expiry; held above $100 since 13 Mar)",
       "Gulf support drying up (UAE OPEC exit 1 May fragments coordination)",
       "Tourism collapse (Lebanon arc compounding Wed 29 Apr — 3 rescue workers killed)"
     ],
@@ -1571,7 +1588,14 @@ Object.assign(window.GULF_RISK_DATA, {
       "Security service defection or internal split — not visible"
     ],
     developments: [
-      "30 Apr 2026 (Thu 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 (TradingEconomics intraday $120.30); USD/EGP holds 52.82 — CBE intervention persists; AAA US gas CORRECTED to $4.03.",
+      "1 May 2026 (Fri 06:07 UTC MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level. 30-day USD/EGP range 51.75-54.69 (Wise).",
+      "1 May 2026 (Fri MORNING): WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes Congressional pressure valve; institutionalises open-ended posture. Lengthens political horizon for any Egypt-contagion read.",
+      "1 May 2026 (Fri MORNING): Brent July front-month +1.11% to ~$111.63; June contract expired Thu $114.01 after intraday wartime high $126.41. Imported-fuel cost in EGP terms remains elevated.",
+      "1 May 2026 (Fri MORNING): UAE OPEC EXIT TAKES EFFECT TODAY — first material structural-coordination break inside Gulf bloc; bailout-coordination implication watch.",
+      "30 Apr 2026 (Thu 18:07 UTC EVENING): EGP BREAKS — USD/EGP moves 52.82 → 53.73 (+1.34%) intraday. First material move from CBE-managed level since intervention began. Pound now $1.27 from 55 panic threshold.",
+      "30 Apr 2026 (Thu EVENING): SISI publicly declares Egypt in 'NEAR STATE OF ECONOMIC EMERGENCY' (EgyptToday). Cairo reportedly considering an emergency $3B IMF loan. $38.65B external debt + interest due Apr 2026 → end 2026 (World Bank).",
+      "30 Apr 2026 (Thu EVENING): BRENT INTRADAY VOLATILITY — wartime high $126 on US-Iran action briefing reports, then ~3.2% pullback to $114.22.",
+      "30 Apr 2026 (Thu 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 (TradingEconomics intraday $120.30); USD/EGP held 52.82 — CBE intervention persisted; AAA US gas CORRECTED to $4.03.",
       "30 Apr 2026 (Thu): EGYPT URBAN CPI 15.2% Mar 2026 (CAPMAS/CBE) confirmed — accelerating from 13.4% Feb; highest since May 2025; driven by Mar fuel hike + broad-based goods/services pass-through.",
       "30 Apr 2026 (Thu): EGYPT OFFICIAL CBE FX RESERVES $52.8B end-Mar 2026 — press-release-grade; analyst-adjusted operative figure remains $34B per cover-up thesis.",
       "30 Apr 2026 (Thu): SUEZ CANAL AUTHORITY lifted 15% transit-fee discount for large containerships effective 7 Apr — fee normalisation on declining traffic, NOT recovery.",
@@ -1588,13 +1612,13 @@ Object.assign(window.GULF_RISK_DATA, {
       "26 Apr 2026: Pentagon 6-month Hormuz mine-clearing timeline reframes Egypt energy outlook.",
       "22 Apr 2026: SCA Q1 figures ahead of 2025 ($449M vs $368M YTD) but still below pre-war pace."
     ],
-    honest_assessment: "Egypt has been functionally insolvent on its own fundamentals for most of the last decade. Thu 30 Apr 06:07 UTC: overnight extends Wed's setup with no rupture. Brent ~$119.85 (ninth straight up-session); pound holds 52.82 (CBE intervention persisting overnight); urban CPI 15.2% Mar confirmed (vs 13.4% Feb); SCA fee normalisation on declining traffic confirms the decline-not-recovery read. Press-release-grade CBE reserves $52.8B end-Mar are NOT the operative figure — analyst-adjusted $34B + bond spread 745bps remain decision-grade. Sisi-Patrushev (Suez/Dabaa) Russia-channel hedge is more salient as Pakistan track stays in question. Lebanon arc compounding (Wed: 3 rescue workers killed) continues to hit European tourism corridor. The cliff remains open-ended in date but the slope keeps steepening — Brent now $4-5 inside the ground-ops $115-150 floor.",
+    honest_assessment: "Egypt has been functionally insolvent on its own fundamentals for most of the last decade. Fri 1 May 06:07 UTC MORNING: the day-after picture from yesterday EGP break (52.82 → 53.73). Pound holds near 53 — the first CBE defence test at the new managed level. The cover-up thesis from yesterday is intact: press-release reserves $52.83B remain visibly detached from operative cash position. Bond spread 745bps and analyst-adjusted reserves $34B remain decision-grade. Brent contract rollover (June $114.01 → July $111.63) does not change the structural energy-import picture for Egypt — the LNG bill rises with the persistent above-$100 backdrop, not the spot-day move. The White House halt of the 60-day War Powers deadline lengthens the regional-political horizon, which buys Egypt a measure of time but also signals the open-ended posture is now indefinite.",
     investment_assessment: {
       verdict: "DO NOT COMMIT — REVISIT H1 2027 AT EARLIEST",
       verdict_color: "red",
       summary: "Q4 2026 target was too optimistic. Civilian baseline: 15.2% inflation accelerating. Political baseline: Sisi voter support rock bottom. Military baseline: officer corps support conditional. Realistic entry window: H1 2027.",
       bull_case: [
-        "FX arbitrage: EGP at 52.82/USD makes local-cost technical talent exceptionally cheap in USD terms.",
+        "FX arbitrage: EGP at ~53/USD (after yesterday break to 53.73, holding today) makes local-cost technical talent exceptionally cheap in USD terms.",
         "Talent depth: Egypt produces ~60,000 STEM graduates/year.",
         "Strategic location: UTC+2, Arabic/English bilingual, time-zone bridges EU and Gulf.",
         "Distressed entry: Asset valuations at multi-year lows in USD terms.",
@@ -1604,7 +1628,7 @@ Object.assign(window.GULF_RISK_DATA, {
       bear_case: [
         "Reserves trajectory: $34B today, $25B danger threshold 6-9 months away without fresh Gulf support.",
         "Energy rationing operational today. Direct productivity hit.",
-        "Currency fragility: EGP at 52.82 with panic threshold at 55.",
+        "Currency fragility: EGP at ~53 holding after yesterday break to 53.73; panic threshold at 55.",
         "SCAF structural risk: military runs 25-40% of formal economy.",
         "Bond spread 745bps: capital markets pricing significant credit risk.",
         "Brain drain pressure: best Egyptian engineers are mobile.",
@@ -1619,7 +1643,7 @@ Object.assign(window.GULF_RISK_DATA, {
       timing_verdict: "H1 2027 at the earliest, subject to: (1) ceasefire confirmed, (2) reserves >$32B, (3) EGP stable 60-90 days, (4) IMF tranche disbursed.",
       recommendation: "No capital commitment until H1 2027 triggers confirmed. Permissible now: passive talent identification, market intelligence, legal SCAF-exposure mapping."
     },
-    updated: "2026-04-30T06:07:00.000Z"
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   gcc_war_damage: {
@@ -1659,7 +1683,17 @@ Object.assign(window.GULF_RISK_DATA, {
     daily_flights_cancelled_peak: 40000,
     strategic_verdict: "GCC air defence posture permanently degraded regardless of ceasefire outcome. NPT fundamentally undermined.",
     incidents: [
-      "30 Apr 2026 (Thu 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 (TradingEconomics intraday $120.30); USD/EGP holds 52.82 — CBE intervention persists; no overnight kinetic.",
+      "1 May 2026 (Fri 06:07 UTC MORNING): WHITE HOUSE ANNOUNCES IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — institutionalises open-ended posture; removes Congressional pressure valve; weakens Senate AUMF push.",
+      "1 May 2026 (Fri MORNING): UAE OPEC EXIT TAKES EFFECT TODAY (1 May) — first material structural-coordination break inside Gulf bloc since war began. Saudi 25% idle capacity backstops; UAE quota deviation watch begins.",
+      "1 May 2026 (Fri MORNING): Brent contract rollover — June expired Thu $114.01 (after intraday wartime high $126.41); July front-month +1.11% to ~$111.63 on White House deadline-halt headline (CNBC).",
+      "1 May 2026 (Fri MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level.",
+      "1 May 2026 (Fri MORNING): Hormuz traffic returns to ~5-10 ships/day per CNN/Bloomberg — yesterday 20-transit print was localised lift, not trend.",
+      "30 Apr 2026 (Thu 18:07 UTC EVENING): EGP BREAKS — USD/EGP moves 52.82 → 53.73 (+1.34%); first material move from CBE-managed level since intervention began.",
+      "30 Apr 2026 (Thu EVENING): BRENT INTRADAY $114-$126 — wartime high $126 on reports US military will brief Trump on potential Iran action, then ~3.2% pullback.",
+      "30 Apr 2026 (Thu EVENING): SISI publicly declares Egypt in 'NEAR STATE OF ECONOMIC EMERGENCY' (EgyptToday); Cairo considering $3B emergency IMF loan.",
+      "30 Apr 2026 (Thu EVENING): KHAMENEI — Iran will 'guard' nuclear and missile technologies; US wants enrichment suspended ≥10 years and HEU removed.",
+      "30 Apr 2026 (Thu EVENING): HORMUZ Apr 29 print 20 transits (6 in / 14 out; Northern 13 / Southern 7); Gulf-wide presence 902 vessels.",
+      "30 Apr 2026 (Thu 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 (TradingEconomics intraday $120.30); USD/EGP held 52.82 — CBE intervention persisted; no overnight kinetic.",
       "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone interview — 'they are choking like a stuffed pig'.",
       "29 Apr 2026 (Wed): Rubio softened verbally — 'better than what we thought' — but anchored on nuclear precondition.",
       "29 Apr 2026 (Wed PM): BRENT $118.03 (~+6% CNBC) — eighth straight up-session, highest since June 2022.",
@@ -1688,25 +1722,25 @@ Object.assign(window.GULF_RISK_DATA, {
       "21 Apr 2026: Hormuz transit collapsed to 3-ship 24h low.",
       "19 Apr 2026: USS Spruance fires on engine room, seizes MV Touska."
     ],
-    updated: "2026-04-30T06:07:00.000Z"
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   hormuz: {
-    status: "Effectively closed — Thu 30 Apr 06:07 UTC morning: status unchanged from Wed. 37 ships redirected by US blockade; Trump's Axios rejection anchors continued blockade. Latest published daily print remains 13 transits Apr 28 (4 in / 9 out, Northern Corridor — Hormuz Strait Monitor / USNI); Apr 29 figure not yet released. Recent average ~7/day vs 125-140 pre-war. ~20,000 seafarers stranded. Polymarket 99.7% AGAINST normal Hormuz traffic by 30 Apr (resolves today). Pentagon 6-month mine-clearing timeline holds.",
+    status: "Effectively closed — Fri 1 May 06:07 UTC MORNING: 37 ships redirected by US blockade. Traffic back to ~5-10 ships/day per CNN/Bloomberg visual coverage; yesterday 20-transit Apr 29 print was a localised lift, not a trend reversal. ~5% of pre-war flow. Trump administration assembling international coalition to reopen Hormuz; White House 60-day-deadline halt today institutionalises open-ended posture. ~20,000 seafarers still stranded. Pentagon 6-month mine-clearing timeline holds. Three US CSGs on station.",
     ships_monday: 16,
-    ships_24h: 13,
-    ships_recent_avg: 7,
+    ships_24h: 6,
+    ships_recent_avg: 11,
     vessels_turned_back_by_blockade: 37,
     us_blockade_active: true,
-    iran_response: "Vowing retaliation for MV Touska. Joint military command: 'will soon respond and retaliate against this armed piracy'. Wed 29 Apr PM: Trump's FORMAL Axios rejection closes the blockade-lift channel. Iran's national security spokesperson questioning Pakistan's mediator legitimacy. House of Commons Library briefing notes Iran's 5-point counter-proposal includes recognition of Iranian sovereignty over Strait of Hormuz, security guarantees, war reparations.",
-    mv_touska: "Iranian cargo ship seized 19 Apr by USS Spruance. Iran demanding immediate release. Still held. Wed 29 Apr: blockade now explicitly anchored by Trump as 'somewhat more effective than the bombing'.",
+    iran_response: "Vowing retaliation for MV Touska. Joint military command: 'will soon respond and retaliate against this armed piracy'. Fri 1 May MORNING: Khamenei nuclear/missile guard reaffirmation from yesterday holds; Iran's standing offer to reopen Hormuz conditional on US lifting blockade and ending war remains rejected by Trump (no nuclear element). White House 60-day-deadline halt today removes one moderating constraint on the open-ended US posture; Iran response calibration watch.",
+    mv_touska: "Iranian cargo ship seized 19 Apr by USS Spruance. Iran demanding immediate release. Still held. Fri 1 May MORNING: blockade remains anchored by Trump as the operative leverage tool; Trump administration assembling international coalition to reopen Hormuz on US terms; White House 60-day-deadline halt today extends the political horizon for the leverage to operate.",
     iran_gunboats: "Fired on two Indian-flagged merchant vessels weekend ~17-18 Apr; IRGC seized MSC Francesca and Epaminondas 22 Apr.",
     mine_threat: "Mines identified by Hegseth as KEY remaining obstacle. Pentagon told Congress it could take SIX MONTHS to clear. Trump (23 Apr) and Hegseth (24 Apr): Navy authorised to 'shoot to destroy' Iranian boats laying mines — no kinetic encounter under this ROE yet.",
     pre_war_daily_barrels_m: 20,
     current_daily_barrels_m: 1,
     insurance_premium_pct: 5.0,
     analyst_quote: "We had the most violent day in the strait on Saturday that we've had since the beginning of this crisis — Rory Johnston, Commodity Context (mid-April)",
-    updated: "2026-04-30T06:07:00.000Z"
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   watchlist: {
@@ -1716,25 +1750,30 @@ Object.assign(window.GULF_RISK_DATA, {
       { id: 4, label: "Ground operations — Kharg/Qeshm/uranium", deadline: "Open-ended", status: "POSTURED — UPGRADED", notes: "82nd Airborne HQ forward deployed. USS Bush CSG ARRIVED in CENTCOM (third US carrier). Wed 29 Apr probability next 14 days: ~25-30% (UP from 22-26% Tue) — Trump's formal Axios rejection CONFIRMED, Brent $116+, Lebanon arc compounding (3 rescue workers killed Wed). IAEA Grossi confirmed ~200kg HEU likely still at Isfahan since June 2025." },
       { id: 5, label: "Nuclear counterproliferation raid — Isfahan fortification", deadline: "If ground ops commence", status: "HIGH", notes: "Trump explicit: 'We want the nuclear dust.' 200kg confirmed at Isfahan — too deep to destroy. Wed 29 Apr Grossi to AP confirms HEU likely there since June 2025." },
       { id: 6, label: "Lebanon — escalation compounding (rescue workers killed Wed)", deadline: "~14 May", status: "ESCALATING — Compounding", notes: "Wed 29 Apr: Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS (Euronews); Israel threatened to 'burn' all of Lebanon. Fourth-rung escalation after Tue Bekaa Valley + Tue 16-town displacement order. Trump-extended truce to ~14 May effectively unraveling." },
-      { id: 7, label: "EGP — Brent $116, cliff sharpened", deadline: "Weeks-months", status: "Watch — Elevated", notes: "EGP 52.82 Wed 29 Apr PM — flat on Tue 52.84 despite Brent extending to $118.03 (~+6% CNBC); CBE intervention apparent. Brent at eighth straight up-session, highest since June 2022. Goldman late-2026 forecast $90 already $28+ below spot. Bond spread 745bps." },
+      { id: 7, label: "EGP — BREAK 52.82 → 53.73 today, cliff escalating", deadline: "Days-weeks", status: "CRITICAL — UPGRADED", notes: "EGP rose 52.82 → 53.73 (+1.34%) Thu 30 Apr intraday — first material move from CBE-managed level since intervention regime began. Pound now $1.27 from 55 panic threshold. Either CBE has burned morning ammunition or stepped back tactically; either way, the press-release-grade reserves figure ($52.83B end-March) is detached from operative cash. Bond spread 745bps." },
       { id: 8, label: "Beijing summit", deadline: "May 14-15", status: "Increasingly relevant", notes: "With Pakistan-mediated track in trouble, Beijing summit becomes more important as fallback architecture." },
       { id: 10, label: "Mine-laying incident under new ROE", deadline: "Real-time", status: "HIGH", notes: "Trump (23 Apr) and Hegseth (24 Apr) authorised Navy to 'shoot to destroy'. First kinetic encounter under this ROE could rapidly collapse the open-ended ceasefire." },
       { id: 12, label: "Second-wave inflation — goods channel not yet priced", deadline: "H2 2026", status: "MEDIUM-TERM WATCH", notes: "Wave 1 (oil price spike) priced at $116. Wave 2 (imported inflation through goods channel) has not arrived yet. Estimated lag: 6-10 weeks." },
       { id: 13, label: "Egypt — invest / relocate technical resources?", deadline: "H1 2027 review", status: "ANALYTICAL WATCH", notes: "Q4 2026 target was too optimistic. DO NOT COMMIT, watch-only until H1 2027. Four trigger conditions: ceasefire, reserves >$32B, EGP stable 60 days, IMF tranche disbursed." },
       { id: 14, label: "Pentagon 6-month Hormuz mine-clearing timeline", deadline: "Structural", status: "STRATEGIC", notes: "Pentagon told Congress fully clearing Iran's Hormuz mines could take SIX MONTHS. Even a diplomatic deal will not produce immediate Hormuz/Suez normalisation." },
-      { id: 19, label: "Iran's REVISED counter-proposal via Pakistan — expected days", deadline: "Days", status: "CRITICAL — INCOMING", notes: "Wed 29 Apr: Pakistan mediators expect revised Iranian counter-proposal in coming days (Pravda USA / Reuters). Iran's reported 5-point counter-proposal: end of US-Israeli attacks on Iran/Lebanon/Iraq, security guarantees, war reparations, recognition of Iranian sovereignty over Strait of Hormuz. Iran's national security spokesperson: Pakistan 'is not suitable as a mediator' — channel risk live." },
+      { id: 19, label: "Iran's REVISED counter-proposal — Khamenei reaffirms nuclear stance Thu", deadline: "Days", status: "STALLED — diplomatic off-ramp narrowing", notes: "Thu 30 Apr: Khamenei publicly reaffirms Iran will 'guard' nuclear and missile technologies despite external pressure — narrows the space for any revised proposal that would meet US precondition (enrichment suspended ≥10 years, HEU removed). Iran's standing offer to reopen Hormuz conditional on US lifting blockade remains rejected by Trump. Pakistan-mediator channel risk live." },
       { id: 20, label: "IAEA Grossi confirms HEU at Isfahan since June 2025", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — Confirmed", notes: "Wed 29 Apr (AP): IAEA Director General Grossi told the AP that ~200kg of Iran's 60% HEU 'likely remains' at Isfahan since June 2025 12-day war. Stockpile potentially enables 'as many as 10 nuclear bombs' if weaponised." },
       { id: 21, label: "Fed rate decision — Powell's last as chair (29 Apr)", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — Held with rare 8-4 dissent", notes: "Wed 29 Apr: Fed held target range 3.50-3.75% on 8-4 dissent — most since October 1992. Powell will step aside as chair mid-May but stay on Fed Board of Governors." },
-      { id: 22, label: "UAE OPEC exit effective 1 May — settlement watch", deadline: "1 May 2026", status: "STRUCTURAL — imminent", notes: "Wed 29 Apr: UAE exit from OPEC and OPEC+ takes effect 1 May 2026. Saudi has 25% idle capacity to offset (CNBC). Watch: Saudi production response, UAE quota deviation post-1 May." }
+      { id: 22, label: "UAE OPEC exit effective 1 May — settlement watch", deadline: "1 May 2026", status: "STRUCTURAL — imminent", notes: "Wed 29 Apr: UAE exit from OPEC and OPEC+ takes effect 1 May 2026 (TOMORROW). Saudi has 25% idle capacity to offset (CNBC). Watch: Saudi production response, UAE quota deviation post-1 May." },
+      { id: 23, label: "Egypt — emergency $3B IMF loan request formalisation", deadline: "Weeks", status: "CRITICAL — INCOMING", notes: "Thu 30 Apr EVENING: Cairo reportedly considering an emergency IMF loan up to $3B on top of the existing EFF + RSF programme — first reporting of an emergency-tranche request since the war began. World Bank shows $38.65B in external debt + interest due Apr 2026 → end 2026. Trigger condition coupled with EGP break to 53.73." },
+      { id: 24, label: "US military briefing to Trump on potential Iran action", deadline: "Days", status: "CRITICAL — H-hour signal — POST-DEADLINE-HALT", notes: "Thu 30 Apr: reports US military will brief Trump on potential action against Iran drove Brent intraday to wartime high $126.41 (then back to $114.22). Fri 1 May: White House halt of 60-day War Powers Act deadline removes the moderating Congressional constraint on any operational order that may follow the briefing. The briefing-to-decision interval IS the H-hour window." },
+      { id: 25, label: "White House halt of 60-day War Powers Act deadline (CNBC 1 May)", deadline: "Resolved Fri 1 May", status: "RESOLVED — INSTITUTIONALISES OPEN-ENDED POSTURE", notes: "Fri 1 May 06:07 UTC MORNING: White House announced Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC). Removes the Congressional pressure valve doves had been pricing as the near-term off-ramp; lets Trump maintain blockade and ceasefire indefinitely without Hill confrontation. Watch: Senate AUMF counter-move signals." },
+      { id: 26, label: "UAE post-OPEC production policy first day signals (1 May)", deadline: "Days", status: "STRUCTURAL — Day 1", notes: "UAE exit from OPEC and OPEC+ takes effect TODAY. Saudi 25% idle capacity backstops; UAE quota deviation watch begins. Watch: UAE production reporting and Saudi response within first week." },
+      { id: 27, label: "April CBE Egypt CPI release", deadline: "Early May", status: "PENDING", notes: "March urban CPI 15.2% (vs 13.4% Feb). April print due in coming days; consensus pencilling further uptick on March fuel-hike pull-through and EGP weakness. Decision-grade for the Egypt-specific stress narrative." }
     ],
-    updated: "2026-04-30T06:07:00.000Z"
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   war: {
     operation_name: "Operation Epic Fury",
-    day_number: 61,
+    day_number: 63,
     start_date: "28 Feb 2026",
-    current_phase: "Open-ended ceasefire formally in place but DETERIORATING — Wed 29 Apr PM. TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone call. LEBANON COMPOUNDING: 3 rescue workers killed Wed; Israel threatened to 'burn' all of Lebanon. BRENT EXTENDED TO $118.03 (~+6% CNBC) — highest since June 2022. Fed held 3.50-3.75% with 8-4 dissent (most since Oct 1992); Powell stepping down as chair mid-May. IAEA Grossi confirmed ~200kg HEU likely still at Isfahan since June 2025. UAE OPEC exit takes effect 1 May. H-hour probability UPGRADED to ~25-30%.",
+    current_phase: "Open-ended ceasefire formally in place and now INSTITUTIONALISED — Fri 1 May 06:07 UTC MORNING. WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes Congressional pressure valve; lets Trump maintain blockade indefinitely without Hill confrontation. Brent: June contract expired Thu $114.01 after intraday wartime high $126.41; July front-month +1.11% to ~$111.63. EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level. UAE OPEC exit takes effect TODAY (1 May) — first material structural-coordination break inside Gulf bloc since war began. Hormuz back to ~6 ships/day after yesterday localised 20-transit print. Khamenei nuclear/missile guard reaffirmation holds. IAEA stockpile picture unchanged (440.9kg HEU at Isfahan since June 2025; access suspended since 28 Feb). H-hour probability HOLDS ~25-30% next 14 days.",
     key_events: [
       "28 Feb 2026: Operation Epic Fury begins — US joins Israeli campaign against Iran",
       "13 Apr 2026: US naval blockade of Iran's ports begins; Kharg Island 90+ targets pre-struck",
@@ -1757,7 +1796,17 @@ Object.assign(window.GULF_RISK_DATA, {
       "29 Apr 2026 (Wed): IAEA Grossi told AP — Iran's ~200kg of 60% HEU 'likely remains' at Isfahan since June 2025",
       "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon",
       "29 Apr 2026 (Wed): H-hour probability UPGRADED ~25-30% in next 14 days from Tue's ~22-26%",
-      "30 Apr 2026 (Thu 06:07 UTC morning): Brent extended overnight to ~$119.85 (ninth straight up-session); USD/EGP holds 52.82; AAA US gas CORRECTED to $4.03; Egypt urban CPI confirmed 15.2% Mar; SCA lifted 15% large-containership transit-fee discount effective 7 Apr; H-hour probability HOLDS 25-30%"
+      "30 Apr 2026 (Thu 06:07 UTC morning): Brent extended overnight to ~$119.85 (ninth straight up-session); USD/EGP held 52.82; AAA US gas CORRECTED to $4.03; Egypt urban CPI confirmed 15.2% Mar; SCA lifted 15% large-containership transit-fee discount effective 7 Apr; H-hour probability HOLDS 25-30%",
+      "30 Apr 2026 (Thu 18:07 UTC EVENING): EGP BREAK — USD/EGP rose 52.82 → 53.73 (+1.34%) intraday; first material move from CBE-managed level since intervention began",
+      "30 Apr 2026 (Thu EVENING): Brent intraday wartime high $126 on US-Iran action briefing reports, then ~3.2% pullback to $114.22",
+      "30 Apr 2026 (Thu EVENING): Sisi publicly declares Egypt in NEAR STATE OF ECONOMIC EMERGENCY; Cairo considering $3B emergency IMF loan",
+      "30 Apr 2026 (Thu EVENING): Khamenei reaffirms Iran will 'guard' nuclear and missile technologies; Trump administration moving to assemble international coalition to reopen Hormuz",
+      "30 Apr 2026 (Thu EVENING): Hormuz Apr 29 print 20 transits (6 in / 14 out; Northern 13, Southern 7) — modest lift on the trickle",
+      "1 May 2026 (Fri 06:07 UTC MORNING): WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes Congressional pressure valve; institutionalises open-ended posture",
+      "1 May 2026 (Fri MORNING): Brent contract rollover — June expired Thu $114.01; July front-month +1.11% to ~$111.63",
+      "1 May 2026 (Fri MORNING): UAE OPEC EXIT TAKES EFFECT — first material structural-coordination break inside Gulf bloc",
+      "1 May 2026 (Fri MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level",
+      "1 May 2026 (Fri MORNING): Hormuz back to ~6 ships/day after yesterday localised 20-transit print"
     ],
     us_targets_struck: "9,000+",
     us_combat_flights: "9,000+",
@@ -1775,36 +1824,37 @@ Object.assign(window.GULF_RISK_DATA, {
       "Regime change — bring Iranian opposition to power",
       "'We want the nuclear dust'"
     ],
-    trump_domestic: "War started with 21% public support. Now two-thirds oppose. Gas at $4.05 nationally. No Congressional authorisation.",
-    senate_signals: "Wed 29 Apr PM: Trump's formal Axios rejection of Iran's proposal hardens hawks' position; dovish Republicans isolated. Brent at $118.03 (highest since June 2022) materially elevates the political cost-of-living vulnerability. Pentagon told ABC7 total US war cost to date $25B; Congressional appropriation question reopens.",
-    updated: "2026-04-30T06:07:00.000Z"
+    trump_domestic: "War started with 21% public support. Now two-thirds oppose. Gas at $4.03 nationally (AAA national, stable). No Congressional authorisation. Fri 1 May: White House halt of 60-day War Powers Act deadline (CNBC) removes the imminent Congressional forcing function — but also intensifies the no-authorisation question for any operational order that may follow. Pentagon told ABC7 total US war cost $25B.",
+    senate_signals: "Fri 1 May MORNING: White House announcement that Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) is the day most decision-grade Senate datum. It removes the imminent forcing function for an AUMF debate — the dove-led pressure that was scheduled to bind in days now slips into the indefinite. Watch: dovish Republican counter-move (Murkowski/Collins/Paul/Lee) and any Schumer floor signal. Brent ~$111.63 keeps cost-of-living live but eases pump-feed urgency.",
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   scenarios: {
     tonight: [
-      { name: "Trump rejection holds; drift / Iran revises proposal via Pakistan", prob: 38, oil: "$115-125", egypt: "Stress elevated — EGP holds 52-53 with CBE intervention", notes: "Wed 29 Apr PM revised base case: Trump's Axios rejection holds; Iran responds with revised counter-proposal in coming days. Probability DOWN from 42% Tue as the rejection has now resolved." },
-      { name: "Iran routes around Pakistan — Russia/Beijing or counter-offer with partial nuclear element", prob: 16, oil: "$95-110", egypt: "Mixed — EGP firms slightly", notes: "Iran's national security spokesperson questioning Pakistan's mediator role opens space for Russia or Beijing. Rubio's modest verbal softening creates a phone-channel back-door. Probability UP from 14% Tue." },
-      { name: "Iran retaliates kinetically (mine-laying / MV Touska / GCC strike)", prob: 25, oil: "$118-140", egypt: "Stress-to-crisis", notes: "Iran reads Trump's Axios rejection + Lebanon escalation as conclusive; IRGC acts unilaterally. Probability UP from 23% Tue." },
-      { name: "US launches ground operations", prob: 16, oil: "$120-150", egypt: "Crisis", notes: "Trump's Axios rejection + Brent $116 + Lebanon arc compounding all push higher. Probability UP from 14% Tue. USS Bush CSG operational accelerant." },
-      { name: "Counterproliferation nuclear raid", prob: 5, oil: "$135-170+", egypt: "Catastrophic", notes: "IAEA Grossi's AP confirmation Wed sharpens the target picture. Probability DOWN slightly from 7% as Isfahan storage depth still binds." }
+      { name: "Stalemate continues; deadline-halt institutionalises open-ended posture", prob: 38, oil: "$105-120", egypt: "STRESS — EGP holds 53-54 area", notes: "Fri 1 May MORNING revised base case: White House 60-day-deadline halt removes Congressional pressure valve; Trump can maintain blockade indefinitely without Hill confrontation. Khamenei nuclear/missile guard reaffirmation holds. Probability UP from 35% as deadline-halt removes one near-term off-ramp pathway and lengthens the political horizon." },
+      { name: "Iran routes via Russia/Beijing or counter-offer with partial nuclear element", prob: 13, oil: "$95-110", egypt: "Mixed — EGP firms slightly", notes: "Putin-Araghchi channel + Beijing summit (May 14-15) keep alternative architecture alive. Deadline-halt makes Iran less likely to come back with concessions in near term as US pressure-clock paused. Probability DOWN from 14%." },
+      { name: "Iran retaliates kinetically (mine-laying / MV Touska / GCC strike)", prob: 25, oil: "$120-140", egypt: "Crisis", notes: "Khamenei reaffirmation + diplomatic stalemate + extended blockade duration raise IRGC unilateral risk. Deadline-halt does not change kinetic-base-case. Probability DOWN from 26%." },
+      { name: "US launches ground operations", prob: 17, oil: "$120-150", egypt: "Crisis", notes: "Reports US military briefing Trump on potential Iran action remain the H-hour signal. Deadline-halt removes the moderating Congressional constraint on any operational order. Probability DOWN slightly from 18% — deadline-halt lengthens political horizon, slightly lowers base-case in 14-day window." },
+      { name: "Counterproliferation nuclear raid", prob: 7, oil: "$135-170+", egypt: "Catastrophic", notes: "IAEA stockpile picture (440.9kg HEU at Isfahan since June 2025; access suspended since 28 Feb) holds the target case. Deadline-halt does not change the political incentive structure for direct counterproliferation." }
     ],
-    thirty_day: "Watch: Iran's REVISED counter-proposal expected via Pakistan in coming days. Whether Iran routes around Pakistan via Russia/Beijing. Witkoff/Kushner phone-channel reactivation possibility. Hormuz daily transits. EGP vs 55. First mine-laying incident under shoot-to-destroy ROE. Lebanon truce ~14 May expiry. UAE OPEC exit takes effect 1 May. Powell departure as Fed chair mid-May.",
-    sixty_day: "Brent spot vs futures gap. CBE reserve figures. Whether Iran's 'postpone nuclear' clause survives in any revised counter-proposal. UAE post-OPEC production policy. Beijing summit outcome (May 14-15). Second-wave inflation watch.",
-    egypt_specific: "If Iran's revised counter-proposal threads partial nuclear element + oil settles $90-100: Egypt muddles through 2026. If talks deadlocked and oil holds $115+ (current Brent $118.03 — already there): Egypt faces genuine crisis Q3 2026.",
-    egypt_investment: "HOLD on near-term commitment. Base case: reserves reach $28-30B by Q3 2026, forcing Gulf bailout — earliest credible entry window H1 2027. Bear case: Lebanon arc collapses fully, Brent sustains $125+, reserves breach $25B → abort. Bull case: Iran's revised counter-proposal threads partial nuclear element acceptable to phone-channel — probability ~16% on Wed 29 Apr.",
-    updated: "2026-04-30T06:07:00.000Z"
+    thirty_day: "Watch: Whether White House 60-day-deadline halt triggers a Senate AUMF counter-move. EGP defence at 53 holding vs second leg toward 54-55. Egypt $3B emergency IMF loan request formalisation. April CBE CPI release (early May). UAE post-OPEC production policy first-week signals. Hormuz daily transits sustaining above 10. First mine-laying incident under shoot-to-destroy ROE. Lebanon truce ~14 May expiry. Powell departure as Fed chair mid-May. Beijing summit May 14-15.",
+    sixty_day: "Brent spot vs futures gap. CBE reserve figures vs analyst-adjusted operative figure (cover-up thesis test). Whether Iran's nuclear-guard stance shifts under sanctions/blockade duration pressure. UAE post-OPEC production policy. Beijing summit outcome (May 14-15). Second-wave inflation watch. Egypt subsidy reform pressure under emergency IMF context.",
+    egypt_specific: "Yesterday EGP break (52.82 → 53.73) and Sisi NEAR STATE OF ECONOMIC EMERGENCY language pull the timeline forward; today pull-back to ~53 is the first CBE defence test. If Khamenei stance and Trump rejection both hold (and the White House deadline-halt institutionalises open-ended posture): Egypt crisis case advances from Q3 → Q2-Q3 2026. Cairo $3B emergency IMF loan + GCC bridge would buy 2-4 quarters; without it, the EGP slide continues toward the 55 panic threshold.",
+    egypt_investment: "HOLD on near-term commitment. Base case: EGP defending 53-54 in near term then sliding through 54-55, reserves reach $28-30B by Q2-Q3 2026, $3B emergency IMF loan + GCC bridge buys time — earliest credible entry window H1 2027. Bear case: EGP breaches 55, Brent sustains $120+, reserves breach $25B → abort. Bull case: Iran-Russia-China-mediated nuclear framework + Hormuz partial reopening — probability ~13% Fri 1 May MORNING (revised down from 14% as deadline-halt makes Iran less likely to come back with concessions near term).",
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   predictions: {
     track_record: { correct: 15, incorrect: 8, pending: 6 },
     pending: [
-      { id: 9,  text: "Sisi stability 12-18 months", status: "PENDING", deadline: "Ongoing", notes: "Holding. Wed 29 Apr: Trump's formal Axios rejection of Iran's proposal closes near-term Hormuz reopening. No immediate political risk to Sisi but funding-conditions stress sharpened.", updated: "2026-04-30" },
-      { id: 12, text: "Beijing trade truce not ceasefire", status: "PENDING — DECISIVE NOW", deadline: "May 14-15", notes: "Wed 29 Apr: with Trump's formal Axios rejection of the Pakistan track, Beijing summit elevates from 'increasingly relevant' to potentially decisive fallback architecture.", updated: "2026-04-30" },
-      { id: 13, text: "Second Egypt fuel price adjustment", status: "PENDING — pressure intensifying", deadline: "Early-mid May", notes: "Wed 29 Apr PM Brent $118.03 (highest since June 2022). AAA US gas $4.23. IMF programme requires fuel-subsidy adjustment.", updated: "2026-04-30" },
-      { id: 25, text: "Ground operations commence — Kharg or Qeshm seizure", status: "PENDING — UPGRADED", deadline: "Next 14 days", notes: "Wed 29 Apr probability: ~25-30% in next 14 days, UP from 22-26% Tue / 20-25% Mon. Trump's formal Axios rejection CONFIRMED; Brent $116+; Lebanon arc compounding (3 rescue workers killed Wed).", updated: "2026-04-30" },
-      { id: 28, text: "Egypt foreign reserves breach $30B without fresh Gulf support", status: "PENDING — probability rising", deadline: "Q3 2026", notes: "Reserves at $34B. UAE OPEC exit (effective 1 May) fragments Gulf coordination further. Probability: ~60% within 6 months absent ceasefire/Gulf deal (UP from 55%).", updated: "2026-04-30" },
-      { id: 27, text: "First kinetic incident under new 'shoot to destroy' ROE", status: "PENDING — probability ticking up", deadline: "Days-weeks", notes: "Probability within 14 days: ~28-32% (UP from 25-28%). Trump's Axios rejection raises Iranian risk-appetite at the margin.", updated: "2026-04-30" },
-      { id: 32, text: "Iran's REVISED counter-proposal lands via Pakistan", status: "PENDING — incoming", deadline: "Days", notes: "Wed 29 Apr: Pakistan mediators expect revised Iranian counter-proposal in coming days. 5-point counter-proposal includes recognition of Iranian sovereignty over Strait of Hormuz. Probability of revised proposal landing within 7 days: ~60%.", updated: "2026-04-30" }
+      { id: 9,  text: "Sisi stability 12-18 months", status: "PENDING — STRESS UPGRADED", deadline: "Ongoing", notes: "Fri 1 May MORNING: NEAR STATE OF ECONOMIC EMERGENCY framing from yesterday holds; EGP holding ~53 after yesterday break; $3B emergency IMF loan request still in considering phase. Direct removal probability remains low but support-base narrowing measurable.", updated: "2026-05-01" },
+      { id: 12, text: "Beijing trade truce not ceasefire", status: "PENDING — DECISIVE NOW", deadline: "May 14-15", notes: "Fri 1 May MORNING: Beijing summit elevates further as White House 60-day-deadline halt institutionalises open-ended posture and reduces near-term US pressure for Pakistan-mediated breakthrough. Beijing as fallback architecture more important.", updated: "2026-05-01" },
+      { id: 13, text: "Second Egypt fuel price adjustment", status: "PENDING — pressure escalating", deadline: "Early-mid May", notes: "Fri 1 May MORNING: Brent ~$111.63 (post-rollover); EGP holding ~53 after break to 53.73. Imported-fuel cost in EGP terms remains elevated. $3B emergency IMF loan request would carry fuel-subsidy reform precondition. Probability of adjustment by mid-May still elevated.", updated: "2026-05-01" },
+      { id: 25, text: "Ground operations commence — Kharg or Qeshm seizure", status: "PENDING — HOLDS", deadline: "Next 14 days", notes: "Fri 1 May MORNING probability: HOLDS ~25-30% in next 14 days. White House 60-day-deadline halt removes Congressional pressure valve; lengthens political horizon for kinetic decision but does not raise base-case kinetic odds in 14-day window. Khamenei reaffirmation closes off-ramp.", updated: "2026-05-01" },
+      { id: 28, text: "Egypt foreign reserves breach $30B without fresh Gulf support", status: "PENDING — probability ESCALATING", deadline: "Q2-Q3 2026", notes: "Operative reserves $34B. Yesterday EGP break + $3B emergency IMF loan consideration signals authorities now preparing for a deeper draw. Probability: ~70% within 6 months absent Gulf bridge. Timeline pulled forward Q3 → Q2-Q3. Today EGP defence at 53 buys near-term time but does not change underlying trajectory.", updated: "2026-05-01" },
+      { id: 27, text: "First kinetic incident under new 'shoot to destroy' ROE", status: "PENDING — probability ticking up", deadline: "Days-weeks", notes: "Probability within 14 days: ~30-34%. Khamenei reaffirmation + extended blockade duration + White House deadline-halt (which lengthens blockade-duration horizon) raise IRGC unilateral risk further.", updated: "2026-05-01" },
+      { id: 32, text: "Iran's REVISED counter-proposal lands via Pakistan", status: "PENDING — narrowed further", deadline: "Days", notes: "Fri 1 May MORNING: White House 60-day-deadline halt reduces Iranian incentive to accelerate any revised proposal as US pressure clock paused. Probability of revised proposal landing within 7 days: ~35% (DOWN from 45%). Probability of US acceptance still ~zero without nuclear element.", updated: "2026-05-01" },
+      { id: 33, text: "EGP breaches 55 panic threshold", status: "PENDING — DEFENCE TEST IN PROGRESS", deadline: "Weeks", notes: "Fri 1 May MORNING: EGP holding ~53 after yesterday break to 53.73. First CBE defence test at the new managed level. Probability within 60 days: ~40-45% if Brent stays above $110 and no Gulf bridge announced; today defence (if sustained) could bring it down toward 35%.", updated: "2026-05-01" }
     ],
     resolved_correct_recent: [
       { id: 30, text: "Trump publicly rejects Iran's formal proposal", notes: "Resolved Wed 29 Apr PM: Trump rejected via Axios phone interview — 'they're choking like a stuffed pig'. Public-rejection pathway was forecast as base case." },
@@ -1818,13 +1868,13 @@ Object.assign(window.GULF_RISK_DATA, {
       { id: 23, text: "DIFC/QFC suspends operations", notes: "Both operational throughout." },
       { id: 24, text: "Beijing written ceasefire framework", notes: "Pakistan/Egypt/Turkey delivered framework, not Beijing." }
     ],
-    updated: "2026-04-30T06:07:00.000Z"
+    updated: "2026-05-01T06:07:57.000Z"
   },
 
   travel: {
-    advisory_date: "2026-04-30 (06:07 UTC morning update)",
+    advisory_date: "2026-05-01 (06:07 UTC MORNING update)",
     advisories: {
-      "Iran":         { level: "Do Not Travel", notes: "Active conflict. State Dept 'Leave Now' / Level 4 reaffirmed. Thu 30 Apr 06:07 UTC: Trump's Axios rejection still anchors; H-hour holds ~25-30%. IAEA Grossi confirms ~200kg HEU likely still at Isfahan since June 2025." },
+      "Iran":         { level: "Do Not Travel", notes: "Active conflict. State Dept 'Leave Now' / Level 4 reaffirmed. Fri 1 May MORNING: White House halt of 60-day War Powers Act deadline institutionalises open-ended US posture; Khamenei nuclear/missile guard reaffirmation holds; H-hour HOLDS ~25-30%." },
       "Kuwait":       { level: "Do Not Travel", notes: "Airport closed. Infrastructure damaged. Interceptors 75% depleted." },
       "Israel":       { level: "Do Not Travel", notes: "Active conflict. Wed 29 Apr: Israeli strikes killed 8 in southern Lebanon incl 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon." },
       "Lebanon":      { level: "Do Not Travel", notes: "Ceasefire formally extended to ~14 May but UNRAVELING — Wed 29 Apr Israeli strikes killed 8 incl 3 RESCUE WORKERS. Tue 28 Apr IDF struck Bekaa Valley for first time since 16 Apr truce. 2,500+ killed since Mar 2." },
@@ -1835,12 +1885,12 @@ Object.assign(window.GULF_RISK_DATA, {
       "UAE":          { level: "Reconsider Travel", notes: "Dubai/Abu Dhabi operating with disruption. UAE exit from OPEC/OPEC+ effective 1 May 2026." },
       "Russia":       { level: "Exercise Caution", notes: "Mon 27 Apr Putin-Araghchi concluded with Russia pledging support for Iran." },
       "Oman":         { level: "High Caution", notes: "Muscat functional. Omani back-channel role folded into Pakistan-mediated proposal Trump rejected Wed." },
-      "Egypt":        { level: "High Caution", notes: "Cairo/Alexandria operating. EGP 52.82 Thu 30 Apr 06:07 UTC (CBE intervention persists overnight). Brent ~$119.85 + urban CPI 15.2% Mar confirmed + SCA fee discount lifted (declining traffic, not recovery) — fuel-subsidy and tourism-corridor pressures structural." },
+      "Egypt":        { level: "High Caution", notes: "Cairo/Alexandria operating. EGP holds ~53 Fri 1 May MORNING after yesterday break to 53.73 — first CBE defence test at new managed level. Sisi NEAR STATE OF ECONOMIC EMERGENCY framing holds; $3B emergency IMF loan still in considering phase. Urban CPI 15.2% Mar; April print due in coming days. Fuel-subsidy and tourism-corridor pressures structural; political-stress signal stays elevated." },
       "Jordan":       { level: "High Caution", notes: "Stable but exposed to spillover." },
       "Turkey":       { level: "Exercise Caution", notes: "Istanbul/Ankara operational. Mediator role preserves access." }
     },
-    summary: "HIGH alert posture — kinetic-war risk elevated; diplomatic outlook DETERIORATED. Thu 30 Apr 06:07 UTC morning: Wed setup holds with overnight Brent extension to ~$119.85 (TradingEconomics intraday $120.30; ninth straight up-session, highest since June 2022). USD/EGP holds 52.82 (CBE intervention persisting overnight). Egypt urban CPI confirmed 15.2% Mar (vs 13.4% Feb). SCA lifted 15% large-containership transit-fee discount effective 7 Apr — fee normalisation on declining traffic, NOT recovery. Trump's Wed Axios rejection of Iran proposal still anchors. Lebanon arc compounding from Wed (8 killed incl 3 rescue workers). UAE OPEC exit takes effect 1 May (tomorrow). Three US carriers on station; 37 ships redirected by blockade. State Dept Iran 'Leave Now' reaffirmed. Iran/Iraq/Lebanon Level 4. Avoid all non-essential travel to Gulf, Levant, and Iraq.",
-    updated: "2026-04-30T06:07:00.000Z"
+    summary: "HIGH alert posture — kinetic-war risk elevated; diplomatic outlook INSTITUTIONALISED open-ended; Egypt-specific stress holding elevated. Fri 1 May 06:07 UTC MORNING: White House announces Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) — removes Congressional pressure valve; institutionalises open-ended US posture. Brent July front-month ~$111.63 (+1.11%) after Thu June expiry $114.01. EGP holds ~53 after yesterday break to 53.73. UAE OPEC exit takes effect TODAY. Hormuz back to ~6 ships/day after yesterday localised 20-transit print. Khamenei nuclear/missile guard reaffirmation holds. Three US carriers on station; 37 ships redirected by blockade. State Dept Iran 'Leave Now' reaffirmed. Iran/Iraq/Lebanon Level 4. Avoid all non-essential travel to Gulf, Levant, and Iraq.",
+    updated: "2026-05-01T06:07:57.000Z"
   }
 
 });
@@ -2896,6 +2946,95 @@ function renderExcoTop(D, upd) {
     document.getElementById('exco-brf-bull').innerHTML = (eb.bull_case_triggers_to_watch || []).map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
     document.getElementById('exco-brf-actions').innerHTML = (eb.recommended_actions || []).map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
   }
+
+  renderExcoTrends(D, upd);
+}
+
+function excoSpark(values, opts){
+  opts = opts || {};
+  var W = 200, H = 46, padX = 3, padY = 5;
+  var n = (values || []).length;
+  var arr = (values || []).filter(function(v){ return v != null && !isNaN(v); });
+  if (arr.length < 2) return '<svg class="exco-spark-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><text x="'+W/2+'" y="'+(H/2+3)+'" text-anchor="middle" font-size="10" fill="#4b5563" font-family="monospace">no data</text></svg>';
+  var min = opts.min != null ? opts.min : Math.min.apply(null, arr);
+  var max = opts.max != null ? opts.max : Math.max.apply(null, arr);
+  if (max === min) max = min + 1;
+  function x(i){ return padX + (i / (n - 1)) * (W - 2 * padX); }
+  function y(v){ if (v == null || isNaN(v)) return null; return H - padY - ((v - min) / (max - min)) * (H - 2 * padY); }
+  var pts = [];
+  for (var i = 0; i < n; i++){ var yy = y(values[i]); if (yy != null) pts.push(x(i).toFixed(1) + ',' + yy.toFixed(1)); }
+  if (pts.length < 2) return '';
+  var color = opts.color || '#e8a020';
+  var firstX = pts[0].split(',')[0], lastX = pts[pts.length-1].split(',')[0];
+  var areaPath = 'M' + firstX + ',' + (H - padY) + ' L' + pts.join(' L') + ' L' + lastX + ',' + (H - padY) + ' Z';
+  var linePath = 'M' + pts.join(' L');
+  var lastIdx = n - 1;
+  var lastY = y(values[lastIdx]);
+  var warMarker = '';
+  if (opts.warStartIdx != null && opts.warStartIdx >= 0 && opts.warStartIdx < n){
+    var wx = x(opts.warStartIdx).toFixed(1);
+    warMarker = '<line x1="'+wx+'" y1="'+padY+'" x2="'+wx+'" y2="'+(H-padY)+'" stroke="#ef4444" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.7"/>';
+  }
+  var endDot = (lastY != null) ? '<circle cx="'+x(lastIdx).toFixed(1)+'" cy="'+lastY.toFixed(1)+'" r="2" fill="'+color+'" stroke="#0d1117" stroke-width="1"/>' : '';
+  var gid = 'exco-spark-grad-' + (opts.id || 'x');
+  return '<svg class="exco-spark-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'
+    + '<defs><linearGradient id="'+gid+'" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.32"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs>'
+    + '<path d="'+areaPath+'" fill="url(#'+gid+')"/>'
+    + warMarker
+    + '<path d="'+linePath+'" fill="none" stroke="'+color+'" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>'
+    + endDot
+    + '</svg>';
+}
+
+function renderExcoTrends(D, upd){
+  var card = document.getElementById('exco-trends-card');
+  if (!card) return;
+  var cs = D && D.chart_series;
+  if (!cs || !cs.labels || !cs.labels.length) { card.style.display = 'none'; return; }
+  var mx = D.metrics || {};
+  card.style.display = '';
+  var updEl = document.getElementById('exco-trends-upd');
+  if (updEl) updEl.textContent = upd || '';
+  var warStart = (cs.war_start_index != null) ? cs.war_start_index : null;
+  var graphs = [
+    { key:'brent',  label:'Brent (USD/bbl)',     color:'#ef4444', dp:2, prefix:'$', current:mx.brent_usd,         min:cs.brent_min,  max:cs.brent_max },
+    { key:'egp',    label:'USD/EGP',             color:'#fbbf24', dp:2, prefix:'',  current:mx.egp_usd,           min:cs.egp_min,    max:cs.egp_max },
+    { key:'hormuz', label:'Hormuz transits/day', color:'#3b82f6', dp:0, prefix:'',  current:mx.hormuz_ships_24h,  min:cs.hormuz_min, max:cs.hormuz_max },
+    { key:'suez',   label:'Suez transits/day',   color:'#22c55e', dp:0, prefix:'',  current:null,                  min:cs.suez_min,   max:cs.suez_max }
+  ];
+  function fmt(n, dp){ if (n == null || isNaN(n)) return '\u2014'; return Number(n).toLocaleString('en-US',{minimumFractionDigits:dp, maximumFractionDigits:dp}); }
+  function pct(p){ if (p == null) return '\u2014'; var s = p >= 0 ? '+' : ''; return s + Number(p).toFixed(1) + '%'; }
+  function delta(arr){
+    var f = (arr || []).filter(function(v){ return v != null && !isNaN(v); });
+    if (f.length < 2) return { p:null, dir:'flat' };
+    var first = f[0], last = f[f.length-1];
+    if (first === 0) return { p:null, dir:'flat' };
+    var p = ((last - first) / Math.abs(first)) * 100;
+    return { p:p, dir: Math.abs(p) < 0.5 ? 'flat' : (p > 0 ? 'up' : 'dn') };
+  }
+  var firstLabel = cs.labels[0] || '';
+  var lastLabel  = cs.labels[cs.labels.length - 1] || '';
+  var html = graphs.map(function(g){
+    var arr = cs[g.key] || [];
+    var arrF = arr.filter(function(v){ return v != null && !isNaN(v); });
+    var last = arrF.length ? arrF[arrF.length - 1] : null;
+    var displayVal = (g.current != null) ? g.current : last;
+    var d = delta(arr);
+    return '<div class="exco-spark-card">'
+      + '<div class="exco-spark-head">'
+        + '<div class="exco-spark-label">'+esc(g.label)+'</div>'
+        + '<div class="exco-spark-val">'+(displayVal != null ? esc(g.prefix) + fmt(displayVal, g.dp) : '\u2014')+'</div>'
+      + '</div>'
+      + excoSpark(arr, { id:'exco-'+g.key, color:g.color, min:g.min, max:g.max, warStartIdx:warStart })
+      + '<div class="exco-spark-foot">'
+        + '<span>'+esc(firstLabel)+' \u2192 '+esc(lastLabel)+'</span>'
+        + '<span class="delta '+d.dir+'">'+(d.p == null ? '\u2014' : pct(d.p))+'</span>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+  document.getElementById('exco-trends-grid').innerHTML = html;
+  var src = document.getElementById('exco-trends-source');
+  if (src) src.textContent = cs.source_note || '';
 }
 
 function renderSources() {
