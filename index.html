@@ -946,15 +946,15 @@ Object.assign(window.GULF_RISK_DATA, {
     priority: "CRITICAL",
     alert_color: "red",
     display_order: "TOP",
-    headline: "ALERT — ENERGY CRISIS: Government burning fuel oil to defer blackouts; mandated 1-day-WFH; 9pm shop closures; June peak-demand window is the danger zone",
+    headline: "ALERT — ENERGY CRISIS: Government burning fuel oil to defer blackouts; mandated 1-day-WFH; 9pm closures + dimmed-lighting ROLLED BACK 28 Apr 2026; June peak-demand window is the danger zone",
     summary: "Egypt is in active energy rationing as of April 2026. Government publicly denies imminent rolling blackouts but is burning fuel oil to delay them — same playbook as 2024 when blackouts arrived in June anyway. June-August 2026 is the danger window: peak demand + war-disrupted LNG + heightened-risk Israeli gas corridor. This is a STRUCTURAL story that has not been properly framed in mainstream coverage.",
     current_measures: [
-      "9pm shop/restaurant/cafe closures across Cairo and most cities (since 28 Mar 2026)",
+      "9pm shop/restaurant/cafe closures REVERSED 28 Apr 2026 (The National) — government cited business-activity damage outweighing energy savings; pre-Mar 28 hours restored",
       "MANDATED 1-day-per-week work-from-home for non-essential public-sector workers — first WFH mandate of 2026",
       "Petrol prices raised 15-22% (Apr 2026 emergency adjustment, Mada Masr)",
       "Official-vehicle fuel allocations cut ~33%",
       "Major state energy projects delayed",
-      "Street lighting dimmed across Cairo + Alexandria",
+      "Street-lighting dimming REVERSED 28 Apr 2026 (The National) — full lighting restored",
       "Government burning fuel oil to avoid rolling blackouts (MEES 24 Apr)"
     ],
     blackout_risk: {
@@ -971,12 +971,11 @@ Object.assign(window.GULF_RISK_DATA, {
       sustainability_window: "Fuel-oil substitution buys ~6-10 weeks before stockpile pressure becomes acute"
     },
     consumer_visible_signs: [
-      "Shop closures by 9pm",
-      "Dimmed street lights at night",
-      "Fuel price hikes (15-22% confirmed)",
+      "Shop closures by 9pm and dimmed street lighting were REVERSED 28 Apr 2026 (The National) — visible day-to-day environment in Cairo / Alexandria has eased",
+      "Fuel price hikes (15-22% confirmed) HOLD",
       "Possible petrol queues if shortage emerges",
-      "Slower public-sector services on WFH days",
-      "Generator noise common in business districts"
+      "Slower public-sector services on WFH days (partial WFH HOLDS)",
+      "Generator noise common in business districts (structural fuel-oil-burn HOLDS)"
     ],
     precedent_2024: "April-May 2024: Cabinet promised 'no rolling blackouts' for summer. June-August 2024: rolling 2-3 hour daily blackouts arrived in Cairo, Alexandria, Delta governorates. Messaging pivoted from denial to 'temporary load-shedding'. Same playbook expected 2026 with materially worse external constraints (Hormuz blockade adds to 2024's purely-fiscal stress).",
     if_blackouts_arrive_what_changes: [
@@ -986,7 +985,7 @@ Object.assign(window.GULF_RISK_DATA, {
       "Restaurants/services in non-tourist areas disrupted",
       "Fuel queues raise low-grade civil tension — risk of flashpoint at petrol stations"
     ],
-    updated: "2026-04-29T21:28:06.000Z"
+    updated: "2026-05-01T09:15:00.000Z"
   },
 
   cairo_travel_briefing: {
@@ -1129,19 +1128,22 @@ Object.assign(window.GULF_RISK_DATA, {
       priority: "ELEVATED",
       display_order: "TOP",
       description: "Freshness indicator for the weekly critical review pass. Auto-populated by the weekly scheduled task each Friday. EXCO readers should look at this BEFORE trusting the EXCO sections — if last_run is more than 14 days ago, the picture may be stale.",
-      last_run_iso:        "2026-05-01T08:55:00.000Z",
-      last_run_human:      "01 May 2026 — first weekly critical-review pass after re-instating the field; ran manually before scheduled-task auto-fire.",
+      last_run_iso:        "2026-05-01T09:15:00.000Z",
+      last_run_human:      "01 May 2026 — second weekly pass today (auto-fire after morning manual seed). Q4 hit on energy-crisis content: government REVERSED 9pm closures + dimmed lighting on 28 Apr per The National; stable.js updated.",
       next_run_expected:   "Friday 09:00 UTC weekly (Cowork scheduled task: weekly-exco-critical-review)",
       cadence:             "Weekly · Friday 09:00 UTC",
-      run_count_total:     1,
-      run_count_scheduled: 0,
+      run_count_total:     2,
+      run_count_scheduled: 1,
       run_count_manual:    1,
       escalation_active:   false,
-      last_run_findings_summary: "Initial weekly run. Decision-relevant: Kuwait $2B deposit confirmed RENEWED (April 2026) and CBE/Finance Minister assurance that GCC $18.3B deposit floor will not be withdrawn while EFF active — bull-case trigger Fresh GCC bailout deposit announced FIRED. Black-market live dealer-quote gap NARROWED to ~2-3% from 5-6% range — unusual after EGP broke 53.73; under-watch as possible head-fake. Two indicators near-break (USD/EGP official 53 vs 55 panic; black-market ~54.2 vs 60 break). UAE OPEC exit takes effect today — already reflected in dashboard. No Cairo trip recommendation flip; UK FCDO Egypt advice unchanged. No escalation triggered.",
+      last_run_findings_summary: "Auto-fire run #2. Decision-relevant: Q4 stale-claim hit — Egypt energy rationing visible measures (9pm closures + dimmed street lighting) REVERSED 28 Apr 2026 per The National after review found business-activity damage outweighed energy savings; partial WFH + fuel-oil burn HOLD. Updated energy_crisis_alert headline, current_measures, consumer_visible_signs, and top_indicators energy rationing posture row to mark rollback. Today official EGP pulled back from yesterday's 53.73 break to ~53 — CBE defence held overnight. No new bull triggers; no Cairo trip flip; cover-up direction stable not widening today. UAE OPEC exit effective today but ~2M bpd offshore shut-in by Hormuz blockade limits immediate market impact.",
       fields_updated_last_run: [
-        "weekly_review_status (created — was missing since 30 Apr recovery)",
-        "exco_briefing.bull_case_triggers_to_watch (Kuwait/GCC deposit trigger marked FIRED with date)",
-        "today daily _meta.critical_review_findings (appended — pass_type weekly)"
+        "weekly_review_status (counters incremented; last_run fields refreshed)",
+        "energy_crisis_alert.headline (added rollback flag for 28 Apr)",
+        "energy_crisis_alert.current_measures (9pm closures + street-lighting items marked REVERSED 28 Apr 2026)",
+        "energy_crisis_alert.consumer_visible_signs (removed reverted items, added rollback note)",
+        "exco_briefing.top_indicators_with_current_readings — Egypt energy rationing posture row updated to reflect partial rollback",
+        "today daily _meta.critical_review_findings (overwritten — run_number 2)"
       ]
     },
     headline: "EXCO BRIEF — Egypt + Gulf risk profile materially worse than mainstream framing; energy crisis structural; June Cairo travel requires specialty insurance + abort plan",
@@ -1185,7 +1187,7 @@ Object.assign(window.GULF_RISK_DATA, {
       { indicator: "Hormuz daily transits",             current: "13 (Apr 28)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
       { indicator: "GCC-Egypt trust index",             current: "38/100 (Apr)",            direction: "↓ -10 from Mar",break_level: "30 (crisis threshold)", why: "Determines whether bailout architecture survives" },
       { indicator: "Egypt baladi loaf price",           current: "LE0.20 held",             direction: "stable",      break_level: "Any rise",                why: "Historical red line for street unrest" },
-      { indicator: "Egypt energy rationing posture",    current: "9pm closures + 1-day WFH + fuel-oil burn", direction: "↑ measures expanding", break_level: "Official rolling blackouts", why: "Structural story missing from mainstream framing" },
+      { indicator: "Egypt energy rationing posture",    current: "1-day WFH + fuel-oil burn (9pm closures + dimmed lighting REVERSED 28 Apr)", direction: "mixed — partial rollback on visible measures, structural fuel-oil burn HOLDS", break_level: "Official rolling blackouts", why: "Structural story missing from mainstream framing — and partial rollback adds reading-the-tea-leaves complexity" },
       { indicator: "H-hour US ground op probability",   current: "25-30% in 14 days",       direction: "↑ from 20-25% Mon", break_level: "40%+",                why: "Defines whether war stays open-ended or escalates" }
     ],
 
@@ -1377,29 +1379,31 @@ Object.assign(window.GULF_RISK_DATA, {
       "travel.state.gov — Iran/Iraq/Lebanon Level 4"
     ],
     critical_review_findings: {
-      ts: "2026-05-01T08:55:00.000Z",
+      ts: "2026-05-01T09:15:00.000Z",
       pass_type: "weekly",
-      run_number: 1,
-      q1_source_grade: "1 single-source claim still flagged: 68% black-market structural premium (specialist outlets, single-source). Standard Chartered Jan 5 pre-war previously cleared. $34B operative reserves analyst-derived single-source — caveat documented in indicator_caveats. No new pre-war source slipped in this cycle.",
-      q2_official_vs_parallel: "Official EGP ~53 (CBE managed); sarfegp dealer-quote ~54.2. Live gap ~2.3% — NARROWED from 5-6% range earlier in week. Status: WITHIN BAND (under 5%). Direction: NARROWING — unusual given EGP broke 52.82 → 53.73 yesterday. Watch closely; could be head-fake before next leg, or genuine CBE defence holding.",
-      q3_bull_triggers_fired: "1 trigger FIRED: Fresh GCC bailout deposit announced — Kuwait $2B deposit RENEWED (Apr 2026 per AGBI/EnterpriseAM/EgyptIndependent); Finance Minister + CBE Governor confirm $18.3B GCC deposit floor protected while EFF active. Beijing summit (May 14-15) — China + Pakistan 5-point proposal Mar 31 + active Wang Yi mediation; not yet written framework that holds >7 days. TRACKING.",
-      q4_stale_claims: "exco_briefing.bull_case_triggers_to_watch updated to mark Kuwait/GCC deposit trigger FIRED. signals_not_yet_reflected_in_mainstream entry on 68% structural premium retained but should carry a caveat that today live dealer-quote gap is narrower (~2-3%). cairo_travel_briefing — UK FCDO Egypt advice unchanged (Cairo, Alex, Luxor, Aswan, Red Sea resorts safe with sensible precautions; North Sinai all-travel-against; partial South Sinai). Dashboard alignment: HOLDS.",
-      q5_near_break_indicators: "2 NEAR BREAK: (a) USD/EGP official 53 vs 55 panic threshold — distance 3.6%, within 10%, NEAR BREAK; (b) USD/EGP black-market live ~54.2 vs 60+ break — distance 9.7%, within 10%, NEAR BREAK. Brent $111.63 vs $130 sustained — 14% (not near). Hormuz 6 vs <5 break — 17% (not near per protocol 10% rule). H-hour 25-30% vs 40%+ — 25-37% (not near).",
-      q6_recommendation_shift: "No flips. Cairo trip Q1: CONDITIONAL GO holds (Kuwait deposit + Beijing mediation slightly dampen worst-case but kinetic risk + open-ended posture remain). EGP exposure Q2: REDUCE holds (today narrow live-gap could be head-fake; EFF protection is tactical not structural). Counterparty/supplier/comms recommendations unchanged.",
-      q7_coverup_direction: "MIXED. Live dealer-quote gap narrowed (stabilising at new managed level after yesterday break) BUT CBE NFA underneath continues to fall ($29.5B Jan → $27.4B Feb per Daily News Egypt / Mindcron). Press-release reserves figure $52.83B end-Mar holds (April figure not yet released). Net direction: STABLE-WITH-WIDENING-UNDERNEATH (mixed signal, neither unambiguously narrowing nor widening on top-line).",
+      run_number: 2,
+      q1_source_grade: "1 single-source claim still flagged: 68% black-market structural premium (specialist outlets). NFA $27.4B Feb (DailyNewsEgypt/Mindcron) corroborated. GCC $18.3B floor multi-source (AGBI/EnterpriseAM/EgyptIndependent/EgyptToday). No new pre-war source slipped in this cycle.",
+      q2_official_vs_parallel: "Today official EGP back to ~52.97-53.02 (pulled BACK from yesterday's 53.73 break — CBE intervention defended overnight). Most recent published sarfegp dealer-quote 55.98 (Apr 3 print indexed); live intra-hour scrape not available. Status: WITHIN BAND on official; closer to break on live published. Direction: NARROWING on top-line.",
+      q3_bull_triggers_fired: "0 NEW triggers fired this cycle (Kuwait $2B from last week's seed stays FIRED). Beijing summit (May 14-15) — Trump publicly credited Beijing for getting Iran to Pakistan peace talks; Xi 4-point peace plan published. BUT China explicitly NOT willing to be ceasefire guarantor (per Diplomat/Brookings late-Apr) — caps upside. Status: TRACKING with positive bias; not yet 'written framework that holds >7 days'.",
+      q4_stale_claims: "1 HIT — Egypt energy_crisis_alert claims '9pm shop closures + dimmed street lighting' as ACTIVE. The National 28 Apr 2026 reports government REVERSED early closures and dimmed lighting after review found business-activity damage outweighed energy savings; partial WFH + fuel-oil burn HOLD. Updated stable.js energy_crisis_alert headline + current_measures + consumer_visible_signs + top_indicators energy rationing posture row to mark rollback. Decision-grade for Cairo traveller experience — softer day-to-day environment than dashboard previously showed.",
+      q5_near_break_indicators: "2 NEAR BREAK (same set as morning seed): (a) USD/EGP official ~53 vs 55 panic — distance 3.6%, NEAR BREAK; (b) USD/EGP black-market live ~55.98 (latest indexed) vs 60+ break — distance 6.7%, NEAR BREAK. Brent $111.63 vs $130 sustained — 14% (outside). Hormuz 6 vs <5 break — 17% (outside).",
+      q6_recommendation_shift: "No flips. Cairo trip Q1 CONDITIONAL GO holds — Q4 energy-rationing rollback finding is mildly positive for traveller comfort; CBE intervention hold today is mildly positive for stability framing. Net: no shift. EGP exposure Q2 REDUCE holds (intervention is tactical not structural; NFA underneath continues to fall). Counterparty/supplier/comms recommendations unchanged.",
+      q7_coverup_direction: "STABLE this cycle. Official top-line gap NARROWED today (CBE re-asserted at 53). Underneath: NFA Feb $27.4B remains latest print; April figure not yet released. Net: not unambiguously widening or narrowing today. Cover-up thesis intact but no new evidence of widening.",
       escalation_active: false,
-      escalation_reason_if_any: "None. Q5 found 2 near-break indicators (both EGP) but both already reflected in dashboard daily content. Q6 no Cairo-trip flip. Q7 mixed not unambiguously widening with new evidence.",
+      escalation_reason_if_any: "None. Q5 near-break indicators are EGP-related and already reflected in dashboard. Q6 no Cairo flip. Q7 stable. Q4 finding decision-grade for traveller comfort but not an abort-trigger.",
       sources_consulted: [
-        "sarfegp / blackmarketlive — live dealer EGP quotes May 2026",
-        "Daily News Egypt 2 Mar 2026 — Egypt banking sector NFA $29.5B Jan / $27.39B Feb",
-        "Egypt Independent / AGBI / EnterpriseAM — Kuwait $2B deposit renewal Apr 2026",
-        "EgyptToday — Finance Minister + CBE Governor GCC $18.3B floor assurance",
-        "MEES 24 Apr 2026 — Egypt fuel burn for power generation",
-        "Al Jazeera / CNBC / Washington Post / WAM 28-29 Apr 2026 — UAE OPEC exit confirmed effective 1 May",
-        "GOV.UK FCDO Egypt travel advice — current page (Cairo/Alex/Luxor/Aswan/Red Sea safe with caveats)",
-        "Bloomberg / Foreign Policy 29 Apr 2026 — IAEA Grossi Iran HEU stockpile assessment",
-        "Kathmandu Post / CNBC — China Iran mediation ahead of May 14-15 Xi-Trump summit",
-        "Egyptian Streets / Amwal Al Ghad / Ahram Online — baladi bread LE0.20 holds 2026"
+        "sarfegp / blackmarketlive — published USD/EGP dealer rates (Apr 3 print 55.98 latest indexed)",
+        "TradingEconomics / xe / Wise / poundsterlinglive — official USD/EGP ~52.97-53.02 today",
+        "CNBC 1 May 2026 — Brent July ~$111.63, June expired $114.01 (intraday wartime high $126.41)",
+        "Hormuz Strait Monitor / CNN / Bloomberg — 5-10 vessels/day trickle continues (Apr 29 print 20)",
+        "DailyNewsEgypt / Mindcron — Egypt banking sector NFA $27.39B Feb (latest)",
+        "AGBI / EnterpriseAM / EgyptIndependent / EgyptToday — Kuwait $2B deposit RENEWED (Apr 2026); GCC $18.3B floor protected",
+        "The National 28 Apr 2026 — Egyptians express relief after government reverses course on energy-saving measures (9pm closures + dimmed lighting REVERSED; partial WFH stays)",
+        "Foreign Policy / IAEA — 440.9kg HEU at Isfahan since Jun 2025; access TERMINATED since 28 Feb 2026 (cameras disabled, seals removed)",
+        "GOV.UK FCDO Egypt travel advice — current page (Cairo/Alex/Luxor/Aswan/Red Sea safe with sensible precautions; North Sinai all-travel-against; partial South Sinai)",
+        "Al Jazeera / NPR / FoxBusiness / WAM — UAE OPEC exit effective TODAY (1 May); 3.2M bpd quota removed; ~2M bpd offshore shut-in due to Hormuz blockade limits immediate impact",
+        "Diplomat / Brookings / Kathmandu Post / SCMP / PBS / Al Jazeera — Beijing summit May 14-15; Xi 4-point peace plan; Trump credits Beijing for Iran/Pakistan talks; China NOT willing to be ceasefire guarantor",
+        "CBS / Hill / DemocracyNow — Senate war-powers resolution defeated 5th time 23 Apr; Murkowski exploring separate authorization; today (1 May) is the formal 60-day mark, halted by White House per CNBC"
       ]
     }
   },
