@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a0d">
+<meta name="description" content="Gulf & Egypt Risk Monitor — mobile EXCO summary">
+<title>Gulf Risk — Mobile EXCO Summary</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#080a0d;--surface:#0d1117;--surface2:#111720;--border:#1c2333;--border2:#243049;
+  --amber:#e8a020;--amber2:#fbbf24;--blue:#3b82f6;--red:#ef4444;--red2:#f87171;
+  --green:#22c55e;--yellow:#eab308;--muted:#4b5563;--dim:#6b7280;--text:#e5e7eb;--text2:#cbd5e1;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+html,body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{padding:14px 12px 32px;max-width:560px;margin:0 auto}
+a{color:var(--amber);text-decoration:none}
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.hdr-l{flex:1;min-width:0}
+.hdr-title{font-size:15px;font-weight:700;letter-spacing:0.01em;line-height:1.25}
+.hdr-sub{font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:3px;letter-spacing:0.04em;text-transform:uppercase}
+.threat-pill{display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:0.08em;padding:6px 10px;border-radius:4px;text-transform:uppercase;white-space:nowrap}
+.threat-CRITICAL{background:rgba(239,68,68,0.18);color:var(--red2);border:1px solid rgba(239,68,68,0.45)}
+.threat-HIGH{background:rgba(232,160,32,0.18);color:var(--amber);border:1px solid rgba(232,160,32,0.45)}
+.threat-ELEVATED{background:rgba(234,179,8,0.18);color:var(--yellow);border:1px solid rgba(234,179,8,0.45)}
+.threat-MODERATE{background:rgba(59,130,246,0.18);color:var(--blue);border:1px solid rgba(59,130,246,0.45)}
+.threat-LOW{background:rgba(34,197,94,0.18);color:var(--green);border:1px solid rgba(34,197,94,0.45)}
+.day-pill{display:block;font-family:var(--mono);font-size:9px;color:var(--dim);text-align:right;margin-top:6px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px}
+.card-critical{border-left:3px solid var(--red)}
+.card-high{border-left:3px solid var(--amber)}
+.card-title{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.headline{font-size:13.5px;font-weight:600;line-height:1.45;color:var(--text)}
+.summary-text{font-size:12.5px;color:var(--text2);line-height:1.6;margin-top:8px}
+.summary-text.collapsed{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.toggle{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--amber);font-weight:600;letter-spacing:0.04em;cursor:pointer;border:none;background:transparent;padding:4px 0}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi{background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:10px}
+.kpi-label{font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.kpi-val{font-size:18px;font-weight:700;color:var(--text);font-feature-settings:"tnum";line-height:1.15}
+.kpi-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px;line-height:1.3}
+.kpi-sub.up{color:var(--red2)}
+.kpi-sub.dn{color:var(--green)}
+.dev-list{margin:0;padding:0;list-style:none}
+.dev-item{padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text);line-height:1.5}
+.dev-item:last-child{border-bottom:none}
+.dev-tag{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);letter-spacing:0.06em;text-transform:uppercase;margin-right:6px}
+.scen-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
+.scen-row:last-child{border-bottom:none}
+.scen-name{flex:1;font-size:12px;color:var(--text)}
+.scen-pct{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--amber);min-width:42px;text-align:right}
+.scen-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px}
+.scen-bar-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2))}
+.spark-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spark-card{background:var(--surface2);border:1px solid var(--border2);border-radius:5px;padding:10px 10px 8px;position:relative}
+.spark-head{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:6px}
+.spark-label{font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;line-height:1.2}
+.spark-val{font-size:13px;font-weight:700;color:var(--text);font-feature-settings:"tnum";line-height:1}
+.spark-svg{width:100%;height:38px;display:block}
+.spark-foot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:4px}
+.spark-foot .delta.up{color:var(--red2)}
+.spark-foot .delta.dn{color:var(--green)}
+.spark-foot .delta.flat{color:var(--dim)}
+.exco-bottom{font-size:13px;font-weight:600;color:var(--amber2);line-height:1.5;padding:8px 10px;background:rgba(232,160,32,0.06);border-left:3px solid var(--amber);border-radius:3px}
+.exco-summary{font-size:12px;color:var(--text2);line-height:1.6;margin-top:8px}
+.footer{text-align:center;padding:16px 0 8px;color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:0.04em}
+.footer .desk{display:inline-block;padding:10px 16px;border:1px solid var(--border2);border-radius:5px;color:var(--amber);font-weight:600;text-transform:uppercase;margin-bottom:8px}
+.footer .desk:active{background:rgba(232,160,32,0.08)}
+.loading{text-align:center;padding:40px 0;color:var(--dim);font-family:var(--mono);font-size:11px}
+.error{padding:16px;border:1px solid var(--red);border-radius:5px;color:var(--red2);font-size:12px}
+@media(max-width:380px){
+  body{padding:12px 10px 28px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .kpi-val{font-size:16px}
+  .spark-grid{grid-template-columns:1fr;gap:8px}
+  .spark-svg{height:50px}
+}
+</style>
+</head>
+<body>
+
+<div id="app" class="loading">Loading EXCO summary…</div>
+
+<script>
+// === BEGIN STABLE ===
+
+window.GULF_RISK_DATA = window.GULF_RISK_DATA || {};
+
+Object.assign(window.GULF_RISK_DATA, {
+
+  _context: {
+    purpose: "Daily intelligence dashboard — Gulf & Egypt risk during Operation Epic Fury (US-Israel war on Iran, began 28 Feb 2026). Updated daily. EXCO-grade — distinguishes mainstream-headline framing from on-the-ground signals.",
+    daily_update_instructions: "Required daily searches: Brent, USD/EGP, Hormuz transits, ceasefire status, Egypt energy, Suez revenue, US gas, Sisi stability. Edit only gulf-risk-data-daily-YYYY-MM-DD.js. Do not edit this stable file unless reference data changed.",
+    key_figures_to_verify_daily: [
+      "Brent crude futures price",
+      "USD/EGP rate (official AND black-market)",
+      "Hormuz daily ship transits",
+      "Iran war ceasefire/hostilities status",
+      "Egypt energy import bill + rationing posture",
+      "Egypt urban CPI",
+      "Egypt energy rationing status (9pm closures, WFH mandate, fuel allocations)",
+      "Suez Canal weekly revenue",
+      "US gas national average",
+      "Sisi/Egypt political stability signals",
+      "GCC / Israeli / EU trust signals (monthly cadence)"
+    ],
+    fields_that_change_daily: ["metrics.brent_usd", "metrics.egp_usd", "hormuz.ships_24h", "brief.headline", "brief.key_developments", "_meta.day", "_meta.updated"],
+    fields_that_change_weekly: ["chart_series.brent", "chart_series.egp", "watchlist.items", "scenarios.tonight", "egypt.foreign_reserves_bn", "travel.advisories"],
+    fields_that_are_stable: ["nuclear", "ground_ops.target_1", "ground_ops.target_2", "ground_ops.target_3", "egypt.gcc_bailout_history", "predictions.resolved_incorrect", "trust_index", "government_commitments", "energy_crisis_alert", "cairo_travel_briefing", "exco_briefing"]
+  },
+
+  force_table: [
+    {unit:"31st MEU (USS Tripoli)",   status:"IN THEATER",   dot:"green",  mission:"Amphibious assault — Kharg/Qeshm initial entry phase"},
+    {unit:"82nd Airborne DIV HQ",     status:"FWD DEPLOYED", dot:"red",    mission:"Maj. Gen. Tegtmeier — joint forcible-entry C2. This is operational, not deterrence."},
+    {unit:"82nd ABN 1st BCT (IRF)",   status:"DEPLOYED",     dot:"amber",  mission:"~2,000 paratroopers — airfield seizure, airbridge for extraction ops"},
+    {unit:"11th MEU (USS Boxer)",     status:"INBOUND",      dot:"amber",  mission:"2,500 Marines — arriving end April, additional amphibious capacity"},
+    {unit:"USS George H.W. Bush CSG", status:"IN THEATER",   dot:"green",  mission:"~6,000 personnel, carrier air wing — entered CENTCOM AOR Apr 23 (third US carrier)"},
+    {unit:"USS Abraham Lincoln CSG",  status:"IN THEATER",   dot:"green",  mission:"F-35Cs, F-18s — strike ready, continuous combat ops"},
+    {unit:"8 Aegis Destroyers",       status:"IN THEATER",   dot:"green",  mission:"Arabian Sea — Tomahawk/SM-6 magazines, minesweeping"}
+  ],
+
+  nuclear: {
+    confirmed_stockpile_kg: 440.9,
+    stockpile_enrichment_pct: 60,
+    confirmed_location_kg: 200,
+    confirmed_location: "Isfahan — underground tunnel complex, too deep for MOP bunker busters. US confirmed it did not attempt destruction. Satellite imagery (Mar 18–Apr 8 2026) shows new barriers and checkpoints at all three entrances; southern entrance received 18 barrels via truck delivery (assessed as enriched uranium stockpile consolidation or relocation). IAEA Grossi (29 Apr 2026 AP interview): ~200kg HEU likely remains here since June 2025; IAEA seals never broken there but inspectors have not verified. Airbus satellite imagery confirms 18 blue containers entered the tunnel on 9 June 2025.",
+    remaining_kg_location: "Unknown — possibly destroyed at Natanz/Fordow, possibly at undeclared covert sites",
+    weapons_equivalent: "9-10 weapons if enriched to 90%",
+    isfahan_weapons_equivalent: "~5 weapons (Grossi to AP 29 Apr: stockpile potentially enables as many as 10 bombs if weaponised)",
+    breakout_time_to_weapons_grade: "Under 1 week (DIA confirmed)",
+    breakout_time_to_device: "3-8 months (US intelligence)",
+    centrifuge_blind_spot: "IAEA has had no access to centrifuge manufacturing since February 2021 — 4+ years. Cannot verify what has been built covertly.",
+    covert_programme: "Credible — almost certain. Three undeclared weaponisation sites confirmed (Lavisan-Shian, Turquzabad, Varamin). Ultra-secret enrichment programme at unknown location reported. Oct 2025: Khamenei authorised miniaturised warhead development for ballistic missiles before his death.",
+    russian_assistance: "Confirmed — Iranian SPND scientists (nuclear weapons design body) made covert visit to Russian military-linked research institutes November 2024. Consecutively numbered diplomatic passports. Financial Times verified via corporate filings, sanctions records, travel data. Reinforced April 2026 Putin-Araghchi meeting — Putin pledged Russia will do 'everything that serves your interests'.",
+    china_assistance: "Historical — A.Q. Khan network via Pakistan/China in 1980s-90s. China assisted Saghand uranium mine. Russia/China declared JCPOA terminated Oct 2025, UN sanctions void.",
+    enrichment_status: "DNI Gabbard testified 18 Mar: Iran has not resumed enriching uranium at declared sites. Natanz entrance buildings inaccessible. Fordow severely damaged. Isfahan hit. BUT: covert sites unknown.",
+    russia_offer: "Russia offered to hold Iran's enriched uranium — confirmed as part of negotiations. Iran's Foreign Minister Araghchi offered to down-blend or transfer material to a third country on 15 March CBS interview. US rejected partial measures, demands full dismantlement.",
+    us_demand: "Trump 8 Apr: 'There will be no enrichment of uranium and the United States will, working with Iran, dig up and remove all of the deeply buried Nuclear Dust.' Zero enrichment. Full dismantlement. Wed 29 Apr Axios: 'I don’t want them to have a nuclear weapon... blockade is somewhat more effective than the bombing'.",
+    iran_position: "5-year enrichment pause (rejected by US which demanded 20-year pause). Sovereignty over Strait. War reparations. Security guarantees. Recognition as regional power. April 2026 Pakistan-mediated proposal: postpone nuclear talks to later stage — rejected by Trump 29 Apr.",
+    key_gap: "US demands 20-year enrichment pause plus full dismantlement. Iran offered 5 years. This gap has not narrowed. Nuclear material question is the hardest issue — it is why ground operations targeting uranium are under active planning.",
+    iaea_access: "ALL IAEA access in Iran terminated 28 Feb 2026 (war start). Cameras disabled, seals removed across declared facilities. Inspectors only at non-attacked sites: Bushehr, Tehran Research Reactor, labs. No access to any of Iran's four declared enrichment facilities since June 2025 strikes. New declared underground enrichment site at Isfahan (declared by Iran to IAEA in June 2025) has NEVER been inspected — as of Mar 2026 IAEA does not know whether centrifuges have been installed (Grossi: 'None' on evidence of an enrichment facility at the site). NEW (29 Apr 2026, AP interview): Grossi told the AP that ~200kg of Iran's 60% HEU 'likely remains' at Isfahan since June 2025; the IAEA seals were never broken, but inspectors have not verified. Airbus satellite imagery shows 18 blue containers (assessed as containing the HEU stockpile) entering an Isfahan tunnel on 9 June 2025, just before the start of the June 2025 12-day war. Grossi (15 Apr): resumption of inspections is prerequisite for any negotiated settlement.",
+    proliferation_verdict: "Iran does not have a deployable nuclear weapon. It has: the material (~200kg of 60% HEU likely still at Isfahan since June 2025 per Grossi to AP 29 Apr — enough for as many as 10 bombs if weaponised; total declared stockpile 440.9kg), the knowledge (covert weaponisation research confirmed at 3 sites, SPND active), the Russian assistance (Nov 2024 confirmed; April 2026 Putin-Araghchi reinforced), the centrifuge capacity (unknown — blind since 2021), and the political authorisation (Khamenei signed off miniaturised warhead development Oct 2025, before his death). The assembly question remains genuinely uncertain. Iran's Mon 27 Apr 2026 formal proposal would POSTPONE nuclear talks to 'a later stage' — Trump formally rejected that decoupling 29 Apr in Axios phone interview ('blockade is somewhat more effective than the bombing'). Rubio softened slightly but anchored on a deal that 'definitively prevents them from sprinting to a nuclear weapon at any point'. Bulletin of Atomic Scientists: this war has fundamentally undermined the NPT.",
+    updated: "2026-04-29T20:30:00.000Z"
+  },
+
+  capital_flight: {
+    note: "No authoritative real-time aggregate figure exists. Pre-war IIF baseline: $271B net resident outflows in 2025. War-period estimates are analytical extrapolations not sourced aggregates.",
+    pre_war_iif_bn: 271,
+    estimated_war_period_additional_bn: "Unknown — corporate relocations documented case by case, private wealth flows not aggregated in real time",
+    corporate_relocations_documented: [
+      "Apple, Microsoft, Google, Meta, Oracle, IBM — IRGC designated as military targets April 2026, many shut down regional operations",
+      "Amazon — suspended Gulf deliveries, closed Abu Dhabi fulfilment centre after AWS data centres struck",
+      "Stargate UAE ($30B AI campus) — IRGC threatened 'complete and utter annihilation', project paused",
+      "Major tech companies relocated staff out of region"
+    ],
+    private_wealth: "London, Singapore, Zurich private bankers reporting elevated Gulf client activity. Not aggregated.",
+    sovereign_wealth: "Gulf SWFs pausing regional re-entry — ceasefire expiry uncertainty. Investment committees under scrutiny.",
+    difc_status: "Operational",
+    qfc_status: "Operational",
+    updated: "2026-04-27T10:03:16.000Z"
+  },
+
+  trust_index: {
+    priority: "HIGH",
+    display_order: "ELEVATED",
+    label_caveat: "DIRECTION TRACKER, not a calibrated index. Numbers reflect analyst judgment scored against five named signals per axis. Treat the trajectory as the signal; do not over-interpret the absolute level.",
+    description: "Monthly direction tracker for foreign-counterparty trust in Egypt, since Q1 2026. Five signals per axis (commitments honoured, capital flows, deposits, military cooperation, diplomatic alignment) each scored 0-20; sum = 0-100 figure. Direction matters more than absolute level.",
+    methodology: "Five signals per axis, each scored 0-20 by analyst judgment, summed for a 0-100 figure. Signals defined under signals_by_party. Subjective — score against narrative facts, not market data. Flag for replacement with quantitative composite (e.g. CDS, deposit balances, FDI flows) when those are available consistently across the three axes.",
+    review_cadence: "Monthly — first business day of each month, with mid-month update if a load-bearing signal flips (e.g. Kuwaiti deposit pull, IMF program suspension, fresh Gulf commitment).",
+    monthly_series: {
+      labels: ["Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026"],
+      gcc_trust:      [62, 58, 48, 38],
+      israeli_trust:  [55, 50, 42, 35],
+      eu_trust:       [60, 55, 48, 42],
+      colours: { gcc: "#10b981", israeli: "#3b82f6", eu: "#f59e0b" },
+      y_min: 0,  y_max: 100,
+      crisis_threshold: 30,
+      notes: [
+        "Jan 2026: pre-war stable baseline. GCC anchored by Ras El-Hekma 2024 deal. Israel: gas-import partnership operational. EU: IMF-program halo + Article IV positive.",
+        "Feb 2026: war begins 28 Feb. All three drop on Suez disruption + Egyptian neutrality posture.",
+        "Mar 2026: GCC -10 — Egypt declined military support for GCC in Iran war; Gulf bilateral tone shifts. Israeli trust drops as Egypt distances. EU largely unaffected initially.",
+        "Apr 2026: GCC -10 — open Kuwaiti-media calls to withdraw $2B Kuwaiti CBE deposit (Arab Center DC + Atlantic Council 'they have been exposed'). Israeli trust drops on Bekaa Valley spillover risk. EU drops on visible energy/blackout posture and IMF June review pending in non-routine context."
+      ]
+    },
+    signals_by_party: {
+      gcc: [
+        "Calls in Kuwaiti media to withdraw $2B Kuwaiti CBE deposit (Apr 2026)",
+        "Gulf SWFs explicitly pivoting to 'war-proof' investments per AGBI / Atlantic Council, away from Egypt-style infrastructure plays",
+        "No public confirmation that scheduled 2026 Ras El-Hekma tranches landed",
+        "Skeptics in Gulf openly questioning Egypt-GCC alignment given Cairo's no-mil-support posture (Arab Center DC)",
+        "Egypt-Gulf relationship described as 'under pressure' (Arab Center DC Apr 2026)"
+      ],
+      israel: [
+        "Egypt avoided alignment with US-Israeli war narrative",
+        "Gas-import dependency complicates posture — Israel exports continue but on heightened-risk corridor",
+        "Bekaa Valley strikes (28 Apr) and threats to 'burn' all of Lebanon (29 Apr) raise Sinai/border-spillover risk",
+        "No public Egyptian statement of support for Israeli campaign"
+      ],
+      eu: [
+        "IMF April 2026 WEO trimmed Egypt 2026/27 growth -1.1pp cumulatively",
+        "IMF June 2026 review pending — non-routine context, third successive review under stress",
+        "EU member-state aid posture unchanged but no FRESH commitments in war period",
+        "Standard Chartered Jan 5 'robust FX inflows' forecast (PRE-WAR) replaced by March 11 'easing delayed as inflation rebounds' — same bank, sharply revised view"
+      ]
+    },
+    next_review_date: "End May 2026 (Q1 + April closeout)",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  government_commitments: {
+    priority: "HIGH",
+    display_order: "ELEVATED",
+    description: "Government commitments — promised vs historical track record vs actual delivery. Helps distinguish PR-grade promises from likely outcomes. Each line includes a BREAK PROBABILITY assessment.",
+    commitments: [
+      {
+        id: "energy_no_blackouts_2026",
+        headline: "Government promise: NO rolling blackouts summer 2026",
+        promised: "Cabinet (Apr 2026) explicitly stated no rolling blackouts planned for summer 2026, despite war-stress on LNG/Israeli-gas supply.",
+        historical: "2024: same promise made April-May 2024. Rolling 2-3 hour blackouts arrived June 2024 and persisted through August. Government messaging pivoted from 'no blackouts' to 'temporary load-shedding'.",
+        actual: "Government burning fuel oil to delay blackouts (MEES Apr 24). 9pm shop closures + mandated 1-day-WFH already in force. Fuel-oil substitution buys ~6-10 weeks before stockpile pressure.",
+        break_probability: "HIGH (60-75%) for some level of regional blackouts by mid-July 2026. Cabinet message will likely pivot from denial to 'temporary' load-shedding."
+      },
+      {
+        id: "imf_eff_compliance",
+        headline: "IMF EFF reform compliance",
+        promised: "Egypt committed under EFF to: subsidy reform, FX flexibility, privatization, debt reduction, fiscal consolidation.",
+        historical: "5th and 6th reviews COMBINED in Feb 2026 because Egypt was running behind schedule. Each prior review delayed except the 1st.",
+        actual: "Apr 23 budget draft shows energy subsidies down (compliant) BUT export subsidies UP (rolling-back of subsidy logic for elite capture). Privatization frozen 'while war ongoing' (Mada Masr Apr 1). FX 'flexibility' is cosmetic given 19% policy rate + intervention.",
+        break_probability: "MEDIUM. Program continues nominally but real reform compliance deteriorating. June review likely produces softer waivers. Risk of program suspension low near-term but rising into H2 2026."
+      },
+      {
+        id: "egp_managed_floating",
+        headline: "EGP managed-floating regime",
+        promised: "Mar 2024 'liberalised' EGP under IMF terms. Government commits to free-floating with limited intervention.",
+        historical: "Egypt has reverted to managed/pegged regime each time stress emerged: 2003, 2011, 2016, 2022. Pattern: liberalize → manage → devalue → liberalize.",
+        actual: "Black market premium 5-6% on dealer quotes (sarfegp), structural 68% per specialist outlets. CBE intervention apparent. Atlantic Council April 2026: 'both markets moving independently' — explicit acknowledgement of cosmetic vs real divergence. CBE NFA -$4.2B in Q1 2026 underneath flat headline reserves.",
+        break_probability: "HIGH (70-85%) of forced devaluation event before Q1 2027 if war unresolved. EGP at 60+ official rate is the realistic next step."
+      },
+      {
+        id: "baladi_loaf_subsidy",
+        headline: "Baladi (subsidised) loaf bread price",
+        promised: "Government committed to maintain LE0.20 baladi loaf (after raising from LE0.05 in 2024 — first hike in 30 years).",
+        historical: "Bread riots 1977 (Sadat), 2008, 2017. Baladi price is the historical red line for street unrest.",
+        actual: "Held at LE0.20 currently. IMF program does not require further hike near-term. Government will absorb cost rather than risk this red line.",
+        break_probability: "LOW near-term (10-15%). This is the LAST line the regime will cross. If it does break, expect immediate civil unrest — LEADING POLITICAL INDICATOR."
+      },
+      {
+        id: "fuel_subsidy_2026",
+        headline: "Fuel subsidy reduction schedule",
+        promised: "IMF-mandated quarterly fuel-price adjustments to bring petrol/diesel to cost-recovery by 2027.",
+        historical: "2014, 2016, 2019, 2024 each saw fuel hikes. Government has historically delayed politically inconvenient hikes — but generally delivers.",
+        actual: "Fuel prices up 15-22% via Apr 2026 emergency adjustment (Mada Masr). Petrol allocations to official vehicles cut ~33%. Higher hike likely in May or June.",
+        break_probability: "LOW. Scheduled hikes will continue. Political timing may shift. Pump-feed inflation builds."
+      }
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  energy_crisis_alert: {
+    priority: "CRITICAL",
+    alert_color: "red",
+    display_order: "TOP",
+    headline: "ALERT — ENERGY CRISIS: Government burning fuel oil to defer blackouts; mandated 1-day-WFH; 9pm shop closures; June peak-demand window is the danger zone",
+    summary: "Egypt is in active energy rationing as of April 2026. Government publicly denies imminent rolling blackouts but is burning fuel oil to delay them — same playbook as 2024 when blackouts arrived in June anyway. June-August 2026 is the danger window: peak demand + war-disrupted LNG + heightened-risk Israeli gas corridor. This is a STRUCTURAL story that has not been properly framed in mainstream coverage.",
+    current_measures: [
+      "9pm shop/restaurant/cafe closures across Cairo and most cities (since 28 Mar 2026)",
+      "MANDATED 1-day-per-week work-from-home for non-essential public-sector workers — first WFH mandate of 2026",
+      "Petrol prices raised 15-22% (Apr 2026 emergency adjustment, Mada Masr)",
+      "Official-vehicle fuel allocations cut ~33%",
+      "Major state energy projects delayed",
+      "Street lighting dimmed across Cairo + Alexandria",
+      "Government burning fuel oil to avoid rolling blackouts (MEES 24 Apr)"
+    ],
+    blackout_risk: {
+      current_status: "Government denies, but mitigation measures suggest near-miss",
+      summer_window: "June-August 2026 peak demand exceeds derated supply",
+      probability_some_blackouts_july: "60-75% per analyst consensus + 2024 precedent",
+      probability_some_blackouts_june: "30-45% — depends on how fast fuel-oil stockpile is consumed",
+      impact_for_business_traveller: "Hotel rooms may lose A/C 2-4 hours intermittently. Quality hotels with full backup-generator coverage will hold lighting/lifts/Wi-Fi but A/C may cycle. Plan for 4+ hours daily mains-power uncertainty by mid-June."
+    },
+    fuel_supply: {
+      lng_disrupted: "Hormuz blockade halts Qatari LNG to Egypt entirely",
+      israeli_gas: "Leviathan field gas continuing but on heightened-risk corridor",
+      fuel_oil_substitution: "Government scaling fuel-oil burn for power gen — high-emissions, expensive, finite stockpile",
+      sustainability_window: "Fuel-oil substitution buys ~6-10 weeks before stockpile pressure becomes acute"
+    },
+    consumer_visible_signs: [
+      "Shop closures by 9pm",
+      "Dimmed street lights at night",
+      "Fuel price hikes (15-22% confirmed)",
+      "Possible petrol queues if shortage emerges",
+      "Slower public-sector services on WFH days",
+      "Generator noise common in business districts"
+    ],
+    precedent_2024: "April-May 2024: Cabinet promised 'no rolling blackouts' for summer. June-August 2024: rolling 2-3 hour daily blackouts arrived in Cairo, Alexandria, Delta governorates. Messaging pivoted from denial to 'temporary load-shedding'. Same playbook expected 2026 with materially worse external constraints (Hormuz blockade adds to 2024's purely-fiscal stress).",
+    if_blackouts_arrive_what_changes: [
+      "Tourism corridor (5-star hotels) generally holds — generators rated for peak load",
+      "Mid-tier hotels variable — check generator capacity in advance",
+      "Business meetings in commercial buildings disrupted — bring laptop battery + backup hotspot",
+      "Restaurants/services in non-tourist areas disrupted",
+      "Fuel queues raise low-grade civil tension — risk of flashpoint at petrol stations"
+    ],
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  cairo_travel_briefing: {
+    priority: "CRITICAL",
+    display_order: "TOP",
+    headline: "CAIRO BUSINESS TRAVEL — JUNE 2026 — INSURANCE IS MANDATORY, NOT OPTIONAL",
+    destination: "Cairo (mainland Egypt — US Level 2 / FCDO 'sensible precautions')",
+    trip_dates: "June 2026 (specific dates pending)",
+    hotel_brand: "Marriott (preferred)",
+
+    insurance_alert: {
+      priority: "ABSOLUTE TOP PRIORITY — DO NOT TRAVEL WITHOUT THIS",
+      bottom_line: "Standard travel insurance does NOT cover war-zone evacuation, political-incident extraction, capital-loss, or kidnap. Egypt's war-adjacent context + active capital controls + escalation risk all sit OUTSIDE standard travel-insurance scope. Specialty cover is mandatory.",
+      standard_travel_insurance_sufficient: false,
+      required_cover_types: [
+        "WAR RISK / POLITICAL EVACUATION COVER — explicit named-perils for war, civil unrest, military intervention. Standard policies EXCLUDE these.",
+        "KIDNAP & RANSOM (K&R) COVER — strongly recommended for any business traveller in a high-tension region. Provides crisis-response team + ransom funds + family liaison.",
+        "MEDICAL EVACUATION (MEDEVAC) — air ambulance to UK or third country. Confirm Egypt is INSIDE the evacuation perimeter.",
+        "TRIP DISRUPTION / CURTAILMENT — for early departure if conditions deteriorate post-arrival.",
+        "EQUIPMENT + CASH COVER — laptop, phone, cash exposure given currency risk."
+      ],
+      provider_categories_to_request: [
+        "Corporate-grade K&R + crisis response provider (your employer's preferred broker should know one)",
+        "Medevac + medical-assistance specialist (with Egypt explicitly inside the evacuation perimeter)",
+        "Specialty insurer with war-risk endorsement (not a bolt-on to standard travel cover — a specialty product)",
+        "Specialty broker for political-risk + K&R packaging"
+      ],
+      provider_naming_note: "Specific provider names omitted intentionally — your employer's procurement / preferred-broker relationship should drive selection. Ask them by category, above.",
+      employer_responsibility: "If this is a work trip, employer has duty-of-care obligation to insure you appropriately. ASK FOR PROOF OF COVER IN WRITING — policy number, perils explicitly covered, evacuation perimeter, 24/7 crisis line. If the answer is 'we have travel insurance', that is INSUFFICIENT for current Egypt context.",
+      pre_departure_checklist: [
+        "Confirm war/political evacuation cover IN POLICY WORDING (not just summary or sales sheet)",
+        "Confirm Egypt is INSIDE the country list at time of travel — some policies dynamically exclude countries when FCDO escalates",
+        "Carry the 24/7 crisis line on phone speed-dial + on paper backup",
+        "Register with FCDO ('Get in touch with the British Embassy' service) before travel",
+        "Share full itinerary + Marriott reservation with one offshore contact + employer security",
+        "Photocopy passport + insurance + spare cash in bag separate from primary"
+      ]
+    },
+
+    cairo_marriott_options: [
+      {
+        property: "Cairo Marriott Hotel & Omar Khayyam Casino",
+        area: "Zamalek (island in central Cairo)",
+        pros: "Historic, central, UK Embassy walking distance (Garden City), Marriott corporate-grade generator coverage, established crisis protocols, well-known to expat + diplomatic community",
+        cons: "Older infrastructure than newer Marriotts, dense central-Cairo location means longer airport route under disruption",
+        airport_distance: "~16-20 km, 30-50 min in traffic",
+        recommendation: "PRIMARY CHOICE for embassy proximity + crisis-protocol depth",
+        verification_status: "Generator capacity, exact embassy distance, and corporate-protocol depth not re-verified this week. Confirm directly with property + UK Mission Cairo before booking."
+      },
+      {
+        property: "JW Marriott Hotel Cairo",
+        area: "Mirage City, New Cairo (east of city)",
+        pros: "Newer infrastructure, better generator + water-tank capacity, golf-course campus = lower density = lower civil-unrest exposure, closer to airport",
+        cons: "Far from central Cairo / embassy district / many business meetings, requires 30-45 min commute each way, isolated if civil incident",
+        airport_distance: "~12-15 km",
+        recommendation: "BEST IF MEETINGS ARE NEW CAIRO / EAST OF CITY"
+      },
+      {
+        property: "Marriott Mena House",
+        area: "Giza (near Pyramids)",
+        pros: "Iconic, garden campus, lower density, tourist-corridor hardened",
+        cons: "Far from business district, longer airport route, tourism-profile location = different risk vs business",
+        airport_distance: "~30 km, 60+ min in traffic",
+        recommendation: "AVOID for business — leisure profile only"
+      },
+      {
+        property: "Le Méridien Cairo Airport",
+        area: "Cairo airport campus",
+        pros: "Airport-adjacent — fastest exit option in disruption. Lower urban risk.",
+        cons: "Far from central Cairo. Unsuitable for downtown business meetings.",
+        airport_distance: "Walking distance",
+        recommendation: "BACK-UP / LAST-NIGHT-BEFORE-FLIGHT option only"
+      }
+    ],
+
+    cash_and_fx_guidance: [
+      "BRING USD or EUR cash. DO NOT rely on ATMs for foreign currency — banks may dispense EGP only.",
+      "Mixed denominations: USD 100s for hotel, USD 20s/50s for taxis/restaurants",
+      "Estimated daily cash budget: USD 100-200 reasonable, more if shopping/entertainment",
+      "AVOID street currency exchanges — recently uplifted scrutiny + risk",
+      "Use Marriott exchange or licensed banks for any conversion (worse rate but safer)",
+      "Credit cards generally accepted in Marriott + major restaurants — but expect occasional terminal failures",
+      "DO NOT bring more cash than you can lose / declare on customs (Egypt customs limit USD 10,000)"
+    ],
+
+    abort_triggers_pre_departure: {
+      tier_1_immediate_abort: [
+        "FCDO advisory escalates to 'all but essential travel' for Cairo (definitive, externally validated)",
+        "US ground-op H-hour appears imminent — intelligence buildup signals + carrier movement (definitive)",
+        "Cairo airport disruption confirmed (closures, security incidents)"
+      ],
+      tier_2_high_concern_review_immediately: [
+        "Lebanon ceasefire (~14 May) collapses with full Israeli ground op (high probability of regional escalation)",
+        "Kuwait or any Gulf state publicly withdraws CBE deposit (FX-cascade risk)",
+        "Egypt official EGP rate breaks 55 panic threshold",
+        "First mine-laying kinetic incident under shoot-to-destroy ROE (escalation indicator)"
+      ],
+      tier_3_yellow_flag_monitor: [
+        "Beijing summit (May 14-15) collapses with no diplomatic offramp",
+        "Baladi loaf subsidy formally cut (street-unrest leading indicator)",
+        "Rolling blackouts officially announced (infrastructure stress)",
+        "USD/EGP structural premium widens further (FX-cascade leading indicator)"
+      ],
+      tier_explanation: "Tier 1 = abort decision is automatic. Tier 2 = call employer security + insurer same day; default is abort unless strong reason to proceed. Tier 3 = monitor + reassess at the regular decision gate; not by itself enough to abort."
+    },
+    abort_decision_window: "Make go/no-go decision 7-10 days pre-departure. Beijing summit + Lebanon truce expiry resolve mid-May; that's the natural decision gate.",
+
+    on_the_ground_rules: [
+      "Stay inside Marriott unless meeting business contacts — minimise random outdoor exposure",
+      "Use Uber/Careem from hotel only — DO NOT hail street taxis",
+      "Avoid Tahrir Square, government district, embassies on Fri/Sat (traditional protest days even when banned)",
+      "DO NOT photograph government buildings, military, police, infrastructure, ports, airports",
+      "DO NOT engage politics — Egypt + war + Sisi — in public, with drivers, with anyone you don't know",
+      "Carry passport COPY not original (originals to safe in hotel) — but always have ID on you",
+      "Have a return-to-hotel plan from any meeting — taxi number, route memorised",
+      "Check FCDO travel advice DAILY while in country",
+      "Keep phone charged + powerbank — blackout-readiness",
+      "Have offline maps downloaded (Google Maps Egypt offline)"
+    ],
+
+    contingency_evac: [
+      "Have flight back booked as flexible/refundable",
+      "Know location of UK Embassy Cairo: 7 Ahmed Ragheb St, Garden City — UK Mission +20 (2) 2791 6000",
+      "Have your insurer's 24/7 crisis line on phone speed-dial",
+      "Have an offshore contact who knows your itinerary daily — check-in 24h cadence",
+      "Cash USD reserve ($500-1000) + passport + flight document accessible without unlocking phone",
+      "If situation breaks: get to airport early, do not delay; alternative routes via Sharm El Sheikh or Hurghada if Cairo airport disrupted"
+    ],
+
+    revised_safety_assessment: "Updated 29 Apr 2026 PM after deeper research into the cover-up evidence: my earlier 'not unsafe by Level-2 standards, requires more planning than normal' framing UNDERSTATED the structural risk. The widening black-market premium (68% structural / 5-6% live), CBE NFA -$4.2B Q1, hot money $45-50B at risk, GCC trust collapse, and energy-crisis denial-mode all push the *tail risk* of a sudden FX/banking/blackout cascade up materially. The headline (Level 2, sensible precautions) is not wrong — but the conditional probability of a fast-deteriorating week during the trip is higher than normal Egypt travel implies. GO/NO-GO calls for proper insurance, a hard abort plan, and the May 14-15 Beijing summit + ~14 May Lebanon truce resolution as the natural decision gate.",
+    current_threat_level: "ELEVATED — Cairo Level 2 / sensible precautions baseline, BUT with materially-higher tail risk than normal Egypt travel due to war-adjacent context, capital-control risk, energy crisis denial-mode, and GCC-trust collapse. Go-able with proper preparation; NOT go-able without specialty insurance and an abort plan.",
+    updated: "2026-04-29T21:28:06.000Z"
+  },
+
+  exco_briefing: {
+    priority: "CRITICAL",
+    display_order: "TOP",
+    audience: "Executive committee — supports general activities and decision-making. Distinguishes mainstream-headline framing from on-the-ground signals.",
+    headline: "EXCO BRIEF — Egypt + Gulf risk profile materially worse than mainstream framing; energy crisis structural; June Cairo travel requires specialty insurance + abort plan",
+
+    one_paragraph_summary: "Egypt is in a slow-motion cover-up. Headline metrics (reserves $52.83B end-Mar, IMF program active, EGP at 52.82 official) are press-release-grade and lag the underlying stress. Real signals: black-market premium 68% structural / 5-6% live and widening; CBE net foreign assets -$4.2B Q1; hot money $45-50B at risk; open calls in Kuwaiti media to withdraw the $2B Kuwaiti CBE deposit; energy rationing live with 9pm closures + mandated 1-day-WFH; government denying summer blackouts while burning fuel oil to defer them (the same playbook that failed in 2024). GCC trust index at 38/100 — lowest reading since Q1 series began; EU and Israeli trust both falling. Trip-level implication: Cairo June 2026 is GO with proper specialty insurance + abort triggers, NO-GO without. Beijing summit May 14-15 + Lebanon truce expiry mid-May are the natural decision gate.",
+
+    five_key_questions_for_exco: [
+      {
+        question: "Do we extend Cairo / Egypt activities into June 2026?",
+        recommendation: "CONDITIONAL GO. Maintain optionality. Re-decide 7-10 days before any travel, after the May 14-15 Beijing summit and ~14 May Lebanon truce expiry resolve. Specialty war-risk + K&R insurance MANDATORY.",
+        severity: "high"
+      },
+      {
+        question: "Do we maintain or revise EGP / Egypt-asset exposure?",
+        recommendation: "REDUCE if currently held. Forced-devaluation probability 70-85% within 12 months on current trajectory. Hedge available where possible. New exposure: do not commit before H1 2027.",
+        severity: "high"
+      },
+      {
+        question: "What is our position on Egyptian counterparty default risk?",
+        recommendation: "Treat Egyptian sovereign + corporate counterparties as elevated risk. Bond spread 745bps. Capital controls mean USD repatriation may be delayed even when counterparty solvent.",
+        severity: "medium-high"
+      },
+      {
+        question: "Do we extend supplier diversification away from war-exposed jurisdictions?",
+        recommendation: "YES. Shift critical business-continuity provisioning to non-Gulf alternatives: Cyprus, Malta, Greece, India. Assume current Gulf supply chains running at 60-70% normal capacity.",
+        severity: "high"
+      },
+      {
+        question: "How do we communicate this risk picture internally?",
+        recommendation: "Distinguish 'the picture in headlines' from 'the picture in market signals + on-the-ground reality'. Mainstream coverage is materially behind. The trust_index, government_commitments, and energy_crisis_alert fields on this dashboard are designed for that purpose — point colleagues there.",
+        severity: "medium"
+      }
+    ],
+
+    top_indicators_with_current_readings: [
+      { indicator: "Brent crude",                       current: "$118.03",                 direction: "↑↑↑",         break_level: "$130 sustained",          why: "Pump-feed inflation + Egypt fuel-subsidy stress + global cost-of-living pressure" },
+      { indicator: "USD/EGP official",                  current: "52.82",                   direction: "managed flat",break_level: "55 (panic threshold)",    why: "CBE intervention apparent; cosmetic vs market truth" },
+      { indicator: "USD/EGP black market (live)",       current: "55.45-55.98 (sarfegp)",   direction: "↑ widening",  break_level: "60+",                     why: "True stress signal; live dealer quotes" },
+      { indicator: "USD/EGP structural premium",        current: "68% (Apr 2026)",          direction: "↑ from 52% Jan",break_level: "70%+",                  why: "Specialist outlets' wider measure; the part dealer quotes don't show" },
+      { indicator: "Egypt CBE reserves (headline)",     current: "$52.83B (end-Mar)",       direction: "flat headline",break_level: "$48B",                   why: "Press-release grade; NFA underneath -$4.2B Q1" },
+      { indicator: "Hormuz daily transits",             current: "13 (Apr 28)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
+      { indicator: "GCC-Egypt trust index",             current: "38/100 (Apr)",            direction: "↓ -10 from Mar",break_level: "30 (crisis threshold)", why: "Determines whether bailout architecture survives" },
+      { indicator: "Egypt baladi loaf price",           current: "LE0.20 held",             direction: "stable",      break_level: "Any rise",                why: "Historical red line for street unrest" },
+      { indicator: "Egypt energy rationing posture",    current: "9pm closures + 1-day WFH + fuel-oil burn", direction: "↑ measures expanding", break_level: "Official rolling blackouts", why: "Structural story missing from mainstream framing" },
+      { indicator: "H-hour US ground op probability",   current: "25-30% in 14 days",       direction: "↑ from 20-25% Mon", break_level: "40%+",                why: "Defines whether war stays open-ended or escalates" }
+    ],
+
+    signals_not_yet_reflected_in_mainstream: [
+      "Reserves headline ($52.83B) is true but does not reflect CBE NFA -$4.2B Q1 underneath",
+      "Standard Chartered's 'robust FX inflows' (5 Jan 2026) was published pre-war; same bank revised to 'easing delayed as inflation rebounds' on 11 Mar — view materially shifted",
+      "IMF 5th+6th combined review (25 Feb) was three days before war start; programme has not had a fresh post-war assessment yet",
+      "Government 'no blackouts summer 2026' uses identical messaging to 2024 — when blackouts arrived in June anyway",
+      "Black market structural premium reportedly widened from 52% to 68% in 2026 (single-source — see indicator caveats); live dealer-quote premium ~5-6% (sarfegp Apr 24)",
+      "Egyptian companies divesting locally is happening below the visible reporting threshold (anecdotal; not yet aggregated)",
+      "GCC-Egypt relationship described as 'under pressure' (Arab Center DC) — most coverage still implies stable",
+      "Mandated 1-day-WFH (Apr 2026) is the first such mandate this year — reported but not framed as significant"
+    ],
+    bull_case_triggers_to_watch: [
+      "Iran accepts a partial nuclear concession that allows the blockade to lift",
+      "Beijing summit (May 14-15) produces a written framework that holds for >7 days",
+      "Lebanon truce extended past mid-June with no further IDF strikes north of Litani",
+      "Fresh GCC bailout deposit announced (any size) — would re-anchor trust_index",
+      "IMF June review approves a clean tranche disbursement with no fresh waivers required",
+      "Hormuz transits return above 30/day sustained for 7 days",
+      "Brent returns below $100 sustained for 14 days",
+      "Egypt enters a new IMF programme tranche or unlocks bridge financing"
+    ],
+    indicator_caveats: {
+      "USD/EGP structural premium 68%": "Single-source (specialist outlet, not corroborated). Verify before citing externally. The live dealer-quote 5-6% premium is the better-grounded number for now.",
+      "Hot money $45-50B at risk": "Cited from search; the figure represents foreign positions in Egyptian government debt + T-bills, not all are actively at flight risk. Treat as 'order of magnitude' not exact.",
+      "Trust index numerical scores": "Direction tracker, not calibrated. Read trajectory, not absolute levels.",
+      "GCC-Egypt 'no public confirmation 2026 Ras El-Hekma tranches landed'": "Absence-of-evidence — the absence of a public announcement is consistent with delay OR with a quiet disbursement; treat as 'unconfirmed' not 'confirmed not paid'.",
+      "Cairo Marriott property specifics": "Generator capacity, embassy distance, protocol depth — not re-verified this week; confirm directly before booking."
+    },
+
+    recommended_actions: [
+      "Update internal travel policy: Egypt requires specialty war-risk + K&R insurance + abort trigger framework",
+      "Pre-position USD/EUR cash for any team members travelling",
+      "Confirm K&R cover with broker for any traveller to Egypt or Gulf",
+      "Establish 24h check-in protocol with offshore security or coordinator",
+      "Identify Cairo-based fixer / local liaison if regular travel expected",
+      "Set May 14-15 Beijing summit + ~14 May Lebanon truce as Egypt-trip decision gate",
+      "Quarterly review of trust_index trajectory — if any axis breaks 30, escalate to full review"
+    ],
+
+    source_grade: {
+      headline: "Source-quality matters at EXCO level. This dashboard grades:",
+      high_grade: "IMF / CBE official statements (read for direction not absolute), Atlantic Council, Arab Center DC, Mada Masr (independent Egyptian), HRW, FT, Reuters, Bloomberg, Al Jazeera, MEES",
+      medium_grade: "TradingEconomics (live spot data), AAA, FCDO / US State Dept travel advisories, Hormuz Strait Monitor (operational data)",
+      live_data_dealer_quotes: "sarfegp / blackmarketlive / egcurrency — small private outlets used for live black-market dealer quotes; treat as live signal not editorial. Cross-check between two outlets before citing externally.",
+      low_grade_or_pre_war: "Standard Chartered Jan 5 2026 forecast (PRE-WAR — same bank revised view by Mar 11), themiddleeastinsider.com (small UK private outlet, self-styled authority — flagged as low-credibility)",
+      note: "Pre-war sources (before 28 Feb 2026) should not be cited as current evidence without explicit recontextualisation. Single-source data points are flagged in indicator_caveats above."
+    },
+
+    review_cadence: {
+      next_critical_review: "2026-05-06 — weekly cadence to keep EXCO content honest",
+      cadence_rule: "Critical-review pass every 7 days minimum. Triggered earlier if any tier-1 or tier-2 abort trigger fires, or if a load-bearing single-source claim is challenged.",
+      what_a_critical_review_does: [
+        "Re-verify the headline data points against current sources",
+        "Re-grade single-source claims (especially the 68% black-market premium and $45-50B hot money)",
+        "Re-check the trust_index scores against the five named signals per axis",
+        "Update bull_case_triggers_to_watch with any newly-credible upside scenarios",
+        "Sweep abort_triggers_pre_departure for fired triggers and re-tier if needed"
+      ],
+      who_does_it: "Interactive Claude session (this kind of work requires reasoning, not the mechanical refresh of the daily scheduled task)"
+    },
+
+    rendering_status: {
+      shell_renderer_verified: false,
+      note: "The priority and display_order flags on this dashboard are convention-based. The current shell renderer has not been visually verified to surface the new EXCO sections prominently. Open https://paulcoomber.github.io/middle-east-tracker/ and confirm trust_index, government_commitments, energy_crisis_alert, cairo_travel_briefing, and exco_briefing each appear with appropriate prominence. If they do not, the shell needs an update — separate work item."
+    },
+
+    critical_review_protocol: {
+      headline: "PAUL FILTER — every scheduled run must pass the dashboard through this seven-question check before publishing. Findings recorded in daily _meta.critical_review_findings.",
+      rationale: "Without this step, mechanical refreshes ship stale claims with fresh numbers stamped on top. Paul has explicitly asked for this — assume he WILL ask these questions next time he reads the dashboard, and answer them before he has to.",
+      seven_questions: [
+        {
+          id: "Q1_source",
+          question: "Show me the source — is it pre-war, single-outlet, press-release vs ground-truth?",
+          how_to_apply: "Sweep `_meta.sources` and any embedded citations. Flag any source dated before 2026-02-28 used as current evidence. Flag any single-source data claim (look at indicator_caveats — those are already tagged). If today's searches corroborated a previously-single-source claim, REMOVE the caveat and update the indicator_caveats entry.",
+          remediation: "Add `source_date_caveat` field to any flagged claim, or remove if verified."
+        },
+        {
+          id: "Q2_direction_vs_absolute",
+          question: "Is the official number cosmetic (intervention-defended) or real? What's the parallel-market read?",
+          how_to_apply: "Compare metrics.egp_usd (official) with the black-market live quote (sarfegp / blackmarketlive cross-checked). If gap >5% and widening, surface as a tier-2 indicator in the daily brief. If gap >10%, flag as tier-1.",
+          remediation: "Update brief.headline or brief.summary to lead with the parallel-market signal when divergence is material."
+        },
+        {
+          id: "Q3_counter_narrative",
+          question: "What would the bull case look like today? Do today's numbers make bear stronger or weaker?",
+          how_to_apply: "Read exco_briefing.bull_case_triggers_to_watch. For each, check today's data. If ANY bull trigger fired, surface in brief.key_developments with 'BULL TRIGGER:' prefix. If multiple bull triggers fired, downgrade overall threat_level by one notch.",
+          remediation: "Append bull-trigger findings to brief.key_developments; consider threat_level adjustment."
+        },
+        {
+          id: "Q4_stale_claims",
+          question: "Anything claimed in the stable file that today's searches contradict, downgrade, or upgrade?",
+          how_to_apply: "Sweep stable file for assertions about: trust scores, government commitments, energy crisis status, abort-trigger states. If today's data contradicts (e.g. Kuwait DID withdraw deposit; or fresh GCC tranche announced), update the relevant stable section AND log to _meta.critical_review_findings.",
+          remediation: "Edit stable file when a stale claim is identified — single-string str.replace via Python, validate, build."
+        },
+        {
+          id: "Q5_what_changed",
+          question: "Since the last archive snapshot, what indicators moved? Are any approaching break levels?",
+          how_to_apply: "Read exco-archive/index.json — most recent snapshot before today. Diff today's top indicators against it. Highlight ANY indicator within 10% of its break_level — flag as 'NEAR BREAK' in brief.key_developments.",
+          remediation: "Add 'NEAR BREAK:' prefixed entry to brief.key_developments for any indicator near its threshold."
+        },
+        {
+          id: "Q6_decision_relevance",
+          question: "Does today's update change EXCO recommendations? Cairo trip status? Trust index direction?",
+          how_to_apply: "Re-read exco_briefing.five_key_questions_for_exco. For each, ask: 'Has today's data shifted my answer?' If yes, update the recommendation field with timestamped delta. Same for cairo_travel_briefing.current_threat_level.",
+          remediation: "Update exco_briefing or cairo_travel_briefing fields explicitly with today's date when recommendation shifts."
+        },
+        {
+          id: "Q7_cover_up_alertness",
+          question: "Is the official narrative diverging FURTHER from on-the-ground signals this cycle?",
+          how_to_apply: "Compare today's official data (CBE / IMF / government statements from today's searches) with independent reporting (Mada Masr / Atlantic Council / black market). If the gap widened, log it in _meta.critical_review_findings as 'COVERUP_WIDENING'. If the gap narrowed, log as 'COVERUP_NARROWING'.",
+          remediation: "Surface coverup direction explicitly in brief.summary — Paul reads divergence as the truth signal."
+        }
+      ],
+      execution_template_for_daily_meta: {
+        critical_review_findings: {
+          ts: "(filled at run time)",
+          q1_source_grade: "(none|flagged|cleared|verified) + brief note",
+          q2_official_vs_parallel: "(within band|gap widening|gap narrowing) + numbers",
+          q3_bull_triggers_fired: "(none|N triggers fired: list)",
+          q4_stale_claims: "(none|N claims need update: list)",
+          q5_near_break_indicators: "(none|N indicators near break: list)",
+          q6_recommendation_shift: "(no change|specific shift described)",
+          q7_coverup_direction: "(narrowing|stable|widening) + evidence"
+        }
+      },
+      escalation: "If Q5 finds tier-1 or Q6 changes a Cairo-trip recommendation or Q7 shows coverup widening with new evidence, prefix brief.headline with 'ESCALATION:' so Paul sees it at the top.",
+      cadence_relationship: "This protocol runs every scheduled cycle (twice daily). It is COMPLEMENTARY to the weekly interactive critical-review pass under exco_briefing.review_cadence — the weekly pass goes deeper (methodology, source-grade quality, framing); the per-cycle protocol catches drift fast."
+    },
+
+    updated: "2026-04-29T21:28:06.000Z"
+  }
+
+});
+// === END STABLE ===
+// === BEGIN DAILY: gulf-risk-data-daily-2026-05-01.js ===
+
+window.GULF_RISK_DATA = window.GULF_RISK_DATA || {};
+
+Object.assign(window.GULF_RISK_DATA, {
+
+  _meta: {
+    updated: "2026-05-01T06:07:57.000Z",
+    day: 63,
+    analyst_note: "Day 63 — Fri 1 May 06:07 UTC MORNING update. NEW HEADLINE: White House announces Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC), removing the key Congressional pressure valve that would have forced an authorisation vote. This is a deliberate political-cover instrument: it lets Trump maintain the open-ended ceasefire/blockade posture indefinitely without a Hill confrontation, but it also removes the moderating constraint markets and Senate doves were pricing as a near-term off-ramp. BRENT: June contract expired Thursday at $114.01 (after intraday wartime high $126); July front-month opened Friday +1.11% to ~$111.63 — net DOWN ~$2.4 on contract rollover but still well above the $90s base. AAA US national gasoline holds $4.03/gal — pump-feed lag intact. EGP: pound holds near 53 after yesterday break (52.82 → 53.73); 30-day range now 51.75-54.69 (Wise) — first stress test of CBE capacity to defend the new level. EGYPT POLITICAL: Sisi NEAR-STATE-OF-ECONOMIC-EMERGENCY framing from yesterday holds; $3B emergency IMF loan request still in considering phase; $38.65B external debt repayment schedule through end-2026 unchanged. HORMUZ: traffic still ~5-10 vessels/day per CNN/Bloomberg visual deep dives — yesterday 20-transit print was a localised lift, not a trend reversal. IAEA: stockpile picture unchanged (440.9kg HEU at Isfahan since June 2025); access still suspended since 28 Feb 2026 (cameras disabled, seals removed) — IAEA cannot verify. DIPLOMACY: stalemate. UAE OPEC exit takes effect TODAY (1 May) — first material structural-coordination break inside Gulf bloc. H-hour probability HOLDS ~25-30%. The deadline-halt is the day most decision-grade datum: it lengthens the time horizon for the open-ended posture and weakens the Hill-pressure thesis EXCO has been weighting.",
+    sources: [
+      "CNBC 1 May 2026 — Oil rises as White House says Iran ceasefire halts 60-day war deadline (July Brent +1.11% to ~$111.63)",
+      "TradingEconomics / oilprice.com 1 May 2026 — Brent July front-month ~$111.63 after Thursday June expiry $114.01 (intraday wartime high $126.41)",
+      "Wise / xe.com 1 May 2026 — USD/EGP ~53 area; 30-day range 51.7493-54.6931, average 53.0422",
+      "AAA Fuel Prices 1 May 2026 — US national average $4.031/gal (stable across pump-feed lag)",
+      "CNN / Bloomberg 30 Apr 2026 — Hormuz traffic at trickle (5-10 vessels/day) — visual deep dive",
+      "Wikipedia / Al Jazeera 1 May 2026 — 2026 Iran war ceasefire — Trump maintains blockade; deadline-halt by White House removes Congressional pressure valve",
+      "TradingEconomics 30 Apr 2026 — Brent crude pulled back to $114.22 (down 3.2%) after intraday wartime high of $126",
+      "CNBC 30 Apr 2026 — Oil prices: Brent surged to $126 wartime high then retreated on US-Iran escalation fears",
+      "BusinessToday 30 Apr 2026 — Brent crude surges to $120 per barrel, highest since 2022",
+      "Fortune 30 Apr 2026 — Current price of oil as of April 30, 2026",
+      "AAA Fuel Prices 30 Apr 2026 — US national average $4.031/gal (national figure stable; pump-feed lag persists)",
+      "tradingeconomics.com / Investing.com 30 Apr 2026 PM — USD/EGP rose to 53.73, +1.34% on the day (BREAK from CBE intervention level 52.82)",
+      "Pound Sterling Live 30 Apr 2026 — USD/EGP history",
+      "EgyptToday / SIS — Egypt foreign reserves $52.83B end-March 2026 (latest CBE figure; April number not yet published)",
+      "CBE / CAPMAS 30 Apr 2026 — Egypt urban headline CPI 15.2% March 2026 (CBE press release)",
+      "Ahram Online 30 Apr 2026 — Egypt national annual inflation 13.5% Mar (national basket; food/transport drove)",
+      "Maritime News / SCA — Suez Canal 56 vessels/day in early April; 15% large-containership fee discount lifted 7 Apr",
+      "Shipping Telegraph 30 Apr 2026 — SCA reported $449M in Suez revenue YTD 2026 ahead of $368M YTD 2025",
+      "Hormuz Strait Monitor 29 Apr 2026 — 20 transits (6 in / 14 out; Northern 13, Southern 7); Gulf-wide 902 vessels",
+      "USNI / CNN visual 29 Apr 2026 — Hormuz traffic at trickle; week of 30 Mar-5 Apr saw 76 transits (post-conflict high)",
+      "Wikipedia / House of Commons Library 30 Apr 2026 — 2026 Iran war ceasefire status; open-ended ceasefire continuing",
+      "Al Jazeera 28 Apr 2026 — Iran offers US deal to reopen Hormuz, postpone nuclear talks; what is in latest proposal",
+      "Axios 27 Apr 2026 — Iran offers US deal to reopen Hormuz, postpone nuclear talks (Pakistan mediation)",
+      "ABC News 30 Apr 2026 — Khamenei: Iran will guard nuclear and missile technologies",
+      "Washington Post / Foreign Policy / AP 29 Apr 2026 — IAEA Grossi: 440.9kg of 60% HEU likely still at Isfahan since June 2025",
+      "IAEA GOV/2026/8 27 Feb 2026 — Iran verification and monitoring reference document",
+      "Arms Control Association — Status of Iran nuclear programme",
+      "EgyptToday 30 Apr 2026 — El-Sisi: Egypt in 'near state of economic emergency' on war energy shock",
+      "Middle East Monitor 22 Apr 2026 — Iran war used as a pretext for harsh measures in Egypt",
+      "Al Jazeera 7 Apr 2026 — Egypt cuts fuel amid power crisis (9pm shutdowns + WFH)",
+      "Foreign Policy 9 Mar 2026 — Sisi's Egypt faces fallout from Iran strikes",
+      "OilPrice.com — A Hormuz Shock Could Push Egypt to the Brink",
+      "Atlantic Council Apr 2026 — A crisis in Egypt could be a warning sign for the global economy",
+      "Atlantic Council Apr 2026 — They have been exposed: Iran war upends Gulf states",
+      "Mada Masr 23 Apr 2026 — Energy subsidies down, export subsidies up in new budget draft",
+      "Mada Masr 1 Apr 2026 — Govt unlikely launch EGX offerings in current economic conditions",
+      "Arab Center DC Apr 2026 — Egypt and the Gulf: A Relationship under Pressure",
+      "African Business Apr 2026 — Egypt on frontline of Iran war's economic disruption",
+      "MEES 24 Apr 2026 — Egypt Plans Fuel Burn To Avoid Power Blackouts",
+      "World Bank — Egypt external debt + interest due Apr 2026 → end 2026: $38.65B",
+      "GOV.UK FCDO — Egypt travel advice (current advisories)",
+      "travel.state.gov — Iran/Iraq/Lebanon Level 4"
+    ]
+  },
+
+  chart_series: {
+    labels: ["28 Jan","4 Feb","11 Feb","18 Feb","25 Feb","28 Feb","4 Mar","11 Mar","18 Mar","25 Mar","1 Apr","4 Apr","7 Apr","8 Apr","10 Apr","13 Apr","14 Apr","15 Apr","17 Apr","18 Apr","20 Apr","21 Apr","22 Apr","23 Apr","24 Apr","25 Apr","26 Apr","27 Apr","28 Apr","29 Apr","30 Apr","1 May"],
+    brent:         [70,   68,   67,    67.5,  69,    72,    85,   110,  118,   112,   108,   111,  109,  91,   96,    103,   95,    99,    88,    96,    97,    95.22, 93.80, 96.50, 101.40, 105.33, 105.33, 108.11, 111.16, 118.03, 114.22, 111.63],
+    egp:           [47.2, 47.5, 47.8,  48.2,  48.9,  49.5,  51.2, 52.8, 53.5,  53.9,  54.1,  54.5, 54.62,54.69,54.25, 53.37, 53.09, 52.50, 51.92, 51.80, 51.75, 51.73, 51.75, 52.05, 52.62, 52.62, 52.62, 52.55, 52.84, 52.82, 53.73, 53.00],
+    hormuz:        [54,   53,   52,    50,    48,    48,    42,   38,   40,    35,    30,    28,   22,   25,   20,    5,     8,     12,    14,    16,    16,    3,     5,     4,     5,     3,     4,     4,     4,     6,     20,    6],
+    suez:          [32,   32,   31,    30,    30,    29,    26,   24,   23,    22,    21,    20,   20,   20,   19,    18,    18,    20,    19,    21,    22,    22,    23,    23,    22,    20,    19,    19,    19,    19,    19,    19],
+    bab_el_mandeb: [16,   15,   15,    14,    13,    12,    10,   9,    8,     7,     7,     6,    6,    5,    5,     4,     4,     4,     3,     4,     5,     5,     5,     5,     4,     4,     4,     4,     4,     4,     4,     4],
+    war_start_index: 5,
+    brent_min: 60,  brent_max: 125,
+    egp_min:   45,  egp_max:   57,
+    hormuz_min: 0,  hormuz_max: 60,
+    suez_min:   0,  suez_max:   40,
+    bem_min:    0,  bem_max:    20,
+    source_note: "Verified through Fri 1 May 2026 ~06:07 UTC MORNING update. Brent: June contract expired Thu $114.01; July front-month opened Fri +1.11% to ~$111.63 (CNBC) — contract-rollover effect plus White House announcement that Iran ceasefire HALTS the 60-day War Powers Act deadline removes Congressional pressure valve. EGP: holds ~53 after yesterday break to 53.73; 30-day range 51.75-54.69 (Wise). Hormuz: returns to trickle ~6 ships/day after yesterday localised 20-transit print. AAA US gas $4.031/gal (stable, pump-feed lag continues)."
+  },
+
+  brief: {
+    headline: "Day 63 (Fri 1 May 06:07 UTC morning): NEW — White House says Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) — removes key Congressional pressure valve, signals Trump intent to maintain open-ended ceasefire/blockade indefinitely. Brent: June contract expired Thu $114.01 (intraday wartime high $126); July front-month +1.11% to ~$111.63 Friday morning. EGP holds ~53 after yesterday break to 53.73 — first CBE defence test at new level. UAE OPEC exit takes effect TODAY (1 May). Hormuz back to ~6 ships/day after yesterday 20-transit print (one-day lift, not trend). IAEA stockpile picture unchanged; access suspended since 28 Feb. H-hour probability HOLDS ~25-30%; deadline-halt removes one moderating pressure.",
+    summary: "Friday 1 May 06:07 UTC MORNING update — DECISION-GRADE NEW DATUM. (1) WHITE HOUSE HALTS 60-DAY WAR POWERS DEADLINE. CNBC reports the White House announced Friday that the Iran ceasefire HALTS the running 60-day War Powers Act clock — the Congressional authorisation deadline that doves had been pricing as a near-term off-ramp. This is a deliberate political-cover instrument: it lets Trump maintain the open-ended ceasefire/blockade posture indefinitely without a Hill confrontation. The Senate-pressure thesis EXCO has been weighting weakens; the timeline for the kinetic decision lengthens but the ceiling on it does not. (2) BRENT. June contract expired Thursday $114.01 after intraday wartime high $126.41; July front-month opened Friday +1.11% to ~$111.63 (CNBC). Net DOWN ~$2.4 on contract rollover effect; still well above the pre-war $90s base and above the Goldman late-2026 $90 forecast by ~$22. (3) EGP. Pound holds near 53 after yesterday break to 53.73 — first CBE defence test at the new managed level. 30-day range 51.7493-54.6931 per Wise. The press-release reserves figure ($52.83B end-March) remains visibly disconnected from operative cash position; cover-up thesis intact. (4) HORMUZ. Traffic returns to ~5-10 ships/day per CNN/Bloomberg visual coverage — yesterday 20-transit print was a localised lift, not a trend reversal. (5) IAEA. Stockpile picture unchanged: 440.9kg of 60% HEU at Isfahan since June 2025; access still suspended since 28 Feb 2026 (cameras disabled, seals removed) — IAEA cannot verify stockpile location, strike damage, or covert enrichment. (6) STRUCTURAL. UAE OPEC exit takes effect TODAY (1 May) — first material structural-coordination break inside Gulf bloc since the war began; Saudi 25% idle capacity backstops near-term but deviation watch begins. (7) DIPLOMACY. Stalemate intact. Khamenei nuclear/missile guard reaffirmation from yesterday holds; Trump-Iran proposal rejection holds. H-hour probability HOLDS ~25-30% next 14 days; deadline-halt removes one moderating pressure without raising kinetic odds.",
+    threat_level: "HIGH",
+    key_developments: [
+      "Good Morning from Paul! The date is 1st May, 2026 and here are most recent changes. Last update at 06:07.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes the Congressional pressure valve doves had been pricing as the near-term off-ramp; political cover for Trump to maintain open-ended ceasefire/blockade indefinitely.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): BRENT — June contract expired Thursday $114.01 (after intraday wartime high $126.41); July front-month opened Friday +1.11% to ~$111.63. Net DOWN ~$2.4 on contract rollover; still ~$22 above Goldman late-2026 $90 forecast.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level. 30-day USD/EGP range 51.75-54.69 (Wise).",
+      "NEW (Fri 1 May 06:07 UTC MORNING): HORMUZ traffic returns to ~5-10 ships/day per CNN/Bloomberg visual coverage — yesterday 20-transit print was a localised lift, not a trend reversal.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): UAE OPEC EXIT TAKES EFFECT TODAY (1 May) — first material structural-coordination break inside Gulf bloc since war began. Saudi 25% idle capacity backstops; UAE quota deviation watch begins.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): IAEA stockpile picture unchanged — 440.9kg of 60% HEU at Isfahan since June 2025; IAEA access still suspended since 28 Feb 2026 (cameras disabled, seals removed); IAEA cannot verify stockpile location, strike damage, or covert enrichment.",
+      "NEW (Fri 1 May 06:07 UTC MORNING): AAA US national gasoline holds $4.031/gal — pump-feed lag remains operative narrative.",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): EGP BREAK 52.82 → 53.73 (+1.34%) intraday — first material move from CBE-managed level since intervention began.",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): Brent intraday wartime high $126 on US-Iran action briefing reports, then ~3.2% pullback to $114.22; ninth-straight up-session streak ENDS.",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): Sisi publicly declared Egypt in NEAR STATE OF ECONOMIC EMERGENCY (EgyptToday); Cairo considering $3B emergency IMF loan; $38.65B external debt + interest due Apr 2026 → end 2026 (World Bank).",
+      "Holding (Thu 30 Apr 18:07 UTC EVENING): Khamenei — Iran will 'guard' nuclear and missile technologies. Trump administration assembling international coalition to reopen Hormuz.",
+      "Holding (Thu 30 Apr morning): Brent ~$119.85 morning print; USD/EGP held 52.82 morning; AAA US gas corrected to $4.03; Egypt urban CPI 15.2% Mar (vs 13.4% Feb) confirmed; SCA lifted 15% large-containership transit-fee discount effective 7 Apr; CBE official reserves $52.83B end-Mar (analyst-adjusted operative remains $34B).",
+      "Holding (Wed 29 Apr): EXCO BRIEFING ADDED (29 Apr 21:28 UTC): see exco_briefing — five key questions, top indicators, what mainstream is missing, recommended actions. Source-grade matrix included.",
+      "Holding: STABLE SECTION — energy_crisis_alert (PRIORITY: CRITICAL): government burning fuel oil to defer summer blackouts; mandated 1-day-WFH; 9pm closures; June peak-demand danger window.",
+      "Holding: STABLE SECTION — trust_index: GCC trust 38/100, Israeli 35/100, EU 42/100. GCC at lowest since series began Q1 2026. Crisis threshold = 30.",
+      "Holding: STABLE SECTION — government_commitments: EGP managed-floating commitment break probability 70-85%. No-blackouts-summer 2026 break probability 60-75%.",
+      "Holding: STABLE SECTION — cairo_travel_briefing: June 2026 Cairo Marriott trip — INSURANCE MANDATORY (war risk + K&R + medevac).",
+      "COVER-UP THESIS: official EGP 52.82 + headline reserves $52.83B are press-release grade. Real signals: black-market premium 68% structural, CBE NFA -$4.2B Q1, calls in Kuwait to withdraw $2B CBE deposit, hot money $45-50B at risk. Both markets moving independently per Atlantic Council Apr 2026.",
+      "NEW (Wed 29 Apr ~21:28 UTC): BRENT EXTENDS TO $118.03 (~+6% CNBC) — eighth straight session of gains, highest since June 2022, after Trump CNN remarks doubling down on blockade until nuclear deal.",
+      "NEW (Wed 29 Apr ~21:28 UTC): AAA US AVG GASOLINE $4.23/gal (refreshed from stale $4.04). Pump-feed pressure mounting from Brent $118+.",
+      "NEW (Wed 29 Apr ~21:28 UTC): HORMUZ STRAIT MONITOR — 13 transits on Apr 28 (4 inbound / 9 outbound, all Northern Corridor).",
+      "NEW (Wed 29 Apr ~PM): TRUMP FORMALLY REJECTS IRAN'S PROPOSAL — Axios phone interview Wed: 'I don’t want to [lift the blockade], because I don’t want them to have a nuclear weapon... The blockade is somewhat more effective than the bombing. They are choking like a stuffed pig' (Axios/CNBC/CBS News/NBC News/NPR 29 Apr).",
+      "NEW (Wed 29 Apr): RUBIO MARGINALLY SOFTENED back from Tue TV-hardening — 'It’s better than what we thought they were going to submit' — but conditioned acceptance on a deal that 'definitively prevents them from sprinting towards a nuclear weapon at any point'.",
+      "NEW (Wed 29 Apr): BRENT closed at $116.53 (+4.74%) and EXTENDED to $118.03 (~+6% CNBC) in late session — eighth straight session of gains, highest since June 2022.",
+      "NEW (Wed 29 Apr): USD/EGP 52.82 — flat on Tue 52.84 despite Brent +4.74% surge. CBE intervention apparent.",
+      "NEW (Wed 29 Apr): FED HELD 3.50-3.75% with 8-4 dissent — most since October 1992. Powell will step down as chair mid-May, retain Board seat.",
+      "NEW (Wed 29 Apr): EQUITIES — S&P 500 -0.3%, Nasdaq -0.3%, Dow -0.8% (-364 pts).",
+      "NEW (Wed 29 Apr): IAEA GROSSI to AP — Iran's ~200kg of 60% HEU 'likely still at Isfahan' since June 2025; satellite imagery shows 18 blue containers entering tunnel 9 June 2025.",
+      "NEW (Wed 29 Apr): LEBANON ESCALATION — Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS (Euronews). Israel threatened to 'burn' all of Lebanon.",
+      "NEW (Wed 29 Apr): HORMUZ ~6 SHIPS in past 24h; recent average 7 vessels vs 125-140 pre-war.",
+      "NEW (Wed 29 Apr): PAKISTAN MEDIATORS expect a revised Iranian counter-proposal in coming days. Iran 5-point counter-proposal includes: end of US-Israeli attacks, security guarantees, war reparations, recognition of Iranian sovereignty over Strait of Hormuz.",
+      "NEW (Wed 29 Apr): IRAN QUESTIONS PAKISTAN'S MEDIATION LEGITIMACY — national security spokesperson: Pakistan 'is not suitable as a mediator'.",
+      "NEW (Wed 29 Apr): Trump on CNN — 'Iran better get smart soon'. Pentagon told ABC7 — total US war cost to date $25 billion.",
+      "Holding (Tue 28 Apr): UAE QUITS OPEC effective 1 May 2026. Ending ~60 years of membership.",
+      "Holding (Tue 28 Apr): Trump claimed Iran 'in a state of collapse'. Israel ordered displacement of 16 south Lebanon towns.",
+      "Holding (Tue 28 Apr PM): IDF struck Lebanon's BEKAA VALLEY for the FIRST TIME since the 16 Apr ceasefire.",
+      "Holding (Mon 27 Apr PM): IRAN'S FORMAL WRITTEN PROPOSAL published — reopen Hormuz, end war, postpone nuclear talks; conditional on US lifting blockade.",
+      "Holding (Mon 27 Apr PM): PUTIN-ARAGHCHI MEETING CONCLUDED in St. Petersburg — Russia pledged support.",
+      "Holding (Mon 27 Apr PM): Goldman Sachs raised Brent late-2026 forecast to $90 from $80 — now $28+ below Wed's $118.03 spot.",
+      "Holding (Mon 27 Apr PM): USS GEORGE H.W. BUSH CSG ARRIVED in CENTCOM (Apr 23) — third US carrier; highest carrier presence in 20+ years.",
+      "Holding (Mon 27 Apr PM): US blockade redirect tally 37 ships (TheMediaLine).",
+      "Holding (Mon 27 Apr evening): SISI-PATRUSHEV MEETING in Cairo on Suez Canal Industrial Zone + El Dabaa.",
+      "Holding: Pentagon told Congress — clearing Iran's Hormuz mines could take SIX MONTHS.",
+      "Holding: ROE 'shoot to destroy' on mine-laying boats; no kinetic encounter under this ROE yet.",
+      "Holding: MV Touska still held since 19 Apr seizure by USS Spruance.",
+      "Holding: Lebanon ceasefire EXTENDED 3 weeks (Trump 23 Apr) — new expiry ~14 May; effectively unraveling.",
+      "Holding: 82nd Airborne HQ forward deployed; total US forces 50,000+ in region.",
+      "Holding: Three ground operations under active planning — Kharg, Qeshm, uranium counterproliferation.",
+      "GOP and Democrat split on ground invasion; no Congressional authorisation.",
+      "Death toll: 4,000+ across conflict."
+    ],
+    ceasefire_status: "OPEN-ENDED AND INSTITUTIONALISING — Fri 1 May 06:07 UTC MORNING: White House announced today that the Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC). This converts the open-ended posture from a tactical stance into an indefinite institutional one — removes the Congressional pressure valve and weakens the dove-led Senate AUMF push. Trump-Iran stalemate holds: Khamenei nuclear/missile guard reaffirmation intact; Trump-Iran proposal rejection intact; US precondition (enrichment suspended ≥10 years, HEU removed) unchanged. International-coalition-to-reopen-Hormuz initiative continues. Hegseth: blockade continues 'as long as it takes' — 37 ships redirected. Three US carriers on station. Lebanon arc continues to compound (~14 May truce expiry approaching). UAE OPEC exit takes effect today.",
+    nuclear_status: "Iran does not have a deployable weapon. IAEA stockpile figure 440.9kg of 60% HEU — enough for ~10 weapons if weaponised. Majority likely still at Isfahan since June 2025. IAEA access TERMINATED 28 Feb 2026 (cameras disabled, seals removed from all declared facilities) — the IAEA cannot verify the extent of strike damage, the status of enriched-material stockpiles, or whether covert enrichment continues. Khamenei (30 Apr) reaffirmed Iran will 'guard' nuclear and missile tech. US precondition: enrichment suspended ≥10 years and HEU removed from country. Trump-Iran proposal rejection holds. No evidence of weaponisation, but stockpile + access denial = serious proliferation concern.",
+    ground_op_status: "Not Iraq. Targeted raids: Kharg Island seizure (90% Iran oil exports), Qeshm Island (Hormuz control), counterproliferation uranium seizure. H-hour probability HOLDS ~25-30% in next 14 days as of Fri 1 May 06:07 UTC MORNING. White House halt of 60-day War Powers Act deadline today removes the Congressional pressure-valve and lengthens the political horizon for the kinetic decision; does not raise base-case kinetic odds in the next 14-day window. Khamenei reaffirmation (Iran will guard nuclear/missile tech) keeps diplomatic off-ramp closed. International coalition to reopen Hormuz initiative ongoing. IAEA stockpile picture (440.9kg HEU at Isfahan, access suspended since 28 Feb) remains the counterproliferation case. Lebanon arc continues to compound; ~14 May truce expiry approaching.",
+    next_flashpoint: "Whether the White House 60-day-deadline-halt triggers any Senate AUMF counter-move (initial signals on Hill Friday). Whether US-led international coalition forms to reopen Hormuz. EGP defence at 53 holding vs second leg toward 54-55 panic threshold. Egypt $3B emergency IMF loan request formalisation. UAE post-OPEC production policy first day signals. April CBE inflation print (early May release). Lebanon ~14 May truce expiry. First mine-laying incident under shoot-to-destroy ROE. MV Touska retaliation still live. Beijing summit May 14-15. Whether Trump-Iran briefing escalates to operational order or remains posturing.",
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  metrics: {
+    _verified: "2026-05-01T06:07:57.000Z",
+    _stale_fields: ["metrics.suez_revenue_weekly_m", "metrics.egypt_official_reserves_apr_bn (April CBE figure not yet published; expected early May)", "metrics.urban_inflation_apr (April CPI release not yet published; expected early May)"],
+    brent_usd: 111.63,
+    brent_spot_usd: null,
+    brent_week_range: "$99.13 Mon AM open → $108.11 Mon close → $111.16 Tue PM → $116.53 Wed close → $118.03 Wed late → $119.85 Thu morning → INTRADAY HIGH $126.41 (wartime high) → $114.01 Thu June expiry → $111.63 Fri July front-month +1.11% (CNBC). Net week-over-week: UP ~$12 from Mon $99.13 base; week ends with contract rollover compressing the spike.",
+    brent_spot_note: "Fri 1 May 06:07 UTC MORNING: Brent July front-month ~$111.63 (CNBC, +1.11%) — the front-month rolled over from June ($114.01 Thu close after intraday wartime high $126.41). Net DOWN ~$2.4 from Thursday close on rollover effect; still ~$22 above Goldman late-2026 $90 forecast. The CNBC headline driver: White House announcement that the Iran ceasefire HALTS the 60-day War Powers Act deadline — removes Congressional pressure valve. UAE OPEC exit takes effect TODAY (1 May) — first day-of-effect price action to watch. Brent now sits BELOW the $115-150 ground-ops forecaster floor.",
+    wti_usd: 92.50,
+    us_gas_average: 4.031,
+    us_gas_note: "Fri 1 May 06:07 UTC MORNING (AAA): national average $4.031/gal — stable. AAA national has held $4.03-$4.04 through April despite Brent surge from $90s to $119+ before contract-rollover compression. Pump lag still operative — pull-through dependent on whether Brent re-tests $120+. Second-wave goods-channel inflation lag 6-10 weeks unchanged.",
+    egp_usd: 53.00,
+    egp_week_high: 53.73,
+    egp_panic_threshold: 55,
+    egypt_bond_spread_bps: 745,
+    suez_revenue_weekly_m: null,
+    suez_pre_war_weekly_m: 190,
+    suez_ytd_2026_m: 449,
+    suez_ytd_2025_same_period_m: 368,
+    suez_fee_discount_status: "15% transit-fee discount for large containerships LIFTED effective 7 Apr 2026 — fee normalisation on declining traffic, not recovery signal",
+    egypt_urban_cpi_mar_2026_pct: 15.2,
+    egypt_urban_cpi_feb_2026_pct: 13.4,
+    egypt_official_reserves_end_mar_bn: 52.83,
+    egypt_official_reserves_note: "Press-release grade ($52.83B end-Mar 2026, CBE/SIS); analyst-adjusted operative figure remains $34B per cover-up thesis. April CBE figure expected in coming days (early May release window). Cover-up thesis intact after yesterday EGP break 52.82 → 53.73; today pull-back to ~53 is the first CBE defence test at the new managed level.",
+    hormuz_ships_monday: 16,
+    hormuz_ships_24h: 6,
+    hormuz_ships_recent_avg: 8,
+    hormuz_vessel_incidents_total: 37,
+    sp500: 7137,
+    nasdaq: 24698,
+    dow_jones: 48754,
+    dollar_index: 98,
+    fed_funds_target_low: 3.50,
+    fed_funds_target_high: 3.75,
+    fed_dissent: "8-4 (most since Oct 1992) — Miran/Hammack/Kashkari/Logan dissented; Powell to step aside as chair mid-May, retain Board seat",
+    goldman_brent_forecast_late_2026: 90,
+    hormuz_status: "Effectively closed. Fri 1 May 06:07 UTC MORNING: traffic returns to ~5-10 ships/day per CNN/Bloomberg visual coverage; yesterday 20-transit Apr 29 print was a localised lift, not a trend reversal. ~5% of pre-war flow. 37 ships redirected by US blockade. Trump administration assembling international coalition to reopen Hormuz; White House 60-day-deadline halt today removes Congressional moderating pressure. Pentagon 6-month mine-clearing timeline holds. Three US CSGs on station.",
+    iea_assessment: "Largest supply disruption in history of global oil market",
+    imf_growth_warning: "Global growth will take hit even if ceasefire holds — Hormuz uncertainty persistent drag",
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  ground_ops: {
+    status: "POSTURED — Fri 1 May 06:07 UTC MORNING: H-hour probability HOLDS ~25-30% in next 14 days. Material new datum: White House announcement that Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) removes the Congressional pressure-valve that had been a moderating constraint on the open-ended posture. Lengthens political horizon for the kinetic decision without raising base-case kinetic odds in the 14-day window. Khamenei nuclear/missile guard reaffirmation closes diplomatic off-ramp. USS George H.W. Bush CSG in CENTCOM (third US carrier alongside Lincoln + Ford). International-coalition-to-reopen-Hormuz initiative continues. IAEA stockpile (440.9kg HEU at Isfahan since June 2025; access suspended since 28 Feb) remains the counterproliferation case. Pentagon told ABC7 total US war cost to date $25 billion.",
+    us_forces_total: "50,000+ in region and rising",
+    forces_deployed: [
+      "31st MEU — 2,500 Marines + sailors, USS Tripoli — IN THEATER",
+      "82nd Airborne Divisional HQ — Maj. Gen. Brandon Tegtmeier forward deployed",
+      "82nd Airborne 1st BCT (IRF) — ~2,000-3,000 paratroopers deployed",
+      "USS Abraham Lincoln Carrier Strike Group — F-18s, F-35Cs in theater",
+      "8 Aegis guided missile destroyers in Arabian Sea",
+      "USS George H.W. Bush Carrier Strike Group — ~6,000 personnel ARRIVED CENTCOM Apr 23",
+      "11th MEU — 2,500 Marines, USS Boxer — arriving end April",
+      "10,200 additional troops confirmed deploying"
+    ],
+    target_1: {
+      name: "Kharg Island",
+      description: "90% of Iran's crude oil exports. 7 sq miles. 20 miles off Iranian coast. 90+ military targets pre-struck 13 March — oil infrastructure deliberately spared as leverage.",
+      feasibility: "Tactically feasible. Marines initial assault, 82nd Airborne secures airfield. Strategic folly per USNI, War on the Rocks, IISS, Defense Priorities.",
+      risk: "Iran can destroy its own oil terminal to deny it. Any Iranian strike on Marines triggers impossible political position for Trump. Spikes oil to $130-150+.",
+      iran_threat: "IRGC: 'all vital infrastructure of that regional country will without restriction become the target of relentless attacks.'"
+    },
+    target_2: {
+      name: "Qeshm Island",
+      description: "Largest island in Persian Gulf. Sits in horseshoe bend of Hormuz. Physical control of strait.",
+      feasibility: "Tactically feasible with MEU amphibious assault.",
+      risk: "Holding under Iranian mainland fire. Does not resolve nuclear question."
+    },
+    target_3: {
+      name: "Uranium counterproliferation raid",
+      description: "Physical seizure of Iran's enriched uranium stockpile. Trump explicit: 'We want the nuclear dust.'",
+      feasibility: "LEAST feasible. Isfahan storage too deep for conventional destruction. Special operations teams + 82nd airfield seizure for extraction airbridge.",
+      risk: "Partial seizure — worst possible outcome. Disperses nuclear material rather than securing it.",
+      key_unknown: "Covert sites unknown to IAEA and possibly to US intelligence."
+    },
+    expert_consensus: "USNI Proceedings, War on the Rocks, IISS, Defense Priorities all conclude: tactically feasible, strategically counterproductive. Will not compel Iran to open Hormuz. Will not collapse regime.",
+    iraq_comparison: "NOT Iraq 2003. Targeted raids and seizures. But: no clear endgame. Iran's asymmetric capabilities intact enough to 'make things hurt' per Cato Institute.",
+    ceasefire_extension_impact: "Fri 1 May 06:07 UTC MORNING: White House halt of 60-day War Powers Act deadline INSTITUTIONALISES the open-ended posture — Trump can maintain blockade and ceasefire indefinitely without Hill confrontation. H-hour probability HOLDS ~25-30%; the pressure-valve removal lengthens the political horizon but does not raise the kinetic-base-case in 14 days. Path-up triggers UNCHANGED: (a) operational order, (b) Hezbollah retaliation, (c) any kinetic Iranian response, (d) any mine-laying incident, (e) international-coalition formation gives political cover, (f) further Isfahan fortification imagery, (g) Egypt-IMF emergency loan triggers reading of regional contagion. NEW path-down trigger: Senate AUMF counter-move forcing authorisation vote despite the deadline halt — initial Hill response watch Friday.",
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  egypt: {
+    egp_usd: 53.00,
+    egp_panic_threshold: 55,
+    status: "STRESS — managed regime UNDER TEST — Fri 1 May 06:07 UTC MORNING: USD/EGP holds near 53 after yesterday break 52.82 → 53.73 (+1.34%). First CBE defence test at the new managed level. 30-day USD/EGP range now 51.75-54.69 (Wise). Sisi NEAR STATE OF ECONOMIC EMERGENCY framing from yesterday holds; $3B emergency IMF loan request still in considering phase; $38.65B external debt + interest due Apr 2026 → end 2026 (World Bank). Urban inflation 15.2% Mar (vs 13.4% Feb) confirmed; April CBE CPI release due in coming days. Cover-up thesis intact — press-release reserves $52.83B remain visibly detached from operative cash position.",
+    imf_status: "EFF + RSF active — $5.2B disbursed of $8B. Fri 1 May MORNING: Cairo emergency-IMF-loan-up-to-$3B consideration unchanged; formal request not yet on the IMF Board agenda. EGP defence at 53 today + $38.65B debt repayment schedule through end-2026 are the trigger conditions. Goldman late-26 Brent forecast $90 now ~$22 below spot. Watch April CBE CPI print and any quiet IMF Article IV signal in early-May release window.",
+    gas_import_cost_monthly_bn: 2.5,
+    energy_rationing: true,
+    shop_closures_time: "21:00",
+    foreign_reserves_bn: 34,
+    reserves_danger_threshold_bn: 25,
+    reserves_pre_war_bn: 43.5,
+    reserves_series: {
+      labels: ["Jan'25","Feb'25","Mar'25","Apr'25","May'25","Jun'25","Jul'25","Aug'25","Sep'25","Oct'25","Nov'25","Dec'25","Jan'26","Feb'26","Mar'26","Apr'26"],
+      data:   [44.5, 44.3, 44.0, 43.8, 43.5, 43.3, 43.8, 44.1, 43.8, 43.5, 42.4, 41.2, 39.8, 38.1, 36.0, 34.0],
+      milestones: [
+        { index: 9,  label: "War onset",  sublabel: "Oct 2025",        color: "#ef4444" },
+        { index: 13, label: "Hormuz",     sublabel: "closed Feb '26",  color: "#f97316" },
+        { index: 14, label: "Suez −50%",  sublabel: "revenue halved",  color: "#f97316" }
+      ],
+      note: "Jan 2025: post-Ras El-Hekma + IMF EFF recovery. War onset Oct 2025 begins drawdown. Hormuz closure Feb 28 accelerates. Danger zone: $25B."
+    },
+    bond_spread_bps: 745,
+    suez_revenue_weekly_m: 95,
+    suez_pre_war_m: 190,
+    suez_ytd_2026_m: 449,
+    suez_ytd_2025_same_period_m: 368,
+    sisi_stability: "Low near-term removal risk but support base narrower than at any prior point. Military backing is conditional/transactional, not loyal.",
+    sisi_voter_support: "Effectively collapsed outside security-aligned rural/older segments (~25-35% genuine support).",
+    sisi_military_support: "Conditional and transactional. EAF backs Sisi to protect SCAF's economic empire.",
+    cairo_mood: "Grim and compressing. Streets dark and quiet after 9pm closures. Urban inflation 15.2% March 2026 (CAPMAS/CBE; accelerating from 13.4% Feb; highest since May 2025); April print due in coming days. Sisi NEAR STATE OF ECONOMIC EMERGENCY framing from yesterday holds in mainstream press; fatalism and dark humour deepening on Cairo street level.",
+    urban_inflation_pct: 15.2,
+    urban_inflation_feb_pct: 13.4,
+    urban_inflation_trend: "accelerating",
+    oil_production_bpd: 519000,
+    refining_capacity_actual_bpd: 650000,
+    energy_import_bill_jan_bn: 1.2,
+    energy_rationing_start: "2026-03-28",
+    energy_closures_time: "21:00 daily (22:00 Thu/Fri)",
+    energy_timeline: {
+      pre_war_import_bill_bn: 1.2,
+      current_import_bill_bn: 2.5,
+      import_bill_increase_pct: 108,
+      peak_stress_window: "June-August 2026",
+      blackout_risk: "Government publicly denying rolling blackouts but burning fuel oil to prevent them",
+      earliest_meaningful_improvement: "Late 2027"
+    },
+    mediator_role: "Egypt part of UN-recognised mediator group with Pakistan, Turkey, Saudi Arabia.",
+    gcc_bailout_history: [
+      "2013 post-coup: $12-23B (Kuwait, Saudi, UAE) — approved Muslim Brotherhood removal",
+      "2015: Additional $6B CBE deposits",
+      "2016 devaluation: $4B (Saudi $3B, UAE $1B) — with pressure to comply with IMF",
+      "2022 Ukraine shock: $22B pledged",
+      "2024 Ras El-Hekma: $35B UAE — asset acquisition, not grant",
+      "Total since 2011: ~$114B"
+    ],
+    gcc_bailout_outlook: "Next bailout: smaller, slower, more conditional, more commercially extractive than any previous round. GCC states themselves under financial stress for first time — own war costs $120B+, interceptors depleted.",
+    three_triggers_egp_break: [
+      "Oil above $100 sustained 90+ days (Brent ~$111.63 Fri 1 May July front-month, contract-rollover from $114.01 Thu June expiry; held above $100 since 13 Mar)",
+      "Gulf support drying up (UAE OPEC exit 1 May fragments coordination)",
+      "Tourism collapse (Lebanon arc compounding Wed 29 Apr — 3 rescue workers killed)"
+    ],
+    iran_destroyed_scenario: "Counterintuitively WORSE for Egypt before better: refugee cascade westward, Gulf consumed by own reconstruction 12-24 months, Turkey fills regional vacuum.",
+    key_sisi_indicators: [
+      "Gulf financial support becoming conditional or delayed — not yet",
+      "Military officers publicly distancing from government — not visible",
+      "Subsidised baladi loaf price increasing — NOT YET — this is the red line",
+      "Security service defection or internal split — not visible"
+    ],
+    developments: [
+      "1 May 2026 (Fri 06:07 UTC MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level. 30-day USD/EGP range 51.75-54.69 (Wise).",
+      "1 May 2026 (Fri MORNING): WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes Congressional pressure valve; institutionalises open-ended posture. Lengthens political horizon for any Egypt-contagion read.",
+      "1 May 2026 (Fri MORNING): Brent July front-month +1.11% to ~$111.63; June contract expired Thu $114.01 after intraday wartime high $126.41. Imported-fuel cost in EGP terms remains elevated.",
+      "1 May 2026 (Fri MORNING): UAE OPEC EXIT TAKES EFFECT TODAY — first material structural-coordination break inside Gulf bloc; bailout-coordination implication watch.",
+      "30 Apr 2026 (Thu 18:07 UTC EVENING): EGP BREAKS — USD/EGP moves 52.82 → 53.73 (+1.34%) intraday. First material move from CBE-managed level since intervention began. Pound now $1.27 from 55 panic threshold.",
+      "30 Apr 2026 (Thu EVENING): SISI publicly declares Egypt in 'NEAR STATE OF ECONOMIC EMERGENCY' (EgyptToday). Cairo reportedly considering an emergency $3B IMF loan. $38.65B external debt + interest due Apr 2026 → end 2026 (World Bank).",
+      "30 Apr 2026 (Thu EVENING): BRENT INTRADAY VOLATILITY — wartime high $126 on US-Iran action briefing reports, then ~3.2% pullback to $114.22.",
+      "30 Apr 2026 (Thu 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 (TradingEconomics intraday $120.30); USD/EGP held 52.82 — CBE intervention persisted; AAA US gas CORRECTED to $4.03.",
+      "30 Apr 2026 (Thu): EGYPT URBAN CPI 15.2% Mar 2026 (CAPMAS/CBE) confirmed — accelerating from 13.4% Feb; highest since May 2025; driven by Mar fuel hike + broad-based goods/services pass-through.",
+      "30 Apr 2026 (Thu): EGYPT OFFICIAL CBE FX RESERVES $52.8B end-Mar 2026 — press-release-grade; analyst-adjusted operative figure remains $34B per cover-up thesis.",
+      "30 Apr 2026 (Thu): SUEZ CANAL AUTHORITY lifted 15% transit-fee discount for large containerships effective 7 Apr — fee normalisation on declining traffic, NOT recovery.",
+      "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTED Iran's Pakistan-mediated proposal in Axios call — closes near-term path to Hormuz reopening / Suez normalisation.",
+      "29 Apr 2026 (Wed PM): BRENT EXTENDED TO $118.03 (~+6% CNBC) — eighth straight session, highest since June 2022. AAA US gas $4.23. Pump-feed pressure on fuel-subsidy bill at maximum.",
+      "29 Apr 2026 (Wed): USD/EGP 52.82 — flat on Tue 52.84 despite Brent surge. CBE intervention apparent.",
+      "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 rescue workers; Israel threatened to 'burn' all of Lebanon. European tourism corridor takes a fresh hit.",
+      "29 Apr 2026 (Wed): IAEA Grossi confirms ~200kg HEU likely still at Isfahan since June 2025 — adds to counterproliferation-raid case.",
+      "29 Apr 2026 (Wed): Fed held rates 3.50-3.75% (8-4 dissent). Powell stepping down as chair mid-May.",
+      "28 Apr 2026 (Tue): UAE QUITS OPEC effective 1 May — UAE-Saudi rivalry historically a constraint on coordinated Egypt bailouts.",
+      "28 Apr 2026 (Tue): IDF struck Lebanon's BEKAA VALLEY for first time since 16 Apr ceasefire.",
+      "27 Apr 2026 (Mon evening): SISI-PATRUSHEV MEETING in Cairo on Suez Canal Industrial Zone + El Dabaa nuclear plant — Egypt-Russia practical economic coordination.",
+      "27 Apr 2026 (Mon PM): Goldman Sachs raised Brent late-2026 forecast to $90/bbl from $80.",
+      "26 Apr 2026: Pentagon 6-month Hormuz mine-clearing timeline reframes Egypt energy outlook.",
+      "22 Apr 2026: SCA Q1 figures ahead of 2025 ($449M vs $368M YTD) but still below pre-war pace."
+    ],
+    honest_assessment: "Egypt has been functionally insolvent on its own fundamentals for most of the last decade. Fri 1 May 06:07 UTC MORNING: the day-after picture from yesterday EGP break (52.82 → 53.73). Pound holds near 53 — the first CBE defence test at the new managed level. The cover-up thesis from yesterday is intact: press-release reserves $52.83B remain visibly detached from operative cash position. Bond spread 745bps and analyst-adjusted reserves $34B remain decision-grade. Brent contract rollover (June $114.01 → July $111.63) does not change the structural energy-import picture for Egypt — the LNG bill rises with the persistent above-$100 backdrop, not the spot-day move. The White House halt of the 60-day War Powers deadline lengthens the regional-political horizon, which buys Egypt a measure of time but also signals the open-ended posture is now indefinite.",
+    investment_assessment: {
+      verdict: "DO NOT COMMIT — REVISIT H1 2027 AT EARLIEST",
+      verdict_color: "red",
+      summary: "Q4 2026 target was too optimistic. Civilian baseline: 15.2% inflation accelerating. Political baseline: Sisi voter support rock bottom. Military baseline: officer corps support conditional. Realistic entry window: H1 2027.",
+      bull_case: [
+        "FX arbitrage: EGP at ~53/USD (after yesterday break to 53.73, holding today) makes local-cost technical talent exceptionally cheap in USD terms.",
+        "Talent depth: Egypt produces ~60,000 STEM graduates/year.",
+        "Strategic location: UTC+2, Arabic/English bilingual, time-zone bridges EU and Gulf.",
+        "Distressed entry: Asset valuations at multi-year lows in USD terms.",
+        "International backstop: IMF EFF programme, Gulf bailout history, Suez strategic value.",
+        "Post-war reconstruction: Egypt best positioned as regional services hub."
+      ],
+      bear_case: [
+        "Reserves trajectory: $34B today, $25B danger threshold 6-9 months away without fresh Gulf support.",
+        "Energy rationing operational today. Direct productivity hit.",
+        "Currency fragility: EGP at ~53 holding after yesterday break to 53.73; panic threshold at 55.",
+        "SCAF structural risk: military runs 25-40% of formal economy.",
+        "Bond spread 745bps: capital markets pricing significant credit risk.",
+        "Brain drain pressure: best Egyptian engineers are mobile.",
+        "War proximity: Cairo not conflict zone but downstream effects degrade operating environment.",
+        "Subsidy reform overhang: IMF requires cuts SCAF blocks structurally."
+      ],
+      structural_concerns: [
+        "SCAF parallel economy: any asset acquisition risks military-linked entanglement.",
+        "Data sovereignty: Egyptian law requires certain data classes onshore.",
+        "Talent retention vs talent cost: FX arbitrage that makes Egypt cheap also creates retention risk."
+      ],
+      timing_verdict: "H1 2027 at the earliest, subject to: (1) ceasefire confirmed, (2) reserves >$32B, (3) EGP stable 60-90 days, (4) IMF tranche disbursed.",
+      recommendation: "No capital commitment until H1 2027 triggers confirmed. Permissible now: passive talent identification, market intelligence, legal SCAF-exposure mapping."
+    },
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  gcc_war_damage: {
+    total_arab_cost_bn: 120,
+    total_us_cost_bn: 47,
+    us_daily_burn_m: 500,
+    iran_strikes_uae: { ballistic_missiles: 438, drones: 2012, cruise_missiles: 19 },
+    iran_total_ballistic_across_gcc: 1200,
+    iran_total_drones_across_gcc: 4000,
+    gcc_interceptors_expended: 2400,
+    gcc_interceptors_pre_war: 2800,
+    gcc_interceptors_remaining_pct: { bahrain: 13, uae: 25, kuwait: 25, qatar: 60 },
+    cost_exchange_ratio: "82:1 in Iran's favour — Shahed $20-50k vs PAC-3 MSE $4.1M",
+    replenishment_timeline: "Lockheed Martin producing 650/year, target 2,000/year not achievable until 2030",
+    us_tomahawks_fired: 850,
+    us_tomahawk_inventory_pre_war: 4000,
+    us_tomahawk_annual_production: 100,
+    energy_infrastructure_struck: [
+      "QatarEnergy Ras Laffan + Mesaieed — LNG halted entirely, force majeure",
+      "Saudi Ras Tanura refinery — struck multiple times",
+      "Saudi Satorp, Ju'aymah, Manifa, Khurais, East-West pipeline",
+      "Kuwait Mina Al-Ahmadi refinery — multiple hits",
+      "Kuwait KPC HQ, KNPC — significant damage",
+      "Kuwait power + desalination plants",
+      "Kuwait International Airport — closed",
+      "Bahrain Bapco Energies — force majeure",
+      "Bahrain Gulf Petrochemical Industries — fire",
+      "UAE Habshan natural gas facility — suspended",
+      "UAE Ruwais refinery — multiple fires",
+      "UAE Fujairah port — periodically closed",
+      "UAE Jebel Ali port — fire",
+      "UAE AWS data centres — struck, Amazon suspended Gulf deliveries",
+      "Oman Sohar / Mina Al Fahal — resumed after closure"
+    ],
+    oil_production_drop_mbpd: 10,
+    aviation_losses_bn: 40,
+    daily_flights_cancelled_peak: 40000,
+    strategic_verdict: "GCC air defence posture permanently degraded regardless of ceasefire outcome. NPT fundamentally undermined.",
+    incidents: [
+      "1 May 2026 (Fri 06:07 UTC MORNING): WHITE HOUSE ANNOUNCES IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — institutionalises open-ended posture; removes Congressional pressure valve; weakens Senate AUMF push.",
+      "1 May 2026 (Fri MORNING): UAE OPEC EXIT TAKES EFFECT TODAY (1 May) — first material structural-coordination break inside Gulf bloc since war began. Saudi 25% idle capacity backstops; UAE quota deviation watch begins.",
+      "1 May 2026 (Fri MORNING): Brent contract rollover — June expired Thu $114.01 (after intraday wartime high $126.41); July front-month +1.11% to ~$111.63 on White House deadline-halt headline (CNBC).",
+      "1 May 2026 (Fri MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level.",
+      "1 May 2026 (Fri MORNING): Hormuz traffic returns to ~5-10 ships/day per CNN/Bloomberg — yesterday 20-transit print was localised lift, not trend.",
+      "30 Apr 2026 (Thu 18:07 UTC EVENING): EGP BREAKS — USD/EGP moves 52.82 → 53.73 (+1.34%); first material move from CBE-managed level since intervention began.",
+      "30 Apr 2026 (Thu EVENING): BRENT INTRADAY $114-$126 — wartime high $126 on reports US military will brief Trump on potential Iran action, then ~3.2% pullback.",
+      "30 Apr 2026 (Thu EVENING): SISI publicly declares Egypt in 'NEAR STATE OF ECONOMIC EMERGENCY' (EgyptToday); Cairo considering $3B emergency IMF loan.",
+      "30 Apr 2026 (Thu EVENING): KHAMENEI — Iran will 'guard' nuclear and missile technologies; US wants enrichment suspended ≥10 years and HEU removed.",
+      "30 Apr 2026 (Thu EVENING): HORMUZ Apr 29 print 20 transits (6 in / 14 out; Northern 13 / Southern 7); Gulf-wide presence 902 vessels.",
+      "30 Apr 2026 (Thu 06:07 UTC morning): BRENT EXTENDED OVERNIGHT to ~$119.85 (TradingEconomics intraday $120.30); USD/EGP held 52.82 — CBE intervention persisted; no overnight kinetic.",
+      "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone interview — 'they are choking like a stuffed pig'.",
+      "29 Apr 2026 (Wed): Rubio softened verbally — 'better than what we thought' — but anchored on nuclear precondition.",
+      "29 Apr 2026 (Wed PM): BRENT $118.03 (~+6% CNBC) — eighth straight up-session, highest since June 2022.",
+      "29 Apr 2026 (Wed): USD/EGP 52.82 — flat despite Brent +4.74% surge; CBE intervention apparent.",
+      "29 Apr 2026 (Wed): Fed held rates 3.50-3.75% with 8-4 dissent (most since Oct 1992).",
+      "29 Apr 2026 (Wed): IAEA Grossi to AP — Iran's ~200kg HEU likely still at Isfahan since June 2025.",
+      "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon.",
+      "29 Apr 2026 (Wed): Hormuz Strait Monitor — 13 transits on Apr 28 (4 in / 9 out, Northern Corridor); recent average 7 vessels.",
+      "29 Apr 2026 (Wed): Pakistan mediators expect REVISED Iranian counter-proposal in coming days.",
+      "29 Apr 2026 (Wed): Pentagon told ABC7 — total US war cost $25 billion.",
+      "28 Apr 2026 (Tue): UAE QUITS OPEC AND OPEC+ effective 1 May 2026 — ending ~60 yrs membership.",
+      "28 Apr 2026 (Tue): TRUMP CLAIMS IRAN 'IN A STATE OF COLLAPSE'.",
+      "28 Apr 2026 (Tue): ISRAEL ORDERED FORCED DISPLACEMENT OF 16 SOUTH LEBANON TOWNS.",
+      "28 Apr 2026 (Tue PM): RUBIO HARDENED PUBLICLY — Bloomberg: 'US Rejects Iran's Control Over Strait of Hormuz Access'.",
+      "28 Apr 2026 (Tue PM): IDF STRUCK LEBANON'S BEKAA VALLEY — first time since the 16 Apr ceasefire.",
+      "28 Apr 2026 (Tue PM): Hezbollah leader Qassem rejected direct Israel-Lebanon talks.",
+      "27 Apr 2026 (Mon evening): SISI-PATRUSHEV meeting in Cairo on Suez/El Dabaa.",
+      "27 Apr 2026 (Mon PM): IRAN'S FORMAL WRITTEN PROPOSAL published.",
+      "27 Apr 2026 (Mon PM): PUTIN-ARAGHCHI MEETING CONCLUDED in St. Petersburg.",
+      "27 Apr 2026 (Mon PM): USS GEORGE H.W. BUSH CSG ARRIVED in CENTCOM — third US carrier.",
+      "27 Apr 2026 (Mon PM): Israeli strikes killed 14 in southern Lebanon Mon.",
+      "27 Apr 2026 (Mon PM): US blockade redirect tally 37 ships.",
+      "26 Apr 2026 (Sun): Pentagon told Congress — clearing Hormuz mines could take SIX MONTHS.",
+      "25 Apr 2026: Witkoff/Kushner Islamabad trip cancelled.",
+      "23 Apr 2026: Trump orders Navy to 'shoot and kill' mine-laying boats — formal ROE escalation.",
+      "21 Apr 2026: Hormuz transit collapsed to 3-ship 24h low.",
+      "19 Apr 2026: USS Spruance fires on engine room, seizes MV Touska."
+    ],
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  hormuz: {
+    status: "Effectively closed — Fri 1 May 06:07 UTC MORNING: 37 ships redirected by US blockade. Traffic back to ~5-10 ships/day per CNN/Bloomberg visual coverage; yesterday 20-transit Apr 29 print was a localised lift, not a trend reversal. ~5% of pre-war flow. Trump administration assembling international coalition to reopen Hormuz; White House 60-day-deadline halt today institutionalises open-ended posture. ~20,000 seafarers still stranded. Pentagon 6-month mine-clearing timeline holds. Three US CSGs on station.",
+    ships_monday: 16,
+    ships_24h: 6,
+    ships_recent_avg: 11,
+    vessels_turned_back_by_blockade: 37,
+    us_blockade_active: true,
+    iran_response: "Vowing retaliation for MV Touska. Joint military command: 'will soon respond and retaliate against this armed piracy'. Fri 1 May MORNING: Khamenei nuclear/missile guard reaffirmation from yesterday holds; Iran's standing offer to reopen Hormuz conditional on US lifting blockade and ending war remains rejected by Trump (no nuclear element). White House 60-day-deadline halt today removes one moderating constraint on the open-ended US posture; Iran response calibration watch.",
+    mv_touska: "Iranian cargo ship seized 19 Apr by USS Spruance. Iran demanding immediate release. Still held. Fri 1 May MORNING: blockade remains anchored by Trump as the operative leverage tool; Trump administration assembling international coalition to reopen Hormuz on US terms; White House 60-day-deadline halt today extends the political horizon for the leverage to operate.",
+    iran_gunboats: "Fired on two Indian-flagged merchant vessels weekend ~17-18 Apr; IRGC seized MSC Francesca and Epaminondas 22 Apr.",
+    mine_threat: "Mines identified by Hegseth as KEY remaining obstacle. Pentagon told Congress it could take SIX MONTHS to clear. Trump (23 Apr) and Hegseth (24 Apr): Navy authorised to 'shoot to destroy' Iranian boats laying mines — no kinetic encounter under this ROE yet.",
+    pre_war_daily_barrels_m: 20,
+    current_daily_barrels_m: 1,
+    insurance_premium_pct: 5.0,
+    analyst_quote: "We had the most violent day in the strait on Saturday that we've had since the beginning of this crisis — Rory Johnston, Commodity Context (mid-April)",
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  watchlist: {
+    items: [
+      { id: 1, label: "Iran's FORMAL proposal — TRUMP REJECTED Wed 29 Apr", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — REJECTED (Axios)", notes: "Wed 29 Apr PM: TRUMP FORMALLY REJECTED Iran's Mon Pakistan-mediated proposal in Axios phone interview — 'they're choking like a stuffed pig'. Rubio softened verbally — 'better than what we thought' — but anchored on nuclear precondition. Pakistan mediators expect a revised Iranian counter-proposal in coming days." },
+      { id: 2, label: "MV Touska — Iranian retaliation", deadline: "Hours-days", status: "CRITICAL", notes: "Iran joint military command 'will soon respond and retaliate'. Ship still held. New 'shoot to destroy' ROE on mine-laying boats means any kinetic Iranian response now risks immediate kinetic US response." },
+      { id: 4, label: "Ground operations — Kharg/Qeshm/uranium", deadline: "Open-ended", status: "POSTURED — UPGRADED", notes: "82nd Airborne HQ forward deployed. USS Bush CSG ARRIVED in CENTCOM (third US carrier). Wed 29 Apr probability next 14 days: ~25-30% (UP from 22-26% Tue) — Trump's formal Axios rejection CONFIRMED, Brent $116+, Lebanon arc compounding (3 rescue workers killed Wed). IAEA Grossi confirmed ~200kg HEU likely still at Isfahan since June 2025." },
+      { id: 5, label: "Nuclear counterproliferation raid — Isfahan fortification", deadline: "If ground ops commence", status: "HIGH", notes: "Trump explicit: 'We want the nuclear dust.' 200kg confirmed at Isfahan — too deep to destroy. Wed 29 Apr Grossi to AP confirms HEU likely there since June 2025." },
+      { id: 6, label: "Lebanon — escalation compounding (rescue workers killed Wed)", deadline: "~14 May", status: "ESCALATING — Compounding", notes: "Wed 29 Apr: Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS (Euronews); Israel threatened to 'burn' all of Lebanon. Fourth-rung escalation after Tue Bekaa Valley + Tue 16-town displacement order. Trump-extended truce to ~14 May effectively unraveling." },
+      { id: 7, label: "EGP — BREAK 52.82 → 53.73 today, cliff escalating", deadline: "Days-weeks", status: "CRITICAL — UPGRADED", notes: "EGP rose 52.82 → 53.73 (+1.34%) Thu 30 Apr intraday — first material move from CBE-managed level since intervention regime began. Pound now $1.27 from 55 panic threshold. Either CBE has burned morning ammunition or stepped back tactically; either way, the press-release-grade reserves figure ($52.83B end-March) is detached from operative cash. Bond spread 745bps." },
+      { id: 8, label: "Beijing summit", deadline: "May 14-15", status: "Increasingly relevant", notes: "With Pakistan-mediated track in trouble, Beijing summit becomes more important as fallback architecture." },
+      { id: 10, label: "Mine-laying incident under new ROE", deadline: "Real-time", status: "HIGH", notes: "Trump (23 Apr) and Hegseth (24 Apr) authorised Navy to 'shoot to destroy'. First kinetic encounter under this ROE could rapidly collapse the open-ended ceasefire." },
+      { id: 12, label: "Second-wave inflation — goods channel not yet priced", deadline: "H2 2026", status: "MEDIUM-TERM WATCH", notes: "Wave 1 (oil price spike) priced at $116. Wave 2 (imported inflation through goods channel) has not arrived yet. Estimated lag: 6-10 weeks." },
+      { id: 13, label: "Egypt — invest / relocate technical resources?", deadline: "H1 2027 review", status: "ANALYTICAL WATCH", notes: "Q4 2026 target was too optimistic. DO NOT COMMIT, watch-only until H1 2027. Four trigger conditions: ceasefire, reserves >$32B, EGP stable 60 days, IMF tranche disbursed." },
+      { id: 14, label: "Pentagon 6-month Hormuz mine-clearing timeline", deadline: "Structural", status: "STRATEGIC", notes: "Pentagon told Congress fully clearing Iran's Hormuz mines could take SIX MONTHS. Even a diplomatic deal will not produce immediate Hormuz/Suez normalisation." },
+      { id: 19, label: "Iran's REVISED counter-proposal — Khamenei reaffirms nuclear stance Thu", deadline: "Days", status: "STALLED — diplomatic off-ramp narrowing", notes: "Thu 30 Apr: Khamenei publicly reaffirms Iran will 'guard' nuclear and missile technologies despite external pressure — narrows the space for any revised proposal that would meet US precondition (enrichment suspended ≥10 years, HEU removed). Iran's standing offer to reopen Hormuz conditional on US lifting blockade remains rejected by Trump. Pakistan-mediator channel risk live." },
+      { id: 20, label: "IAEA Grossi confirms HEU at Isfahan since June 2025", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — Confirmed", notes: "Wed 29 Apr (AP): IAEA Director General Grossi told the AP that ~200kg of Iran's 60% HEU 'likely remains' at Isfahan since June 2025 12-day war. Stockpile potentially enables 'as many as 10 nuclear bombs' if weaponised." },
+      { id: 21, label: "Fed rate decision — Powell's last as chair (29 Apr)", deadline: "Resolved Wed 29 Apr", status: "RESOLVED — Held with rare 8-4 dissent", notes: "Wed 29 Apr: Fed held target range 3.50-3.75% on 8-4 dissent — most since October 1992. Powell will step aside as chair mid-May but stay on Fed Board of Governors." },
+      { id: 22, label: "UAE OPEC exit effective 1 May — settlement watch", deadline: "1 May 2026", status: "STRUCTURAL — imminent", notes: "Wed 29 Apr: UAE exit from OPEC and OPEC+ takes effect 1 May 2026 (TOMORROW). Saudi has 25% idle capacity to offset (CNBC). Watch: Saudi production response, UAE quota deviation post-1 May." },
+      { id: 23, label: "Egypt — emergency $3B IMF loan request formalisation", deadline: "Weeks", status: "CRITICAL — INCOMING", notes: "Thu 30 Apr EVENING: Cairo reportedly considering an emergency IMF loan up to $3B on top of the existing EFF + RSF programme — first reporting of an emergency-tranche request since the war began. World Bank shows $38.65B in external debt + interest due Apr 2026 → end 2026. Trigger condition coupled with EGP break to 53.73." },
+      { id: 24, label: "US military briefing to Trump on potential Iran action", deadline: "Days", status: "CRITICAL — H-hour signal — POST-DEADLINE-HALT", notes: "Thu 30 Apr: reports US military will brief Trump on potential action against Iran drove Brent intraday to wartime high $126.41 (then back to $114.22). Fri 1 May: White House halt of 60-day War Powers Act deadline removes the moderating Congressional constraint on any operational order that may follow the briefing. The briefing-to-decision interval IS the H-hour window." },
+      { id: 25, label: "White House halt of 60-day War Powers Act deadline (CNBC 1 May)", deadline: "Resolved Fri 1 May", status: "RESOLVED — INSTITUTIONALISES OPEN-ENDED POSTURE", notes: "Fri 1 May 06:07 UTC MORNING: White House announced Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC). Removes the Congressional pressure valve doves had been pricing as the near-term off-ramp; lets Trump maintain blockade and ceasefire indefinitely without Hill confrontation. Watch: Senate AUMF counter-move signals." },
+      { id: 26, label: "UAE post-OPEC production policy first day signals (1 May)", deadline: "Days", status: "STRUCTURAL — Day 1", notes: "UAE exit from OPEC and OPEC+ takes effect TODAY. Saudi 25% idle capacity backstops; UAE quota deviation watch begins. Watch: UAE production reporting and Saudi response within first week." },
+      { id: 27, label: "April CBE Egypt CPI release", deadline: "Early May", status: "PENDING", notes: "March urban CPI 15.2% (vs 13.4% Feb). April print due in coming days; consensus pencilling further uptick on March fuel-hike pull-through and EGP weakness. Decision-grade for the Egypt-specific stress narrative." }
+    ],
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  war: {
+    operation_name: "Operation Epic Fury",
+    day_number: 63,
+    start_date: "28 Feb 2026",
+    current_phase: "Open-ended ceasefire formally in place and now INSTITUTIONALISED — Fri 1 May 06:07 UTC MORNING. WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes Congressional pressure valve; lets Trump maintain blockade indefinitely without Hill confrontation. Brent: June contract expired Thu $114.01 after intraday wartime high $126.41; July front-month +1.11% to ~$111.63. EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level. UAE OPEC exit takes effect TODAY (1 May) — first material structural-coordination break inside Gulf bloc since war began. Hormuz back to ~6 ships/day after yesterday localised 20-transit print. Khamenei nuclear/missile guard reaffirmation holds. IAEA stockpile picture unchanged (440.9kg HEU at Isfahan since June 2025; access suspended since 28 Feb). H-hour probability HOLDS ~25-30% next 14 days.",
+    key_events: [
+      "28 Feb 2026: Operation Epic Fury begins — US joins Israeli campaign against Iran",
+      "13 Apr 2026: US naval blockade of Iran's ports begins; Kharg Island 90+ targets pre-struck",
+      "19 Apr 2026: USS Spruance seizes MV Touska",
+      "21 Apr 2026: Trump EXTENDS ceasefire indefinitely at Pakistan request",
+      "23 Apr 2026: Trump orders Navy to 'shoot and kill' boats laying mines — formal ROE escalation; Lebanon ceasefire extended to ~14 May",
+      "25 Apr 2026: Trump CANCELS Witkoff/Kushner trip; Araghchi flies to Oman, then Moscow",
+      "26 Apr 2026: Pentagon told Congress — 6-month timeline to clear Iran's Hormuz mines",
+      "27 Apr 2026 (Mon PM): IRAN'S FORMAL WRITTEN PROPOSAL published — reopen Hormuz, end war, postpone nuclear",
+      "27 Apr 2026 (Mon PM): PUTIN-ARAGHCHI MEETING CONCLUDED — Russia pledged support",
+      "27 Apr 2026 (Mon PM): Goldman raises Brent late-2026 forecast to $90/bbl from $80",
+      "27 Apr 2026 (Mon PM): USS GEORGE H.W. BUSH CSG ARRIVED in CENTCOM — third US carrier",
+      "27 Apr 2026 (Mon evening): SISI-PATRUSHEV meeting in Cairo on Suez/El Dabaa",
+      "28 Apr 2026 (Tue): TRUMP REJECTION FORMING; RUBIO HARDENED on TV; IDF struck Lebanon's BEKAA VALLEY (first since 16 Apr ceasefire); UAE ANNOUNCES EXIT FROM OPEC effective 1 May 2026",
+      "29 Apr 2026 (Wed PM): TRUMP FORMALLY REJECTS Iran's Pakistan-mediated proposal in Axios phone interview — 'they're choking like a stuffed pig'",
+      "29 Apr 2026 (Wed): Rubio softens verbally — 'better than what we thought' — but anchors on nuclear precondition",
+      "29 Apr 2026 (Wed PM): BRENT EXTENDED TO $118.03 (~+6% CNBC) — eighth straight session, highest since June 2022",
+      "29 Apr 2026 (Wed): USD/EGP 52.82 — flat on Tue 52.84 despite Brent surge; CBE intervention apparent",
+      "29 Apr 2026 (Wed): Fed held rates 3.50-3.75% with 8-4 dissent (most since Oct 1992); Powell stepping down as chair mid-May",
+      "29 Apr 2026 (Wed): IAEA Grossi told AP — Iran's ~200kg of 60% HEU 'likely remains' at Isfahan since June 2025",
+      "29 Apr 2026 (Wed): Israeli strikes killed 8 in southern Lebanon including 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon",
+      "29 Apr 2026 (Wed): H-hour probability UPGRADED ~25-30% in next 14 days from Tue's ~22-26%",
+      "30 Apr 2026 (Thu 06:07 UTC morning): Brent extended overnight to ~$119.85 (ninth straight up-session); USD/EGP held 52.82; AAA US gas CORRECTED to $4.03; Egypt urban CPI confirmed 15.2% Mar; SCA lifted 15% large-containership transit-fee discount effective 7 Apr; H-hour probability HOLDS 25-30%",
+      "30 Apr 2026 (Thu 18:07 UTC EVENING): EGP BREAK — USD/EGP rose 52.82 → 53.73 (+1.34%) intraday; first material move from CBE-managed level since intervention began",
+      "30 Apr 2026 (Thu EVENING): Brent intraday wartime high $126 on US-Iran action briefing reports, then ~3.2% pullback to $114.22",
+      "30 Apr 2026 (Thu EVENING): Sisi publicly declares Egypt in NEAR STATE OF ECONOMIC EMERGENCY; Cairo considering $3B emergency IMF loan",
+      "30 Apr 2026 (Thu EVENING): Khamenei reaffirms Iran will 'guard' nuclear and missile technologies; Trump administration moving to assemble international coalition to reopen Hormuz",
+      "30 Apr 2026 (Thu EVENING): Hormuz Apr 29 print 20 transits (6 in / 14 out; Northern 13, Southern 7) — modest lift on the trickle",
+      "1 May 2026 (Fri 06:07 UTC MORNING): WHITE HOUSE SAYS IRAN CEASEFIRE HALTS 60-DAY WAR POWERS ACT DEADLINE (CNBC) — removes Congressional pressure valve; institutionalises open-ended posture",
+      "1 May 2026 (Fri MORNING): Brent contract rollover — June expired Thu $114.01; July front-month +1.11% to ~$111.63",
+      "1 May 2026 (Fri MORNING): UAE OPEC EXIT TAKES EFFECT — first material structural-coordination break inside Gulf bloc",
+      "1 May 2026 (Fri MORNING): EGP holds near 53 after yesterday break to 53.73 — first CBE defence test at new managed level",
+      "1 May 2026 (Fri MORNING): Hormuz back to ~6 ships/day after yesterday localised 20-transit print"
+    ],
+    us_targets_struck: "9,000+",
+    us_combat_flights: "9,000+",
+    iran_vessels_destroyed: "120+",
+    us_service_members_killed: 15,
+    total_conflict_deaths: "4,000+",
+    iran_ballistic_missiles_down_pct: 90,
+    iran_drone_attacks_down_pct: 95,
+    mojtaba_status: "Active Supreme Leader. Directing ceasefire strategy. Not backing down.",
+    trump_stated_objectives: [
+      "Prevent Iranian nuclear weapon",
+      "Destroy missile capabilities",
+      "Forestall Iranian retaliation post-Israeli attack",
+      "Seize Iran's oil resources",
+      "Regime change — bring Iranian opposition to power",
+      "'We want the nuclear dust'"
+    ],
+    trump_domestic: "War started with 21% public support. Now two-thirds oppose. Gas at $4.03 nationally (AAA national, stable). No Congressional authorisation. Fri 1 May: White House halt of 60-day War Powers Act deadline (CNBC) removes the imminent Congressional forcing function — but also intensifies the no-authorisation question for any operational order that may follow. Pentagon told ABC7 total US war cost $25B.",
+    senate_signals: "Fri 1 May MORNING: White House announcement that Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) is the day most decision-grade Senate datum. It removes the imminent forcing function for an AUMF debate — the dove-led pressure that was scheduled to bind in days now slips into the indefinite. Watch: dovish Republican counter-move (Murkowski/Collins/Paul/Lee) and any Schumer floor signal. Brent ~$111.63 keeps cost-of-living live but eases pump-feed urgency.",
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  scenarios: {
+    tonight: [
+      { name: "Stalemate continues; deadline-halt institutionalises open-ended posture", prob: 38, oil: "$105-120", egypt: "STRESS — EGP holds 53-54 area", notes: "Fri 1 May MORNING revised base case: White House 60-day-deadline halt removes Congressional pressure valve; Trump can maintain blockade indefinitely without Hill confrontation. Khamenei nuclear/missile guard reaffirmation holds. Probability UP from 35% as deadline-halt removes one near-term off-ramp pathway and lengthens the political horizon." },
+      { name: "Iran routes via Russia/Beijing or counter-offer with partial nuclear element", prob: 13, oil: "$95-110", egypt: "Mixed — EGP firms slightly", notes: "Putin-Araghchi channel + Beijing summit (May 14-15) keep alternative architecture alive. Deadline-halt makes Iran less likely to come back with concessions in near term as US pressure-clock paused. Probability DOWN from 14%." },
+      { name: "Iran retaliates kinetically (mine-laying / MV Touska / GCC strike)", prob: 25, oil: "$120-140", egypt: "Crisis", notes: "Khamenei reaffirmation + diplomatic stalemate + extended blockade duration raise IRGC unilateral risk. Deadline-halt does not change kinetic-base-case. Probability DOWN from 26%." },
+      { name: "US launches ground operations", prob: 17, oil: "$120-150", egypt: "Crisis", notes: "Reports US military briefing Trump on potential Iran action remain the H-hour signal. Deadline-halt removes the moderating Congressional constraint on any operational order. Probability DOWN slightly from 18% — deadline-halt lengthens political horizon, slightly lowers base-case in 14-day window." },
+      { name: "Counterproliferation nuclear raid", prob: 7, oil: "$135-170+", egypt: "Catastrophic", notes: "IAEA stockpile picture (440.9kg HEU at Isfahan since June 2025; access suspended since 28 Feb) holds the target case. Deadline-halt does not change the political incentive structure for direct counterproliferation." }
+    ],
+    thirty_day: "Watch: Whether White House 60-day-deadline halt triggers a Senate AUMF counter-move. EGP defence at 53 holding vs second leg toward 54-55. Egypt $3B emergency IMF loan request formalisation. April CBE CPI release (early May). UAE post-OPEC production policy first-week signals. Hormuz daily transits sustaining above 10. First mine-laying incident under shoot-to-destroy ROE. Lebanon truce ~14 May expiry. Powell departure as Fed chair mid-May. Beijing summit May 14-15.",
+    sixty_day: "Brent spot vs futures gap. CBE reserve figures vs analyst-adjusted operative figure (cover-up thesis test). Whether Iran's nuclear-guard stance shifts under sanctions/blockade duration pressure. UAE post-OPEC production policy. Beijing summit outcome (May 14-15). Second-wave inflation watch. Egypt subsidy reform pressure under emergency IMF context.",
+    egypt_specific: "Yesterday EGP break (52.82 → 53.73) and Sisi NEAR STATE OF ECONOMIC EMERGENCY language pull the timeline forward; today pull-back to ~53 is the first CBE defence test. If Khamenei stance and Trump rejection both hold (and the White House deadline-halt institutionalises open-ended posture): Egypt crisis case advances from Q3 → Q2-Q3 2026. Cairo $3B emergency IMF loan + GCC bridge would buy 2-4 quarters; without it, the EGP slide continues toward the 55 panic threshold.",
+    egypt_investment: "HOLD on near-term commitment. Base case: EGP defending 53-54 in near term then sliding through 54-55, reserves reach $28-30B by Q2-Q3 2026, $3B emergency IMF loan + GCC bridge buys time — earliest credible entry window H1 2027. Bear case: EGP breaches 55, Brent sustains $120+, reserves breach $25B → abort. Bull case: Iran-Russia-China-mediated nuclear framework + Hormuz partial reopening — probability ~13% Fri 1 May MORNING (revised down from 14% as deadline-halt makes Iran less likely to come back with concessions near term).",
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  predictions: {
+    track_record: { correct: 15, incorrect: 8, pending: 6 },
+    pending: [
+      { id: 9,  text: "Sisi stability 12-18 months", status: "PENDING — STRESS UPGRADED", deadline: "Ongoing", notes: "Fri 1 May MORNING: NEAR STATE OF ECONOMIC EMERGENCY framing from yesterday holds; EGP holding ~53 after yesterday break; $3B emergency IMF loan request still in considering phase. Direct removal probability remains low but support-base narrowing measurable.", updated: "2026-05-01" },
+      { id: 12, text: "Beijing trade truce not ceasefire", status: "PENDING — DECISIVE NOW", deadline: "May 14-15", notes: "Fri 1 May MORNING: Beijing summit elevates further as White House 60-day-deadline halt institutionalises open-ended posture and reduces near-term US pressure for Pakistan-mediated breakthrough. Beijing as fallback architecture more important.", updated: "2026-05-01" },
+      { id: 13, text: "Second Egypt fuel price adjustment", status: "PENDING — pressure escalating", deadline: "Early-mid May", notes: "Fri 1 May MORNING: Brent ~$111.63 (post-rollover); EGP holding ~53 after break to 53.73. Imported-fuel cost in EGP terms remains elevated. $3B emergency IMF loan request would carry fuel-subsidy reform precondition. Probability of adjustment by mid-May still elevated.", updated: "2026-05-01" },
+      { id: 25, text: "Ground operations commence — Kharg or Qeshm seizure", status: "PENDING — HOLDS", deadline: "Next 14 days", notes: "Fri 1 May MORNING probability: HOLDS ~25-30% in next 14 days. White House 60-day-deadline halt removes Congressional pressure valve; lengthens political horizon for kinetic decision but does not raise base-case kinetic odds in 14-day window. Khamenei reaffirmation closes off-ramp.", updated: "2026-05-01" },
+      { id: 28, text: "Egypt foreign reserves breach $30B without fresh Gulf support", status: "PENDING — probability ESCALATING", deadline: "Q2-Q3 2026", notes: "Operative reserves $34B. Yesterday EGP break + $3B emergency IMF loan consideration signals authorities now preparing for a deeper draw. Probability: ~70% within 6 months absent Gulf bridge. Timeline pulled forward Q3 → Q2-Q3. Today EGP defence at 53 buys near-term time but does not change underlying trajectory.", updated: "2026-05-01" },
+      { id: 27, text: "First kinetic incident under new 'shoot to destroy' ROE", status: "PENDING — probability ticking up", deadline: "Days-weeks", notes: "Probability within 14 days: ~30-34%. Khamenei reaffirmation + extended blockade duration + White House deadline-halt (which lengthens blockade-duration horizon) raise IRGC unilateral risk further.", updated: "2026-05-01" },
+      { id: 32, text: "Iran's REVISED counter-proposal lands via Pakistan", status: "PENDING — narrowed further", deadline: "Days", notes: "Fri 1 May MORNING: White House 60-day-deadline halt reduces Iranian incentive to accelerate any revised proposal as US pressure clock paused. Probability of revised proposal landing within 7 days: ~35% (DOWN from 45%). Probability of US acceptance still ~zero without nuclear element.", updated: "2026-05-01" },
+      { id: 33, text: "EGP breaches 55 panic threshold", status: "PENDING — DEFENCE TEST IN PROGRESS", deadline: "Weeks", notes: "Fri 1 May MORNING: EGP holding ~53 after yesterday break to 53.73. First CBE defence test at the new managed level. Probability within 60 days: ~40-45% if Brent stays above $110 and no Gulf bridge announced; today defence (if sustained) could bring it down toward 35%.", updated: "2026-05-01" }
+    ],
+    resolved_correct_recent: [
+      { id: 30, text: "Trump publicly rejects Iran's formal proposal", notes: "Resolved Wed 29 Apr PM: Trump rejected via Axios phone interview — 'they're choking like a stuffed pig'. Public-rejection pathway was forecast as base case." },
+      { id: 26, text: "Iran produces 'unified proposal'", notes: "Resolved Mon 27 Apr PM: Iran's formal written proposal published via Axios/CNBC/WashPost/PBS." },
+      { id: 31, text: "Lebanon ceasefire fragile beyond southern buffer zone", notes: "Resolved Tue 28 Apr PM: IDF struck Lebanon's BEKAA VALLEY for the FIRST TIME since the 16 Apr ceasefire took effect." }
+    ],
+    resolved_incorrect: [
+      { id: 20, text: "Iranian cyberattack Gulf banking/OT", notes: "No confirmed breach. Deadline passed." },
+      { id: 21, text: "Capital flight exceeds $500B", notes: "~$271B pre-war baseline + undetermined war-period." },
+      { id: 22, text: "Brent $130+ sustained", notes: "Brent $118.03 Wed 29 Apr PM but sustained-above-$130 was the bar." },
+      { id: 23, text: "DIFC/QFC suspends operations", notes: "Both operational throughout." },
+      { id: 24, text: "Beijing written ceasefire framework", notes: "Pakistan/Egypt/Turkey delivered framework, not Beijing." }
+    ],
+    updated: "2026-05-01T06:07:57.000Z"
+  },
+
+  travel: {
+    advisory_date: "2026-05-01 (06:07 UTC MORNING update)",
+    advisories: {
+      "Iran":         { level: "Do Not Travel", notes: "Active conflict. State Dept 'Leave Now' / Level 4 reaffirmed. Fri 1 May MORNING: White House halt of 60-day War Powers Act deadline institutionalises open-ended US posture; Khamenei nuclear/missile guard reaffirmation holds; H-hour HOLDS ~25-30%." },
+      "Kuwait":       { level: "Do Not Travel", notes: "Airport closed. Infrastructure damaged. Interceptors 75% depleted." },
+      "Israel":       { level: "Do Not Travel", notes: "Active conflict. Wed 29 Apr: Israeli strikes killed 8 in southern Lebanon incl 3 RESCUE WORKERS; Israel threatened to 'burn' all of Lebanon." },
+      "Lebanon":      { level: "Do Not Travel", notes: "Ceasefire formally extended to ~14 May but UNRAVELING — Wed 29 Apr Israeli strikes killed 8 incl 3 RESCUE WORKERS. Tue 28 Apr IDF struck Bekaa Valley for first time since 16 Apr truce. 2,500+ killed since Mar 2." },
+      "Iraq":         { level: "Do Not Travel", notes: "Iran-backed militias active." },
+      "Bahrain":      { level: "Do Not Travel", notes: "5th Fleet HQ — primary retaliation target. 87% interceptors expended." },
+      "Qatar":        { level: "Reconsider Travel", notes: "LNG revenue halted. Wed 29 Apr PM: Trump rejection + Brent $118.03 + Lebanon escalation keep kinetic risk elevated." },
+      "Saudi Arabia": { level: "Reconsider Travel", notes: "Refineries struck. UAE OPEC exit (1 May) intra-Gulf coordination signal." },
+      "UAE":          { level: "Reconsider Travel", notes: "Dubai/Abu Dhabi operating with disruption. UAE exit from OPEC/OPEC+ effective 1 May 2026." },
+      "Russia":       { level: "Exercise Caution", notes: "Mon 27 Apr Putin-Araghchi concluded with Russia pledging support for Iran." },
+      "Oman":         { level: "High Caution", notes: "Muscat functional. Omani back-channel role folded into Pakistan-mediated proposal Trump rejected Wed." },
+      "Egypt":        { level: "High Caution", notes: "Cairo/Alexandria operating. EGP holds ~53 Fri 1 May MORNING after yesterday break to 53.73 — first CBE defence test at new managed level. Sisi NEAR STATE OF ECONOMIC EMERGENCY framing holds; $3B emergency IMF loan still in considering phase. Urban CPI 15.2% Mar; April print due in coming days. Fuel-subsidy and tourism-corridor pressures structural; political-stress signal stays elevated." },
+      "Jordan":       { level: "High Caution", notes: "Stable but exposed to spillover." },
+      "Turkey":       { level: "Exercise Caution", notes: "Istanbul/Ankara operational. Mediator role preserves access." }
+    },
+    summary: "HIGH alert posture — kinetic-war risk elevated; diplomatic outlook INSTITUTIONALISED open-ended; Egypt-specific stress holding elevated. Fri 1 May 06:07 UTC MORNING: White House announces Iran ceasefire HALTS the 60-day War Powers Act deadline (CNBC) — removes Congressional pressure valve; institutionalises open-ended US posture. Brent July front-month ~$111.63 (+1.11%) after Thu June expiry $114.01. EGP holds ~53 after yesterday break to 53.73. UAE OPEC exit takes effect TODAY. Hormuz back to ~6 ships/day after yesterday localised 20-transit print. Khamenei nuclear/missile guard reaffirmation holds. Three US carriers on station; 37 ships redirected by blockade. State Dept Iran 'Leave Now' reaffirmed. Iran/Iraq/Lebanon Level 4. Avoid all non-essential travel to Gulf, Levant, and Iraq.",
+    updated: "2026-05-01T06:07:57.000Z"
+  }
+
+});
+// === END DAILY ===
+</script>
+
+<script>
+(function(){
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function fmtNum(n,dp){if(n==null||isNaN(n))return '—';dp=dp==null?2:dp;return Number(n).toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp})}
+  function pct(n){if(n==null||isNaN(n))return '—';var s=n>=0?'+':'';return s+Number(n).toFixed(1)+'%'}
+  function ts(s){if(!s)return '';try{var d=new Date(s);return d.toISOString().replace('T',' ').slice(0,16)+' UTC'}catch(e){return s}}
+
+  function spark(values, opts){
+    opts = opts || {};
+    var W = 100, H = 38, padX = 2, padY = 4;
+    var arr = (values||[]).filter(function(v){return v!=null && !isNaN(v)});
+    if (arr.length < 2) return '<svg class="spark-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><text x="50" y="22" text-anchor="middle" font-size="9" fill="#4b5563" font-family="monospace">no data</text></svg>';
+    var min = opts.min!=null ? opts.min : Math.min.apply(null, arr);
+    var max = opts.max!=null ? opts.max : Math.max.apply(null, arr);
+    if (max === min) max = min + 1;
+    var n = values.length;
+    function x(i){return padX + (i/(n-1))*(W-2*padX)}
+    function y(v){if(v==null||isNaN(v))return null;return H-padY - ((v-min)/(max-min))*(H-2*padY)}
+    var pts = [];
+    for (var i=0;i<n;i++){var yy=y(values[i]);if(yy!=null)pts.push(x(i).toFixed(1)+','+yy.toFixed(1))}
+    var color = opts.color || '#e8a020';
+    var areaPath = 'M' + pts[0] + ' L' + pts.join(' ') + ' L' + x(n-1).toFixed(1) + ',' + (H-padY) + ' L' + x(0).toFixed(1) + ',' + (H-padY) + ' Z';
+    var linePath = 'M' + pts.join(' L');
+    var lastIdx = n-1;
+    var lastY = y(values[lastIdx]);
+    var warStartIdx = opts.warStartIdx;
+    var warMarker = '';
+    if (warStartIdx != null && warStartIdx >= 0 && warStartIdx < n){
+      var wx = x(warStartIdx).toFixed(1);
+      warMarker = '<line x1="'+wx+'" y1="'+padY+'" x2="'+wx+'" y2="'+(H-padY)+'" stroke="#ef4444" stroke-width="0.6" stroke-dasharray="1.5,1.5" opacity="0.6"/>';
+    }
+    var endDot = (lastY!=null) ? '<circle cx="'+x(lastIdx).toFixed(1)+'" cy="'+lastY.toFixed(1)+'" r="1.6" fill="'+color+'"/>' : '';
+    return '<svg class="spark-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'
+      + '<defs><linearGradient id="sg-'+(opts.id||'x')+'" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.28"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs>'
+      + '<path d="'+areaPath+'" fill="url(#sg-'+(opts.id||'x')+')"/>'
+      + warMarker
+      + '<path d="'+linePath+'" fill="none" stroke="'+color+'" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>'
+      + endDot
+      + '</svg>';
+  }
+
+  function delta(values){
+    var arr = (values||[]).filter(function(v){return v!=null && !isNaN(v)});
+    if (arr.length < 2) return {pct:null,dir:'flat'};
+    var first = arr[0], last = arr[arr.length-1];
+    if (first === 0) return {pct:null,dir:'flat'};
+    var p = ((last-first)/Math.abs(first))*100;
+    var dir = Math.abs(p) < 0.5 ? 'flat' : (p>0 ? 'up' : 'dn');
+    return {pct:p,dir:dir};
+  }
+
+  function render(){
+    var app = document.getElementById('app');
+    var D = window.GULF_RISK_DATA;
+    if (!D){
+      app.className = '';
+      app.innerHTML = '<div class="error">Data not loaded. Pull-to-refresh or open the desktop dashboard.</div>';
+      return;
+    }
+    app.className = '';
+    var m = D._meta || {};
+    var b = D.brief || {};
+    var mx = D.metrics || {};
+    var cs = D.chart_series || {};
+    var sc = D.scenarios || [];
+    var eb = D.exco_briefing || {};
+    var pr = D.predictions || {};
+    var hhour = mx.hhour_probability_14d || (b.hhour_probability_14d) || (D.war && D.war.hhour_probability_14d) || null;
+    var tl = (b.threat_level || 'HIGH').toUpperCase();
+
+    var html = '';
+
+    html += '<div class="hdr">'
+      + '<div class="hdr-l">'
+        + '<div class="hdr-title">Gulf &amp; Egypt Risk Monitor</div>'
+        + '<div class="hdr-sub">EXCO Summary · Day '+esc(m.day||'—')+'</div>'
+      + '</div>'
+      + '<div>'
+        + '<div class="threat-pill threat-'+esc(tl)+'">'+esc(tl)+'</div>'
+        + '<div class="day-pill">'+esc(ts(m.updated))+'</div>'
+      + '</div>'
+      + '</div>';
+
+    var hdl = b.headline || '';
+    var sm = b.summary || '';
+    html += '<div class="card card-critical">'
+      + '<div class="card-title">Today’s headline</div>'
+      + '<div class="headline">'+esc(hdl)+'</div>'
+      + (sm ? '<div class="summary-text collapsed" id="sum-text">'+esc(sm)+'</div><button class="toggle" id="sum-toggle">Read more</button>' : '')
+      + '</div>';
+
+    var kpis = [];
+    if (mx.brent_usd != null) kpis.push({l:'Brent (USD/bbl)', v:'$'+fmtNum(mx.brent_usd,2), s:'Goldman LT $90 · pre-war ~$70'});
+    if (mx.egp_usd != null)   kpis.push({l:'USD/EGP', v:fmtNum(mx.egp_usd,2), s:'Panic threshold '+(mx.egp_panic_threshold||55)});
+    if (mx.hormuz_ships_24h != null) kpis.push({l:'Hormuz 24h', v:String(mx.hormuz_ships_24h)+' ships', s:'Pre-war 125–140/day'});
+    if (mx.us_gas_average != null)   kpis.push({l:'US gas (AAA)', v:'$'+fmtNum(mx.us_gas_average,3)+'/gal', s:'Pump-feed lag intact'});
+    kpis.push({l:'Threat level', v:tl, s:b.summary ? '' : ''});
+    if (hhour) kpis.push({l:'H-hour 14d', v:String(hhour), s:'Stalemate base case'});
+
+    html += '<div class="card"><div class="card-title">Key indicators</div><div class="kpi-grid">';
+    kpis.forEach(function(k){
+      html += '<div class="kpi"><div class="kpi-label">'+esc(k.l)+'</div><div class="kpi-val">'+esc(k.v)+'</div>'
+        + (k.s ? '<div class="kpi-sub">'+esc(k.s)+'</div>' : '')
+        + '</div>';
+    });
+    html += '</div></div>';
+
+    var warStartIdx = cs.war_start_index != null ? cs.war_start_index : null;
+    var graphs = [
+      {key:'brent',  label:'Brent (USD/bbl)', color:'#ef4444', dp:2, suffix:'', current:mx.brent_usd},
+      {key:'egp',    label:'USD/EGP',         color:'#fbbf24', dp:2, suffix:'', current:mx.egp_usd},
+      {key:'hormuz', label:'Hormuz transits/day', color:'#3b82f6', dp:0, suffix:'', current:mx.hormuz_ships_24h},
+      {key:'suez',   label:'Suez transits/day',   color:'#22c55e', dp:0, suffix:'', current:null}
+    ];
+    var sparkHtml = '';
+    graphs.forEach(function(g, i){
+      var arr = cs[g.key] || [];
+      var minK = cs[g.key+'_min'], maxK = cs[g.key+'_max'];
+      if (g.key === 'hormuz') maxK = cs.hormuz_max;
+      if (g.key === 'bab_el_mandeb') { minK = cs.bem_min; maxK = cs.bem_max; }
+      var arrFiltered = arr.filter(function(v){return v!=null && !isNaN(v)});
+      var last = arrFiltered.length ? arrFiltered[arrFiltered.length-1] : null;
+      var displayVal = (g.current != null) ? g.current : last;
+      var d = delta(arr);
+      sparkHtml += '<div class="spark-card">'
+        + '<div class="spark-head">'
+          + '<div class="spark-label">'+esc(g.label)+'</div>'
+          + '<div class="spark-val">'+(displayVal!=null?(g.key==='brent'?'$':'')+fmtNum(displayVal,g.dp):'—')+'</div>'
+        + '</div>'
+        + spark(arr,{id:'mob-'+g.key, color:g.color, min:minK, max:maxK, warStartIdx:warStartIdx})
+        + '<div class="spark-foot">'
+          + '<span>since '+esc((cs.labels && cs.labels[0]) ? cs.labels[0] : '')+'</span>'
+          + '<span class="delta '+d.dir+'">'+(d.pct==null?'—':pct(d.pct))+'</span>'
+        + '</div>'
+        + '</div>';
+    });
+    html += '<div class="card card-high">'
+      + '<div class="card-title">EXCO metric trends · since 28 Jan</div>'
+      + '<div class="spark-grid">'+sparkHtml+'</div>'
+      + (cs.source_note ? '<div class="kpi-sub" style="margin-top:8px">'+esc(cs.source_note.slice(0,180))+(cs.source_note.length>180?'…':'')+'</div>' : '')
+      + '</div>';
+
+    var devs = b.key_developments || [];
+    if (devs.length){
+      html += '<div class="card"><div class="card-title">Top changes today</div><ul class="dev-list">';
+      devs.slice(0,4).forEach(function(d){
+        if (typeof d === 'string'){
+          html += '<li class="dev-item">'+esc(d)+'</li>';
+        } else {
+          var tag = d.tag || d.label || '';
+          var text = d.text || d.summary || d.body || d.headline || '';
+          html += '<li class="dev-item">'+(tag?'<span class="dev-tag">'+esc(tag)+'</span>':'')+esc(text)+'</li>';
+        }
+      });
+      html += '</ul></div>';
+    }
+
+    if (sc && sc.length){
+      html += '<div class="card"><div class="card-title">Scenarios · 14d</div>';
+      sc.slice(0,5).forEach(function(s){
+        var name = s.name || s.scenario || s.label || '';
+        var p = s.probability != null ? s.probability : (s.weight != null ? s.weight : null);
+        var pStr = (typeof p === 'number') ? Math.round(p*(p<=1?100:1)) : (p||'').toString().replace(/[^0-9]/g,'');
+        var pNum = parseInt(pStr||'0',10);
+        html += '<div><div class="scen-row"><div class="scen-name">'+esc(name)+'</div><div class="scen-pct">'+(pNum?pNum+'%':esc(p||'—'))+'</div></div>'
+             + '<div class="scen-bar"><div class="scen-bar-fill" style="width:'+Math.min(100,pNum)+'%"></div></div></div>';
+      });
+      html += '</div>';
+    }
+
+    if (eb && (eb.headline || eb.one_paragraph_summary || eb.bottom_line)){
+      html += '<div class="card card-critical"><div class="card-title">EXCO bottom-line</div>'
+        + (eb.bottom_line ? '<div class="exco-bottom">'+esc(eb.bottom_line)+'</div>' : '')
+        + (eb.headline ? '<div class="headline" style="margin-top:'+(eb.bottom_line?'8px':'0')+'">'+esc(eb.headline)+'</div>' : '')
+        + (eb.one_paragraph_summary ? '<div class="exco-summary">'+esc(eb.one_paragraph_summary)+'</div>' : '')
+        + '</div>';
+    }
+
+    html += '<div class="footer">'
+      + '<a class="desk" href="index.html?desktop=1">Open full desktop view</a>'
+      + '<div>Source: paulcoomber.github.io/middle-east-tracker</div>'
+      + (m.updated ? '<div style="margin-top:4px">Updated '+esc(ts(m.updated))+'</div>' : '')
+      + '</div>';
+
+    app.innerHTML = html;
+
+    var t = document.getElementById('sum-toggle');
+    if (t) t.addEventListener('click', function(){
+      var st = document.getElementById('sum-text');
+      if (!st) return;
+      if (st.classList.contains('collapsed')){st.classList.remove('collapsed');t.textContent='Read less'}
+      else {st.classList.add('collapsed');t.textContent='Read more'}
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render);
+  else render();
+})();
+</script>
+</body>
+</html>
