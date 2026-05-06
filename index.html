@@ -3937,4 +3937,27 @@ function renderSources() {
     var hl = document.getElementById('brief-headline');
     if (hl) hl.textContent = 'Loading intelligence data…';
     fetch(GIST_URL + '?t=' + Date.now())
-      .then(functi
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function(text) {
+        (new Function(text)).call(window);
+        if (window.GULF_RISK_DATA) { render(); }
+        else throw new Error('Data file executed but GULF_RISK_DATA not set');
+      })
+      .catch(function(e) {
+        console.error('Gist fetch failed:', e);
+        if (hl) hl.textContent = 'Data failed to load — check network connection.';
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+</body>
+</html>
