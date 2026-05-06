@@ -1271,7 +1271,12 @@ Object.assign(window.GULF_RISK_DATA, {
       "IMF June review approves a clean tranche disbursement with no fresh waivers required",
       "Hormuz transits return above 30/day sustained for 7 days",
       "Brent returns below $100 sustained for 14 days",
-      "Egypt enters a new IMF programme tranche or unlocks bridge financing"
+      "Egypt enters a new IMF programme tranche or unlocks bridge financing",
+      "Brent <$90 sustained 14 days — collapses fiscal binding constraint on European rearmament + eases Egypt imported-fuel pressure (per 6 May 2026 assessment Part IV.3)",
+      "Iran-US framework agreement signed and holding >7 days — Trump-pause de-escalation framing translates into substantive deal (per 6 May assessment Scenario A trigger; cross-references Pred #38 + #44)",
+      "French OAT-Bund spread narrowing for 30 days — eurozone fiscal stress easing materially; eases probability-mass on muddle-through and bad-outcome scenarios (per 6 May assessment Part VII)",
+      "Polish military deployment hitting milestones on schedule (e.g. 250k active personnel before end-2027) — rearmament executing, narrows the Russia-window-vs-Europe-rearmament race (per 6 May assessment Part 2.3)",
+      "MV Touska release as Iran goodwill signal — would corroborate Iran-side reciprocity to Trump pause (Pred #49 sub-bucket; assessment-aligned bull signal)"
     ],
     indicator_caveats: {
       "USD/EGP structural premium 68%": "Single-source (specialist outlet, not corroborated). Verify before citing externally. The live dealer-quote 5-6% premium is the better-grounded number for now.",
@@ -1297,6 +1302,7 @@ Object.assign(window.GULF_RISK_DATA, {
       medium_grade: "TradingEconomics (live spot data), AAA, FCDO / US State Dept travel advisories, Hormuz Strait Monitor (operational data)",
       live_data_dealer_quotes: "sarfegp / blackmarketlive / egcurrency — small private outlets used for live black-market dealer quotes; treat as live signal not editorial. Cross-check between two outlets before citing externally.",
       low_grade_or_pre_war: "Standard Chartered Jan 5 2026 forecast (PRE-WAR — same bank revised view by Mar 11), themiddleeastinsider.com (small UK private outlet, self-styled authority — flagged as low-credibility)",
+    analyst_assessments: "Working Assessment 6 May 2026 (anonymous internal, transatlantic + Iran wildcard, Parts I-VIII) — single-source analyst opinion. Empirical anchors (Romania 281-4 vote, defence figures, EU GDP/spend %s) verifiable; framings (rupture-as-structurally-necessary, 75/15/10 Iran probability split, Russia 5-10yr window, Poland>France 2030) carried as ONE-LENS reading not consensus. Critical-read flags in strategic_outlook_2026_2030.assessment_critical_read.",
       note: "Pre-war sources (before 28 Feb 2026) should not be cited as current evidence without explicit recontextualisation. Single-source data points are flagged in indicator_caveats above."
     },
 
@@ -1311,6 +1317,120 @@ Object.assign(window.GULF_RISK_DATA, {
         "Sweep abort_triggers_pre_departure for fired triggers and re-tier if needed"
       ],
       who_does_it: "Interactive Claude session (this kind of work requires reasoning, not the mechanical refresh of the daily scheduled task)"
+    },
+
+    strategic_outlook_2026_2030: {
+      priority: "HIGH",
+      display_order: "AFTER_TACTICAL",
+      horizon: "12-24 months strategic / 2026-2030 trajectory",
+      relationship_to_daily_scenarios: "DISTINCT FROM the daily file's scenarios.tonight (which is a 14-day tactical H-hour view). The daily scenarios re-weight per news cycle on Iran/Hormuz/Egypt; this section frames the broader European rearmament + transatlantic rebalancing arc within which the daily scenarios sit.",
+      source: {
+        primary: "Working Assessment 6 May 2026 (anonymous internal — Transatlantic Rebalancing and the Iran Wildcard, Parts I-VIII). Filed under analyst_assessments in source_grade.",
+        secondary_anchors: "SIPRI / NATO defence spending data, Reuters / Bloomberg / FT current reporting, ECFR / IISS published analysis. Empirical numbers in this section are open-source verifiable; framings are author-judgment."
+      },
+      assessment_critical_read: {
+        carried_as_decision_grade: [
+          "Romania 5 May 2026 281-4 no-confidence vote and PSD-AUR coalition arithmetic (verified facts)",
+          "Trump-as-unintentional-midwife framing for the 5 structural barriers to European strategic autonomy (well-evidenced)",
+          "European resource audit: combined ~$20T GDP, ~$425bn defence spend, ~1.1m active personnel, ~515 stockpile warheads (multi-source consistent)",
+          "Russia 'closing window' thesis at the structural level (broadly consensus among Western analysts)",
+          "China structural-competitor framing (35% global manufacturing, demographic / property / debt constraints)",
+          "Iran four-scenario probability framework as a 12-24mo medium-term outlook (distinct from daily H-hour)"
+        ],
+        carried_as_one_lens_reading: [
+          "'Transatlantic rupture is structurally necessary' — author thesis, contested historiographically; track empirical indicators not the necessity claim",
+          "'Higher catastrophic-scenario probability than at any point since early 1980s' — rhetorically powerful, empirically defensible at 5-10% but the early-1980s comparison is heavy",
+          "2030 trajectory ranking (Poland > France) — conflates speed-of-buildup with absolute capability; carry as 'growth rate ranking' not absolute",
+          "Romania-as-leading-indicator framing — pattern is real; the 2-3yr timing on France/Italy is overstated as inevitability"
+        ],
+        flagged_overconfident: [
+          "75/15/10 Iran probability split is meaningfully dovish vs the dashboard's daily 57% non-kinetic / 43% kinetic-or-escalatory weighting — gap of ~18pts likely reflects horizon difference (12-24mo vs 14-day) but assessment may also be underweighting tail-of-tail",
+          "11:1 nuclear ratio (France+UK 515 vs Russia 5,500 stockpile) is technically correct but misleading vs the operative 4:1 deployed-strategic ratio (France 290 + UK 120 = 410 vs Russia ~1,710)",
+          "'Russia 5-10 year window' is treated as deterministic; better evidenced as '3-15 years with median around 7'",
+          "'Without external shock Europe was on trajectory toward comfortable decline' — speculative counterfactual, not load-bearing"
+        ],
+        not_adopted: [
+          "Russia 2040 = 'Chinese client / fragmented / transformed unpredictably' three-way framing — too speculative; third option is a non-prediction",
+          "'Each crisis ratchets integration forward' as a deterministic frame — the ratchet has been real (banking union, Recovery Fund, rearmament) but isn't guaranteed forward",
+          "'Strict' 2-3 year timing for next France/Italy fiscal-political collapse — track as conditional, not as deadline"
+        ]
+      },
+      four_scenario_framework: {
+        horizon_note: "12-24 month medium-term + 2026-2030 directional. Carry as parallel to daily H-hour, NOT as replacement.",
+        scenarios: [
+          { name: "A: Successful rebalancing", probability_pct: "35-40", direction_vs_prior: "up modestly", conditions: "Iran stabilises (managed cold war or stand-down), European rearmament executes broadly on schedule, Russia window closes without Article 5 test, Taiwan deferred, 2028 US election produces partnership-willing administration", outcome: "Europe exits transition more capable, sovereign, resilient. Transatlantic rebuilt as genuine partnership. China-Taiwan deferred to 2030s." },
+          { name: "B: Muddle-through", probability_pct: "35-40", direction_vs_prior: "stable", conditions: "Iran current frozen conflict / periodic flare-ups, European rearmament partial, 1-2 member states experience Romania-style fiscal-political crisis, Russia probes opportunistically without breakthrough, 2028 administration wants rebuild but lacks bandwidth", outcome: "Europe more autonomous than before but not fully capable. 2030s Europe poorer, more nationalist, more militarised, less integrated, recognisably continuing." },
+          { name: "C: Bad outcome", probability_pct: "15-20", direction_vs_prior: "up modestly", conditions: "Iran escalates significantly OR Russia tests Article 5 below threshold OR Taiwan crisis erupts in window, European fiscal arithmetic breaks, multiple Romania-pattern failures, eastern flank fragments visibly (Hungary/Slovakia openly defect, Romania goes AUR-coalition), US distracted, 2028 election produces continued rupture", outcome: "Europe fragments visibly. Marginal territory effectively lost. Severe recession. Political instability widespread. Deterrent holds (no nuclear escalation) but credibility degraded a generation." },
+          { name: "D: Catastrophic", probability_pct: "5-10", direction_vs_prior: "up significantly from historical baseline (caveat: assessment compares to early-1980s peak; comparison is heavy)", conditions: "Multiple crises stack — Iran nuclear escalation + Russia conventional probe + Taiwan + American internal disorder. Nuclear taboo broken (tactical use). Some form of major-power conventional war.", outcome: "Civilisational disruption." }
+        ],
+        sum_to_100_caveat: "Assessment ranges sum to 90-110%. Dashboard treats midpoints (37.5+37.5+17.5+7.5 = 100) for sum discipline; spread retained in probability_pct strings.",
+        gap_vs_daily_scenarios: "Assessment combined 'benign' (A+B) ~75% vs daily file's stalemate+multilateral path ~57% on Wed 6 May AM. Gap reflects horizon difference (12-24mo vs 14-day) plus assessment may be more dovish than the dashboard's tactical view."
+      },
+      three_binding_constraints: {
+        iran_fiscal: { horizon: "short-term", description: "Iran-driven oil price is the binding fiscal constraint on European rearmament. Sustained Brent >$110 is the threshold where eurozone deficit math breaks; Romania 5 May 2026 is the leading edge. France (debt 115%) and Italy (debt 137%) are the next stress points.", current_state_wed_6_may: "Brent $108.09 (Tue close, -5.55% on Trump pause). Below the assessment's $110 threshold but only just; Trump-pause-priced-in case still being tested." },
+          russia_opportunistic: { horizon: "medium-term", description: "Russia's window (assessment says 5-10yr; carry as 3-15yr median ~7yr). Race between European rearmament maturing and Russian opportunism. Moldova destabilisation is plan-against base case for next 6-12 months given Romania weakness.", current_state_wed_6_may: "Romania government collapsed 5 May 2026 (Bolojan 281-4); AUR third of seats; eastern flank fragility newly visible. Russia troop concentrations near Moldova / Baltics not currently flagged as elevated but indicator added to tail-risk tracking." },
+          china_structural: { horizon: "long-term (30-50yr horizon, with 5-10yr Taiwan flashpoint window)", description: "China is the only state that is genuine peer competitor across all dimensions. Taiwan crisis probability ~30-40% next 10yr; successful operation conditional <50%; absolute reunification by force ~15-20%.", current_state_wed_6_may: "Taiwan pacing target 2027 unchanged. Beijing role pivots from ceasefire fallback to Trump-pause corroboration; Beijing summit May 14-15 is decision-grade for whether US-Iran framework runs through Beijing." }
+      },
+      part_vii_tracking_variables: {
+        primary: [
+          { variable: "Brent crude", status: "ALREADY TRACKED in metrics + watchlist", break_level: "$110+ sustained (eurozone deficit math breaks)", current: "$108.09 Tue 5 May close" },
+          { variable: "French OAT-Bund spread", status: "NEW — add to watchlist", break_level: "100bps+ sustained", rationale: "Eurozone fiscal stress proxy; Romania-pattern early-warning for France" },
+          { variable: "Polish military deployment milestones", status: "NEW — add to watchlist", break_level: "Slip on 250k-by-2027 target or 300k-by-2035 target", rationale: "Most credible European territorial-defence force; pace gates the Russia-window race" },
+          { variable: "UK-EU joint procurement under SAFE access (May 2025 Security and Defence Partnership)", status: "NEW — add to watchlist", rationale: "UK-EU integration in defence industrial base post-Brexit; structural lock-in" },
+          { variable: "Franco-German MGCS tank programme milestones", status: "NEW — add to watchlist", rationale: "Industrial consolidation indicator; if it slips, German-French defence cooperation is signalling stress" },
+          { variable: "GCAP fighter programme milestones (UK/Italy/Japan)", status: "NEW — add to watchlist", rationale: "Combat-air industrial base post-Tempest merger; long-cycle indicator" }
+        ],
+        secondary: [
+          { variable: "Saudi-China relationship intensity", status: "NEW — add to watchlist", rationale: "Gulf hedge direction; leading indicator of broader regional realignment under Trump pressure" },
+          { variable: "Turkey-EU dialogue temperature", status: "NEW — add to watchlist", rationale: "Black Sea backstop indispensable under Romania/Bulgaria wobble (assessment Part 5.5)" },
+          { variable: "Hungarian and Slovak EU foreign policy vetoes", status: "NEW — add to watchlist", rationale: "Eastern flank cohesion test; veto frequency = fragmentation signal" },
+          { variable: "AUR (Romania) / Le Pen (France) / AfD (Germany) / FPÖ (Austria) polling", status: "NEW — add to watchlist", rationale: "Political stability of major members; Romania-pattern early warning" },
+          { variable: "European LNG terminal completions and nuclear restart timelines", status: "NEW — add to watchlist", rationale: "Energy independence milestones; reduces Iran-driven oil-price binding" }
+        ],
+        tail_risk: [
+          { variable: "Iran missile programme reconstitution", status: "ALREADY TRACKED in war + watchlist", rationale: "Direct escalation path within Iran scenario tree" },
+          { variable: "Russian troop concentrations near Baltic and Moldova borders", status: "NEW — add to watchlist", rationale: "Russia opportunistic window operationalisation" },
+          { variable: "Taiwan Strait incident frequency", status: "NEW — add to watchlist", rationale: "China timeline pull-forward signal" },
+          { variable: "Eurobarometer trust-in-US numbers", status: "NEW — add to watchlist", rationale: "Public-opinion lock-in of European autonomy investment; even rhetoric warming doesn't reverse quickly" }
+        ]
+      },
+      european_pillar_resource_summary: {
+        note: "Resource audit drawn from assessment Part II. Numbers are open-source verifiable; rankings reflect 2025 baseline + 2030 trajectories.",
+        combined_eu_uk: {
+          gdp_usd_trillion: "~20",
+          defence_spend_usd_bn: "~425",
+          active_personnel_million: "~1.1",
+          warheads_stockpile: "~515 (France 290 + UK 225)",
+          warheads_deployed_strategic: "~410 (France 290 + UK 120)",
+          carriers: "5 (UK x2 Queen Elizabeth, France x1 CdG, Italy x2 Cavour+Trieste)"
+        },
+        nuclear_ratio_vs_russia: {
+          stockpile: "~11:1 (rhetorically heavier — assessment cites this)",
+          deployed_strategic: "~4:1 (operative comparison for short-of-Armageddon deterrence)",
+          flag: "Carry both. Stockpile ratio for long-war / regenerative posture; deployed ratio for crisis calculus."
+        },
+        ranking_today_deployable: "France ≈ UK > Poland > Germany > Italy > Netherlands > Spain",
+        ranking_2030_trajectory: "Poland > France ≈ UK > Germany > Italy > Netherlands > Spain (assessment claim — flagged: conflates speed of buildup with absolute capability; Poland>France absolute is contestable)",
+        structural_mismatch: "States most willing to fight (Poland, Nordics, Baltics) lack resources at scale needed. States with resources (Germany, France, Italy) not acting like they expect to fight. American umbrella papered over this for 70 years; without it, contradictions become live."
+      },
+      key_decision_points_for_reweight: [
+        "Iran negotiated stand-down formalises (shift weight TOWARD Scenario A; cross-references daily Pred #38 + #44)",
+        "Iran sustained escalation (shift weight TOWARD Scenario C)",
+        "Major European member state experiences Romania-pattern collapse (shift weight TOWARD Scenario C)",
+        "Russian aggression below Article 5 threshold (shift weight TOWARD Scenario C, possibly D)",
+        "Taiwan Strait incident with casualties (shift weight TOWARD C, possibly D)",
+        "French 2027 election: Le Pen win (uncertain — could go either direction depending on her actual policy posture vs campaign rhetoric)",
+        "German 2029 election: AfD in coalition (uncertain — same caveat)",
+        "US 2028 election outcome (major recalibration regardless of result)"
+      ],
+      review_cadence: {
+        cadence: "Quarterly explicit re-weight; ad hoc on any decision-point trigger above",
+        next_scheduled_review: "2026-08-06 (T+3 months from integration)",
+        triggered_review_threshold: "Any single decision-point trigger above; or any of the bull_case_triggers_to_watch firing",
+        responsibility: "Interactive Claude session (this is reasoning work, not mechanical refresh)"
+      },
+      updated: "2026-05-06T12:00:00.000Z",
+      integration_session: "2026-05-06 interactive — assessment received, critical-read pass applied, integrated as parallel-horizon outlook to daily H-hour. See gulf-risk-decision-log.md for full integration rationale."
     },
 
     rendering_status: {
@@ -1381,7 +1501,7 @@ Object.assign(window.GULF_RISK_DATA, {
       cadence_relationship: "This protocol runs every scheduled cycle (twice daily). It is COMPLEMENTARY to the weekly interactive critical-review pass under exco_briefing.review_cadence — the weekly pass goes deeper (methodology, source-grade quality, framing); the per-cycle protocol catches drift fast."
     },
 
-    updated: "2026-04-29T21:28:06.000Z"
+    updated: "2026-05-06T12:00:00.000Z"
   }
 
 });
