@@ -3348,16 +3348,54 @@ function buildExcoHTML(D) {
   if (ti.monthly_series && ti.monthly_series.labels) {
     var ms = ti.monthly_series;
     var lab = ms.labels[ms.labels.length-1] || '';
-    var gccLatest = ms.gcc_trust ? ms.gcc_trust[ms.gcc_trust.length-1] : '—';
-    var isrLatest = ms.israeli_trust ? ms.israeli_trust[ms.israeli_trust.length-1] : '—';
-    var euLatest  = ms.eu_trust ? ms.eu_trust[ms.eu_trust.length-1] : '—';
+    function iframeTrustCard(label, color, bg, border, arr, threshold) {
+      var clean = (arr||[]).filter(function(v){return v!=null && !isNaN(v);});
+      if (!clean.length) return '<div style="border:1px solid '+border+';background:'+bg+';padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:'+color+';text-transform:uppercase">'+label+'</div><div style="font-size:24px;font-weight:800;color:'+color+'">—</div></div>';
+      var first = clean[0], last = clean[clean.length-1];
+      var firstLast = last - first;
+      var dirColor = firstLast > 0 ? '#059669' : firstLast < 0 ? '#dc2626' : '#9ca3af';
+      var arrow = firstLast > 0 ? '↑' : firstLast < 0 ? '↓' : '→';
+      var firstLabel = (ms.labels && ms.labels[0]) || '';
+      var lastLabel = (ms.labels && ms.labels[ms.labels.length-1]) || '';
+      var W = 110, H = 26, padX = 3, padY = 3;
+      var n = arr.length;
+      var min = Math.min.apply(null, clean), max = Math.max.apply(null, clean);
+      if (threshold != null && threshold < min) min = threshold;
+      if (max === min) max = min + 1;
+      function xCoord(i){ return padX + (i/(n-1))*(W-2*padX); }
+      function yCoord(v){ if (v==null||isNaN(v)) return null; return H-padY - ((v-min)/(max-min))*(H-2*padY); }
+      var pts = [];
+      for (var i=0;i<n;i++){ var yy=yCoord(arr[i]); if(yy!=null) pts.push(xCoord(i).toFixed(1)+','+yy.toFixed(1)); }
+      var linePath = pts.length ? 'M' + pts.join(' L') : '';
+      var lastY = yCoord(last);
+      var endDot = (lastY != null) ? '<circle cx="'+xCoord(n-1).toFixed(1)+'" cy="'+lastY.toFixed(1)+'" r="2" fill="'+color+'"/>' : '';
+      var thresholdLine = '';
+      if (threshold != null) {
+        var ty = yCoord(threshold);
+        if (ty != null) thresholdLine = '<line x1="'+padX+'" y1="'+ty.toFixed(1)+'" x2="'+(W-padX)+'" y2="'+ty.toFixed(1)+'" stroke="#dc2626" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.6"/>';
+      }
+      var spark = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" style="display:block;width:100%;height:24px;margin-top:4px">'
+        + thresholdLine
+        + (linePath ? '<path d="'+linePath+'" fill="none" stroke="'+color+'" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>' : '')
+        + endDot
+        + '</svg>';
+      var deltaText = arrow + ' ' + (firstLast > 0 ? '+' : '') + firstLast + ' ' + excoEsc(firstLabel) + '→' + excoEsc(lastLabel);
+      return '<div style="border:1px solid '+border+';background:'+bg+';padding:8px 10px;border-radius:6px">'
+        +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px">'
+          +'<div style="font-size:9px;font-weight:700;color:'+color+';text-transform:uppercase;letter-spacing:0.04em">'+label+'</div>'
+          +'<div style="font-size:9px;color:'+dirColor+';font-weight:700">'+deltaText+'</div>'
+        +'</div>'
+        +'<div style="font-size:24px;font-weight:800;color:'+color+';line-height:1.1">'+last+'<span style="font-size:11px;color:#9ca3af;font-weight:400">/100</span></div>'
+        + spark
+      +'</div>';
+    }
     var tiBody = '<p class="xp" style="color:#6b7280;font-style:italic">'+excoEsc(ti.label_caveat||ti.description||'')+'</p>'
       +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px">'
-        +'<div style="border:1px solid #d1fae5;background:#f0fdf4;padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:#065f46;text-transform:uppercase">GCC</div><div style="font-size:24px;font-weight:800;color:#059669">'+excoEsc(gccLatest)+'/100</div></div>'
-        +'<div style="border:1px solid #dbeafe;background:#eff6ff;padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:#1e40af;text-transform:uppercase">ISRAEL</div><div style="font-size:24px;font-weight:800;color:#2563eb">'+excoEsc(isrLatest)+'/100</div></div>'
-        +'<div style="border:1px solid #fef3c7;background:#fffbeb;padding:10px;border-radius:6px;text-align:center"><div style="font-size:9px;font-weight:700;color:#92400e;text-transform:uppercase">EU</div><div style="font-size:24px;font-weight:800;color:#d97706">'+excoEsc(euLatest)+'/100</div></div>'
+        + iframeTrustCard('GCC',    '#059669', '#f0fdf4', '#d1fae5', ms.gcc_trust,     ms.crisis_threshold)
+        + iframeTrustCard('ISRAEL', '#2563eb', '#eff6ff', '#dbeafe', ms.israeli_trust, ms.crisis_threshold)
+        + iframeTrustCard('EU',     '#d97706', '#fffbeb', '#fef3c7', ms.eu_trust,      ms.crisis_threshold)
       +'</div>'
-      +'<p class="xp" style="font-size:9px;color:#9ca3af;margin-top:6px;text-align:center">'+excoEsc(lab)+' &nbsp;·&nbsp; crisis threshold: '+excoEsc(ms.crisis_threshold||30)+' &nbsp;·&nbsp; series: '+excoEsc((ms.labels||[]).join(' › '))+'</p>';
+      +'<p class="xp" style="font-size:9px;color:#9ca3af;margin-top:6px;text-align:center">'+excoEsc(lab)+' &nbsp;·&nbsp; crisis threshold (red dotted): '+excoEsc(ms.crisis_threshold||30)+' &nbsp;·&nbsp; series: '+excoEsc((ms.labels||[]).join(' › '))+' &nbsp;·&nbsp; trajectory ↑ improving / ↓ worsening / → flat</p>';
     html += excoSection('04','Trust Direction Tracker — Monthly', tiBody);
   }
 
@@ -3553,16 +3591,59 @@ function renderExcoTop(D, upd) {
     var snapshotHtml = '';
     if (labels.length) {
       var latest = labels[labels.length-1] || '';
-      var gccLatest = (ms.gcc_trust && ms.gcc_trust[ms.gcc_trust.length-1]) || '—';
-      var isrLatest = (ms.israeli_trust && ms.israeli_trust[ms.israeli_trust.length-1]) || '—';
-      var euLatest  = (ms.eu_trust && ms.eu_trust[ms.eu_trust.length-1]) || '—';
-      snapshotHtml = '<div class="exco-trust-readings">'
-        +'<div class="exco-trust-card" style="border:1px solid rgba(16,185,129,0.4)"><div class="exco-trust-card-label" style="color:#10b981">GCC</div><div class="exco-trust-card-val" style="color:#10b981">'+gccLatest+'/100</div></div>'
-        +'<div class="exco-trust-card" style="border:1px solid rgba(59,130,246,0.4)"><div class="exco-trust-card-label" style="color:#3b82f6">ISRAEL</div><div class="exco-trust-card-val" style="color:#3b82f6">'+isrLatest+'/100</div></div>'
-        +'<div class="exco-trust-card" style="border:1px solid rgba(245,158,11,0.4)"><div class="exco-trust-card-label" style="color:#f59e0b">EU</div><div class="exco-trust-card-val" style="color:#f59e0b">'+euLatest+'/100</div></div>'
-        +'<div style="margin-left:auto;font-size:10px;color:var(--muted);align-self:center">'+esc(latest)+' · crisis threshold: '+esc(ms.crisis_threshold||30)+'</div>'
+      function trustCard(label, color, arr, threshold) {
+        var clean = (arr||[]).filter(function(v){return v!=null && !isNaN(v);});
+        if (!clean.length) return '<div class="exco-trust-card" style="border:1px solid '+color+'40"><div class="exco-trust-card-label" style="color:'+color+'">'+label+'</div><div class="exco-trust-card-val" style="color:'+color+'">—</div></div>';
+        var first = clean[0], last = clean[clean.length-1];
+        var prev = clean.length >= 2 ? clean[clean.length-2] : null;
+        var firstLast = last - first;
+        var monthOnMonth = (prev != null) ? (last - prev) : null;
+        var dirColor = firstLast > 0 ? '#22c55e' : firstLast < 0 ? '#ef4444' : '#9ca3af';
+        var arrow = firstLast > 0 ? '↑' : firstLast < 0 ? '↓' : '→';
+        var firstLabel = labels[0] || '';
+        var lastLabel = labels[labels.length-1] || '';
+        var W = 110, H = 28, padX = 3, padY = 3;
+        var n = arr.length;
+        var min = Math.min.apply(null, clean), max = Math.max.apply(null, clean);
+        if (threshold != null && threshold < min) min = threshold;
+        if (max === min) max = min + 1;
+        function xCoord(i){ return padX + (i/(n-1))*(W-2*padX); }
+        function yCoord(v){ if (v==null||isNaN(v)) return null; return H-padY - ((v-min)/(max-min))*(H-2*padY); }
+        var pts = [];
+        for (var i=0;i<n;i++){ var yy=yCoord(arr[i]); if(yy!=null) pts.push(xCoord(i).toFixed(1)+','+yy.toFixed(1)); }
+        var linePath = pts.length ? 'M' + pts.join(' L') : '';
+        var lastY = yCoord(last);
+        var endDot = (lastY != null) ? '<circle cx="'+xCoord(n-1).toFixed(1)+'" cy="'+lastY.toFixed(1)+'" r="2.2" fill="'+color+'"/>' : '';
+        var thresholdLine = '';
+        if (threshold != null) {
+          var ty = yCoord(threshold);
+          if (ty != null) thresholdLine = '<line x1="'+padX+'" y1="'+ty.toFixed(1)+'" x2="'+(W-padX)+'" y2="'+ty.toFixed(1)+'" stroke="#ef4444" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.55"/>';
+        }
+        var spark = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" style="display:block;width:100%;height:28px;margin-top:4px">'
+          + thresholdLine
+          + (linePath ? '<path d="'+linePath+'" fill="none" stroke="'+color+'" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>' : '')
+          + endDot
+          + '</svg>';
+        var deltaText = arrow + ' ' + (firstLast > 0 ? '+' : '') + firstLast + ' ' + esc(firstLabel) + '→' + esc(lastLabel);
+        var momText = (monthOnMonth != null) ? (' · ' + (monthOnMonth >= 0 ? '+' : '') + monthOnMonth + ' MoM') : '';
+        return '<div class="exco-trust-card" style="border:1px solid '+color+'40;flex:1;min-width:130px;padding:6px 10px 8px">'
+          +'<div style="display:flex;justify-content:space-between;align-items:baseline">'
+            +'<div class="exco-trust-card-label" style="color:'+color+'">'+label+'</div>'
+            +'<div style="font-size:10px;color:'+dirColor+';font-weight:700">'+esc(deltaText)+'</div>'
+          +'</div>'
+          +'<div style="display:flex;justify-content:space-between;align-items:baseline">'
+            +'<div class="exco-trust-card-val" style="color:'+color+'">'+last+'<span style="font-size:11px;color:var(--muted);font-weight:400">/100</span></div>'
+            +'<div style="font-size:9px;color:var(--muted)">'+esc(momText.replace(/^ · /,''))+'</div>'
+          +'</div>'
+          + spark
         +'</div>';
-      snapshotHtml += '<div style="font-size:10px;color:var(--muted);margin-bottom:6px">Monthly series ('+labels.join(' › ')+'): GCC ['+(ms.gcc_trust||[]).join(' › ')+'] · ISR ['+(ms.israeli_trust||[]).join(' › ')+'] · EU ['+(ms.eu_trust||[]).join(' › ')+']</div>';
+      }
+      snapshotHtml = '<div class="exco-trust-readings">'
+        + trustCard('GCC',    '#10b981', ms.gcc_trust,     ms.crisis_threshold)
+        + trustCard('ISRAEL', '#3b82f6', ms.israeli_trust, ms.crisis_threshold)
+        + trustCard('EU',     '#f59e0b', ms.eu_trust,      ms.crisis_threshold)
+        +'</div>';
+      snapshotHtml += '<div style="font-size:9px;color:var(--muted);margin-bottom:6px;line-height:1.5">Series '+labels.join(' › ')+' · crisis threshold '+esc(ms.crisis_threshold||30)+' (red dotted) · trajectory ↑ improving / ↓ worsening / → flat</div>';
     }
     document.getElementById('exco-trust-snapshot').innerHTML = snapshotHtml;
     var sigHtml = '';
