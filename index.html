@@ -485,6 +485,31 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--m
       </div>
     </div>
 
+    <div class="card exco-high" id="exco-strategic-card" style="display:none">
+      <div class="card-title"><span class="exco-pill" style="background:rgba(99,102,241,0.18);color:#a5b4fc;border:1px solid rgba(99,102,241,0.4)">STRATEGIC</span> STRATEGIC OUTLOOK 2026&ndash;2030 <span class="card-upd" id="exco-strategic-upd"></span></div>
+      <div id="exco-strategic-horizon" style="font-size:10px;color:var(--muted);margin:0 0 10px;font-style:italic"></div>
+      <div class="exco-sublabel">Four-scenario probability framework (12&ndash;24mo)</div>
+      <div id="exco-strategic-scenarios" style="margin-bottom:10px"></div>
+      <div id="exco-strategic-gap-note" style="font-size:10px;color:#9ca3af;margin:-4px 0 10px;font-style:italic"></div>
+      <div class="exco-sublabel">Three binding constraints</div>
+      <div id="exco-strategic-constraints" class="grid3" style="margin-bottom:10px"></div>
+      <div class="exco-sublabel">Tracking variables (per Part VII)</div>
+      <div id="exco-strategic-tracking" class="grid3" style="margin-bottom:10px"></div>
+      <div class="exco-sublabel">European pillar resource summary</div>
+      <div id="exco-strategic-pillar" style="margin-bottom:10px"></div>
+      <div class="grid2" style="margin-bottom:8px">
+        <div>
+          <div class="exco-sublabel">Decision points for re-weight</div>
+          <ul class="exco-list" id="exco-strategic-decision-points"></ul>
+        </div>
+        <div>
+          <div class="exco-sublabel">Critical-read flags</div>
+          <div id="exco-strategic-flags"></div>
+        </div>
+      </div>
+      <div id="exco-strategic-source" style="font-size:9px;color:var(--muted);border-top:1px solid #1f2937;padding-top:8px;margin-top:8px;line-height:1.5"></div>
+    </div>
+
     <div class="card exco-high" id="exco-trends-card" style="display:none">
       <div class="card-title"><span class="exco-pill exco-pill-high">TRENDS</span> EXCO METRIC TRENDS — since 28 Jan 2026 <span class="card-upd" id="exco-trends-upd"></span><span class="exco-spark-legend">war start (28 Feb)</span></div>
       <div class="exco-spark-grid" id="exco-trends-grid"></div>
@@ -1237,12 +1262,12 @@ Object.assign(window.GULF_RISK_DATA, {
     ],
 
     top_indicators_with_current_readings: [
-      { indicator: "Brent crude",                       current: "$118.03",                 direction: "↑↑↑",         break_level: "$130 sustained",          why: "Pump-feed inflation + Egypt fuel-subsidy stress + global cost-of-living pressure" },
-      { indicator: "USD/EGP official",                  current: "52.82",                   direction: "managed flat",break_level: "55 (panic threshold)",    why: "CBE intervention apparent; cosmetic vs market truth" },
+      { indicator: "Brent crude",                       current: "$108.09",                 direction: "↑↑↑",         break_level: "$130 sustained",          why: "Pump-feed inflation + Egypt fuel-subsidy stress + global cost-of-living pressure" },
+      { indicator: "USD/EGP official",                  current: "53.6200",                   direction: "managed flat",break_level: "55 (panic threshold)",    why: "CBE intervention apparent; cosmetic vs market truth" },
       { indicator: "USD/EGP black market (live)",       current: "55.45-55.98 (sarfegp)",   direction: "↑ widening",  break_level: "60+",                     why: "True stress signal; live dealer quotes" },
       { indicator: "USD/EGP structural premium",        current: "68% (Apr 2026)",          direction: "↑ from 52% Jan",break_level: "70%+",                  why: "Specialist outlets' wider measure; the part dealer quotes don't show" },
       { indicator: "Egypt CBE reserves (headline)",     current: "$52.83B (end-Mar)",       direction: "flat headline",break_level: "$48B",                   why: "Press-release grade; NFA underneath -$4.2B Q1" },
-      { indicator: "Hormuz daily transits",             current: "13 (Apr 28)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
+      { indicator: "Hormuz daily transits",             current: "8 (May 6)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
       { indicator: "GCC-Egypt trust index",             current: "38/100 (Apr)",            direction: "↓ -10 from Mar",break_level: "30 (crisis threshold)", why: "Determines whether bailout architecture survives" },
       { indicator: "Egypt baladi loaf price",           current: "LE0.20 held",             direction: "stable",      break_level: "Any rise",                why: "Historical red line for street unrest" },
       { indicator: "Egypt energy rationing posture",    current: "1-day WFH + fuel-oil burn (9pm closures + dimmed lighting REVERSED 28 Apr)", direction: "mixed — partial rollback on visible measures, structural fuel-oil burn HOLDS", break_level: "Official rolling blackouts", why: "Structural story missing from mainstream framing — and partial rollback adds reading-the-tea-leaves complexity" },
@@ -3390,6 +3415,33 @@ function buildExcoHTML(D) {
     html += excoSection('10','Source grade', sgBody);
   }
 
+  if (eb.strategic_outlook_2026_2030) {
+    var so = eb.strategic_outlook_2026_2030;
+    var sf = so.four_scenario_framework || {};
+    var scenariosHtml = (sf.scenarios||[]).map(function(sc){
+      return '<div style="padding:6px 8px;border-left:3px solid #6366f1;background:#f5f5ff;margin-bottom:5px;border-radius:0 3px 3px 0">'
+        +'<div style="font-size:10px;font-weight:700;color:#1e1e3f">'+excoEsc(sc.name||'')+' · '+excoEsc(sc.probability_pct||'')+'%</div>'
+        +'<div style="font-size:9px;color:#374151;margin-top:3px"><b>If:</b> '+excoEsc(sc.conditions||'')+'</div>'
+        +'<div style="font-size:9px;color:#374151;margin-top:2px"><b>Then:</b> '+excoEsc(sc.outcome||'')+'</div>'
+      +'</div>';
+    }).join('');
+    var bc = so.three_binding_constraints || {};
+    var bcHtml = ['iran_fiscal','russia_opportunistic','china_structural'].map(function(k){
+      var c = bc[k] || {};
+      var name = k.replace(/_/g,' ').replace(/\b./g,function(m){return m.toUpperCase();});
+      return '<div style="padding:5px 8px;font-size:9px;color:#374151;border-bottom:1px dotted #d1d5db"><b>'+excoEsc(name)+(c.horizon ? ' ('+excoEsc(c.horizon)+')' : '')+':</b> '+excoEsc(c.description||'')+(c.current_state_wed_6_may ? ' <i>Now: '+excoEsc(c.current_state_wed_6_may)+'</i>' : '')+'</div>';
+    }).join('');
+    var soBody = '<p class="xp" style="font-style:italic;color:#6b7280;font-size:9px;margin-bottom:6px">'+excoEsc(so.horizon||'')+' · '+excoEsc(so.relationship_to_daily_scenarios||'')+'</p>'
+      +'<p class="xp" style="font-weight:700;color:#374151;margin:4px 0">Four-scenario probability framework</p>'
+      +scenariosHtml
+      +(sf.gap_vs_daily_scenarios ? '<p class="xp" style="font-size:9px;color:#92400e;font-style:italic;margin:4px 0">'+excoEsc(sf.gap_vs_daily_scenarios)+'</p>' : '')
+      +'<p class="xp" style="font-weight:700;color:#374151;margin:8px 0 4px">Three binding constraints</p>'
+      +bcHtml
+      +'<p class="xp" style="font-weight:700;color:#374151;margin:8px 0 4px">Decision points for re-weight</p>'
+      +(so.key_decision_points_for_reweight||[]).map(function(d){return '<div class="xdev-item">'+excoEsc(d)+'</div>';}).join('');
+    html += excoSection('11','Strategic Outlook 2026–2030', soBody);
+  }
+
   html += '<div class="xfooter">'
     +'<span>Gulf &amp; Egypt Risk Monitor — Operation Epic Fury Day '+excoEsc(m.day)+'</span>'
     +'<span>Generated from gulf-risk-data.js — no external API calls &nbsp;·&nbsp; '+excoEsc(upd)+'</span>'
@@ -3583,6 +3635,110 @@ function renderExcoTop(D, upd) {
     document.getElementById('exco-brf-signals').innerHTML = signalsArr.map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
     document.getElementById('exco-brf-bull').innerHTML = (eb.bull_case_triggers_to_watch || []).map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
     document.getElementById('exco-brf-actions').innerHTML = (eb.recommended_actions || []).map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
+
+    var so = eb.strategic_outlook_2026_2030;
+    if (so) {
+      var soCard = document.getElementById('exco-strategic-card');
+      if (soCard) {
+        soCard.style.display = '';
+        document.getElementById('exco-strategic-upd').textContent = ts(so.updated) || upd;
+        document.getElementById('exco-strategic-horizon').textContent = (so.horizon || '') + (so.relationship_to_daily_scenarios ? ' · ' + so.relationship_to_daily_scenarios : '');
+
+        var sf = so.four_scenario_framework || {};
+        var scenarios = sf.scenarios || [];
+        var totalRow = '';
+        var sBody = scenarios.map(function(sc){
+          var probColor = '#22c55e';
+          var pn = parseFloat((sc.probability_pct||'').split(/[-–]/)[0]);
+          if (pn >= 30) probColor = '#fbbf24';
+          if (sc.name && /catastrophic|bad/i.test(sc.name)) probColor = '#ef4444';
+          var dirClass = '';
+          if (sc.direction_vs_prior) {
+            if (/up/i.test(sc.direction_vs_prior)) dirClass = 'color:#fbbf24';
+            else if (/down/i.test(sc.direction_vs_prior)) dirClass = 'color:#22c55e';
+            else dirClass = 'color:#9ca3af';
+          }
+          return '<div style="display:grid;grid-template-columns:auto 80px 1fr;gap:10px;padding:8px 10px;border-left:3px solid '+probColor+';background:rgba(30,41,59,0.4);border-radius:0 4px 4px 0;margin-bottom:6px">'
+            +'<div style="font-weight:700;color:'+probColor+';font-size:11px">'+esc(sc.name||'')+'</div>'
+            +'<div style="font-size:11px;font-weight:700;text-align:right;color:'+probColor+'">'+esc(sc.probability_pct||'')+'%<div style="font-size:9px;font-weight:400;'+dirClass+';margin-top:2px">'+esc(sc.direction_vs_prior||'')+'</div></div>'
+            +'<div style="font-size:10px;color:var(--text);line-height:1.5"><div style="color:#9ca3af;margin-bottom:3px"><b>If:</b> '+esc(sc.conditions||'')+'</div><div><b>Then:</b> '+esc(sc.outcome||'')+'</div></div>'
+          +'</div>';
+        }).join('');
+        document.getElementById('exco-strategic-scenarios').innerHTML = sBody;
+        document.getElementById('exco-strategic-gap-note').textContent = sf.gap_vs_daily_scenarios || '';
+
+        var bc = so.three_binding_constraints || {};
+        var bcOrder = [['iran_fiscal','Iran (fiscal)','#ef4444'],['russia_opportunistic','Russia (opportunistic)','#fbbf24'],['china_structural','China (structural)','#a5b4fc']];
+        document.getElementById('exco-strategic-constraints').innerHTML = bcOrder.map(function(b){
+          var c = bc[b[0]] || {};
+          return '<div style="border-top:2px solid '+b[2]+';padding:8px 10px;background:rgba(30,41,59,0.4);border-radius:0 0 4px 4px">'
+            +'<div style="font-size:10px;font-weight:700;color:'+b[2]+';text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px">'+b[1]+(c.horizon ? ' · '+esc(c.horizon) : '')+'</div>'
+            +'<div style="font-size:10px;color:var(--text);line-height:1.5;margin-bottom:6px">'+esc(c.description||'')+'</div>'
+            +(c.current_state_wed_6_may ? '<div style="font-size:10px;color:#fbbf24;line-height:1.5"><b>Now:</b> '+esc(c.current_state_wed_6_may)+'</div>' : '')
+          +'</div>';
+        }).join('');
+
+        var tv = so.part_vii_tracking_variables || {};
+        var tvOrder = [['primary','Primary','#fbbf24'],['secondary','Secondary','#a5b4fc'],['tail_risk','Tail risk','#ef4444']];
+        document.getElementById('exco-strategic-tracking').innerHTML = tvOrder.map(function(t){
+          var arr = tv[t[0]] || [];
+          var rows = arr.map(function(v){
+            var status = v.status || '';
+            var statusBadge = /already tracked/i.test(status) ? '<span style="background:rgba(34,197,94,0.18);color:#86efac;font-size:8px;font-weight:700;padding:1px 5px;border-radius:2px;margin-left:4px;letter-spacing:0.04em">TRACKED</span>'
+                            : /^new/i.test(status) ? '<span style="background:rgba(99,102,241,0.18);color:#a5b4fc;font-size:8px;font-weight:700;padding:1px 5px;border-radius:2px;margin-left:4px;letter-spacing:0.04em">NEW</span>'
+                            : '';
+            return '<div style="font-size:10px;line-height:1.5;padding:4px 0;border-bottom:1px dotted #1f2937"><div><b>'+esc(v.variable||'')+'</b>'+statusBadge+'</div>'
+              +(v.current ? '<div style="color:#fbbf24;font-size:9px">Current: '+esc(v.current)+'</div>' : '')
+              +(v.break_level ? '<div style="color:#ef4444;font-size:9px">Break: '+esc(v.break_level)+'</div>' : '')
+              +(v.rationale ? '<div style="color:#9ca3af;font-size:9px">'+esc(v.rationale)+'</div>' : '')
+            +'</div>';
+          }).join('');
+          return '<div><div style="font-size:10px;font-weight:700;color:'+t[2]+';text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid '+t[2]+'">'+t[1]+'</div>'+rows+'</div>';
+        }).join('');
+
+        var ep = so.european_pillar_resource_summary || {};
+        var ce = ep.combined_eu_uk || {};
+        var nr = ep.nuclear_ratio_vs_russia || {};
+        document.getElementById('exco-strategic-pillar').innerHTML = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px">'
+          +'<div style="background:rgba(30,41,59,0.4);padding:6px 8px;border-radius:3px"><div style="font-size:9px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">GDP combined</div><div style="font-size:14px;color:#a5b4fc;font-weight:700">$'+esc(ce.gdp_usd_trillion||'?')+'T</div></div>'
+          +'<div style="background:rgba(30,41,59,0.4);padding:6px 8px;border-radius:3px"><div style="font-size:9px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Defence spend</div><div style="font-size:14px;color:#fbbf24;font-weight:700">$'+esc(ce.defence_spend_usd_bn||'?')+'B</div></div>'
+          +'<div style="background:rgba(30,41,59,0.4);padding:6px 8px;border-radius:3px"><div style="font-size:9px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Active personnel</div><div style="font-size:14px;color:#86efac;font-weight:700">'+esc(ce.active_personnel_million||'?')+'M</div></div>'
+        +'</div>'
+        +'<div style="font-size:10px;color:var(--text);line-height:1.6;padding:6px 0">'
+          +'<div><b>Warheads:</b> '+esc(ce.warheads_stockpile||'?')+' stockpile / '+esc(ce.warheads_deployed_strategic||'?')+' deployed strategic</div>'
+          +'<div><b>Nuclear ratio vs Russia:</b> '+esc(nr.stockpile||'?')+' stockpile / '+esc(nr.deployed_strategic||'?')+' deployed</div>'
+          +(nr.flag ? '<div style="color:#9ca3af;font-style:italic;font-size:9px">'+esc(nr.flag)+'</div>' : '')
+          +'<div style="margin-top:4px"><b>Today:</b> '+esc(ep.ranking_today_deployable||'?')+'</div>'
+          +'<div><b>2030 trajectory:</b> '+esc(ep.ranking_2030_trajectory||'?')+'</div>'
+          +(ep.structural_mismatch ? '<div style="color:#fbbf24;font-style:italic;margin-top:6px;line-height:1.5">'+esc(ep.structural_mismatch)+'</div>' : '')
+        +'</div>';
+
+        document.getElementById('exco-strategic-decision-points').innerHTML = (so.key_decision_points_for_reweight || []).map(function(d){return '<li>'+esc(d)+'</li>';}).join('');
+
+        var acr = so.assessment_critical_read || {};
+        var flagGroups = [
+          ['carried_as_decision_grade','Carried as decision-grade','#86efac'],
+          ['carried_as_one_lens_reading','Carried as one-lens reading','#fbbf24'],
+          ['flagged_overconfident','Flagged overconfident','#fb923c'],
+          ['not_adopted','Not adopted','#ef4444']
+        ];
+        document.getElementById('exco-strategic-flags').innerHTML = flagGroups.map(function(g){
+          var arr = acr[g[0]] || [];
+          if (!arr.length) return '';
+          return '<details style="margin-bottom:4px"><summary style="cursor:pointer;font-size:10px;color:'+g[2]+';font-weight:600">'+g[1]+' ('+arr.length+')</summary>'
+            +'<ul style="margin:4px 0 6px 18px;padding:0;font-size:10px;line-height:1.5;color:var(--text)">'
+            + arr.map(function(s){return '<li style="margin-bottom:2px">'+esc(s)+'</li>';}).join('')
+            +'</ul></details>';
+        }).join('');
+
+        var src = so.source || {};
+        var rcd = so.review_cadence || {};
+        document.getElementById('exco-strategic-source').innerHTML = (src.primary ? '<b>Source:</b> '+esc(src.primary) : '')
+          +(rcd.cadence ? '<br><b>Re-weight cadence:</b> '+esc(rcd.cadence)+(rcd.next_scheduled_review ? ' · next '+esc(rcd.next_scheduled_review) : '') : '')
+          +(so.integration_session ? '<br><b>Integration:</b> '+esc(so.integration_session) : '');
+      }
+    }
+
   }
 
   renderExcoTrends(D, upd);
