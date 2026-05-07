@@ -1262,12 +1262,12 @@ Object.assign(window.GULF_RISK_DATA, {
     ],
 
     top_indicators_with_current_readings: [
-      { indicator: "Brent crude",                       current: "$108.09",                 direction: "↑↑↑",         break_level: "$130 sustained",          why: "Pump-feed inflation + Egypt fuel-subsidy stress + global cost-of-living pressure" },
+      { indicator: "Brent crude",                       current: "$101.96",                 direction: "↑↑↑",         break_level: "$130 sustained",          why: "Pump-feed inflation + Egypt fuel-subsidy stress + global cost-of-living pressure" },
       { indicator: "USD/EGP official",                  current: "53.6200",                   direction: "managed flat",break_level: "55 (panic threshold)",    why: "CBE intervention apparent; cosmetic vs market truth" },
       { indicator: "USD/EGP black market (live)",       current: "55.45-55.98 (sarfegp)",   direction: "↑ widening",  break_level: "60+",                     why: "True stress signal; live dealer quotes" },
       { indicator: "USD/EGP structural premium",        current: "68% (Apr 2026)",          direction: "↑ from 52% Jan",break_level: "70%+",                  why: "Specialist outlets' wider measure; the part dealer quotes don't show" },
       { indicator: "Egypt CBE reserves (headline)",     current: "$52.83B (end-Mar)",       direction: "flat headline",break_level: "$48B",                   why: "Press-release grade; NFA underneath -$4.2B Q1" },
-      { indicator: "Hormuz daily transits",             current: "8 (May 6)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
+      { indicator: "Hormuz daily transits",             current: "8 (May 7)",             direction: "trickle",     break_level: "<5/day or full closure",  why: "War continuation gauge" },
       { indicator: "GCC-Egypt trust index",             current: "38/100 (Apr)",            direction: "↓ -10 from Mar",break_level: "30 (crisis threshold)", why: "Determines whether bailout architecture survives" },
       { indicator: "Egypt baladi loaf price",           current: "LE0.20 held",             direction: "stable",      break_level: "Any rise",                why: "Historical red line for street unrest" },
       { indicator: "Egypt energy rationing posture",    current: "1-day WFH + fuel-oil burn (9pm closures + dimmed lighting REVERSED 28 Apr)", direction: "mixed — partial rollback on visible measures, structural fuel-oil burn HOLDS", break_level: "Official rolling blackouts", why: "Structural story missing from mainstream framing — and partial rollback adds reading-the-tea-leaves complexity" },
@@ -1392,7 +1392,7 @@ Object.assign(window.GULF_RISK_DATA, {
         gap_vs_daily_scenarios: "Assessment combined 'benign' (A+B) ~75% vs daily file's stalemate+multilateral path ~57% on Wed 6 May AM. Gap reflects horizon difference (12-24mo vs 14-day) plus assessment may be more dovish than the dashboard's tactical view."
       },
       three_binding_constraints: {
-        iran_fiscal: { horizon: "short-term", description: "Iran-driven oil price is the binding fiscal constraint on European rearmament. Sustained Brent >$110 is the threshold where eurozone deficit math breaks; Romania 5 May 2026 is the leading edge. France (debt 115%) and Italy (debt 137%) are the next stress points.", current_state_wed_6_may: "Brent $108.09 (Tue close, -5.55% on Trump pause). Below the assessment's $110 threshold but only just; Trump-pause-priced-in case still being tested." },
+        iran_fiscal: { horizon: "short-term", description: "Iran-driven oil price is the binding fiscal constraint on European rearmament. Sustained Brent >$110 is the threshold where eurozone deficit math breaks; Romania 5 May 2026 is the leading edge. France (debt 115%) and Italy (debt 137%) are the next stress points.", current_state_wed_6_may: "Brent $101.96 (Thu 7 May AM, +0.68% after -10.95% Mon-Wed collapse). Comfortably below the assessment's $110 threshold; multi-day de-escalation absorption now base pricing. Bull-case <$90-sustained trigger no longer hypothetical-distant. NOTE: field name `wed_6_may` is now itself dated — should be renamed `current_state_snapshot` with `snapshot_date` sub-field on next stable-edit cycle." },
           russia_opportunistic: { horizon: "medium-term", description: "Russia's window (assessment says 5-10yr; carry as 3-15yr median ~7yr). Race between European rearmament maturing and Russian opportunism. Moldova destabilisation is plan-against base case for next 6-12 months given Romania weakness.", current_state_wed_6_may: "Romania government collapsed 5 May 2026 (Bolojan 281-4); AUR third of seats; eastern flank fragility newly visible. Russia troop concentrations near Moldova / Baltics not currently flagged as elevated but indicator added to tail-risk tracking." },
           china_structural: { horizon: "long-term (30-50yr horizon, with 5-10yr Taiwan flashpoint window)", description: "China is the only state that is genuine peer competitor across all dimensions. Taiwan crisis probability ~30-40% next 10yr; successful operation conditional <50%; absolute reunification by force ~15-20%.", current_state_wed_6_may: "Taiwan pacing target 2027 unchanged. Beijing role pivots from ceasefire fallback to Trump-pause corroboration; Beijing summit May 14-15 is decision-grade for whether US-Iran framework runs through Beijing." }
       },
@@ -1523,13 +1523,7 @@ Object.assign(window.GULF_RISK_DATA, {
         }
       },
       escalation: "If Q5 finds tier-1 or Q6 changes a Cairo-trip recommendation or Q7 shows coverup widening with new evidence, prefix brief.headline with 'ESCALATION:' so Paul sees it at the top.",
-      cadence_relationship: "This protocol runs every scheduled cycle (twice daily). It is COMPLEMENTARY to the weekly interactive critical-review pass under exco_briefing.review_cadence — the weekly pass goes deeper (methodology, source-grade quality, framing); the per-cycle protocol catches drift fast.",
-    },
-
-    updated: "2026-05-06T12:00:00.000Z"
-  }
-
-});
+      cadence_relationship: "This protocol runs every scheduled cycle (twice daily). It is COMPLEMENTARY to the weekly intera
 // === END STABLE ===
 // === BEGIN DAILY: gulf-risk-data-daily-2026-05-07.js ===
 
